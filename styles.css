@@ -1,0 +1,135 @@
+*{
+    background-color: black;
+    color: white;
+    font-family: "Pirata One", serif;
+    font-size: 50px;
+}
+.name{
+    font-family: "Pirata One", serif;
+    font-size:80px;
+    color: #FF8200;
+}
+.navigation-bar{
+    display: flex;
+    gap: 30px;
+    align-items: center;
+    justify-content: space-between;
+    margin: 0 100px;
+}
+ul{
+    list-style: none;
+    display: flex;
+    gap: 50px;
+}
+
+ul li a{
+    text-decoration: none;
+    color: white;
+}
+
+nav a:hover,nav a.active{
+    color: #FF8200;
+    border-bottom: 3px solid #FF8200;
+}
+
+a:hover, a.active{
+    color: #FF8200;
+    border-bottom: 3px solid #FF8200;
+}
+
+.official{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.image{
+    margin-left: 100px;
+}
+.official-content{
+    margin-right: 285px;
+}
+.official h1{
+    font-size: 140px;
+}
+.official h4{
+    font-size: 80px;
+}
+.links a{
+    margin-right:30px;
+}
+.btn-container{
+    font-size: 50px;
+    padding: 20px 40px;
+    border-radius: 4rem;
+    border: 1px solid#FF8200;
+    margin-bottom: 100px;
+}
+
+button:hover,button.active{
+    color: #FF8200;
+    border: 3px solid#FF8200;
+}
+
+.title{
+    margin-left: 800px;
+}
+.certificates{
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 100px;
+}
+.ssc{
+    border-radius: 8px;
+    border: 1px solid #FF8200;
+    padding: 0px 50px;
+    width: 400px;
+    height: 700px;
+}
+.hsc{
+    border-radius: 8px;
+    border: 1px solid #FF8200;
+    padding: 0px 50px;
+    width: 400px;
+    height: 700px;
+}
+.ug{
+    border-radius: 8px;
+    border: 1px solid #FF8200;
+    padding: 0px 50px;
+    width: 400px;
+    height: 700px;
+}
+.contact{
+    display: flex;
+    justify-content: space-between;
+    gap: 50px;
+    margin: 0px 40px ;
+}
+.information{
+    border-radius: 8px;
+    border: 1px solid #FF8200;
+    padding: 0px 50px;
+}
+.about-me{
+    border-radius: 8px;
+    border: 1px solid #FF8200;
+    padding: 0px 50px;
+}
+.learnings{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+.topic{
+    border-radius: 8px;
+    border: 1px solid #FF8200;
+    padding: 0px 40px;
+    margin-right: 10px;
+    background-size: cover;
+    width: 500px;
+    height: 600px;
+    margin-bottom: 50px;
+}
+.learning{
+    margin-left: 800px;
+}
