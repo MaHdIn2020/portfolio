@@ -133,3 +133,38 @@ button:hover,button.active{
 .learning{
     margin-left: 800px;
 }
+
+.courses{
+    display: flex;
+    justify-content: space-around;
+}
+.course-name{
+    border-radius: 8px;
+    border: 1px solid #FF8200;
+    height: 900px;
+    width: 700px;
+    margin-bottom: 50px;
+    align-items: flex-start;
+}
+.course-name img{
+    height: 100px;
+    width: 100px;
+    border-radius: 8px;
+}
+.course-name a{
+    text-decoration: none;
+}
+.course-name button{
+    font-size: 50px;
+    padding: 20px 40px;
+    border-radius: 4rem;
+    border: 1px solid#FF8200;
+    margin-bottom: 100px
+}
+.course-name button:hover, .course-name button:active{
+    border-radius: 4rem;
+    border: 4px solid #FF8200;
+}
+.course-title{
+    margin-left: 800px;
+}
