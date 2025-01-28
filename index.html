@@ -4,138 +4,299 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Portfolio</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Pirata+One&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+    <!-- Tailwind + DaisyUi CDN -->
     <link href="https://cdn.jsdelivr.net/npm/daisyui@4.12.23/dist/full.min.css" rel="stylesheet" type="text/css" />
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://kit.fontawesome.com/b2f22ffb66.js" crossorigin="anonymous"></script>
+    <!-- font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Manrope:wght@200..800&family=Pirata+One&family=Quicksand:wght@300..700&family=Raleway:ital,wght@0,100..900;1,100..900&family=Titillium+Web:ital,wght@0,200;0,300;0,400;0,600;0,700;0,900;1,200;1,300;1,400;1,600;1,700&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              clifford: '#da373d',
+            },
+            fontFamily:{
+              'titillium':["Titillium Web", 'serif'],
+            }
+          }
+        }
+      }
+    </script>
 </head>
-<body>
-    <nav class="navigation-bar">
-        <div class="name">Mahdin</div>
-        <div class="ul">
-            <ul>
-            <li class="navbar"><a href="#official">Home</a></li>
-            <li class="navbar"><a href="projects.html">Projects</a></li>
-            <li class="navbar"><a href="#courses">Courses</a></li>
-            <li class="navbar"><a href="#education">Education</a></li>
-            <li class="navbar"><a href="#learnings">Learnings</a></li>
-            <li class="navbar"><a href="#contact">Contact</a></li>
+<body class="bg-white lg:bg-black font-titillium">
+    <!-- NavBar -->
+    <div class="navbar bg-white lg:bg-black ">
+        <div class="navbar-start">
+          <div class="dropdown">
+            <div tabindex="0" role="button" class="btn btn-ghost lg:hidden">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="h-5 w-5"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M4 6h16M4 12h8m-8 6h16" />
+              </svg>
+            </div>
+            <ul
+              tabindex="0"
+              class="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
+              <li><a href="#official">Home</a></li>
+              <li><a href="projects.html">Projects</a></li>
+              <li><a href="#courses">Courses</a></li>
+              <li><a href="#education">Education</a></li>
+              <li><a href="#learnings">Learnings</a></li>
             </ul>
+          </div>
+          <a class="btn btn-ghost text-xl lg:text-5xl" href="#home">Mahdin</a>
         </div>
-    </nav>
-    <div class="official" id="official">
-        <div class="image"><img src="images/ichigo.png" alt=""></div>
-        <div class="official-content">
-            <h1>Hi, It's Mahdin</h1>
-            <h4>Nice to meet You.</h4>
-            <br>
-            <button class="btn-container hidden">Hire Me</button>
+        <div class="navbar-center hidden lg:flex">
+          <ul class="menu menu-horizontal px-1 text-4xl">
+            <li><a href="#official">Home</a></li>
+            <li><a href="projects.html">Projects</a></li>
+            <li><a href="#courses">Courses</a></li>
+            <li><a href="#education">Education</a></li>
+            <li><a href="#learnings">Learnings</a></li>
+           
+          </ul>
         </div>
-    </div>
-    <div class="education" id="education">
-        <div class="title">
-            <h1>Eduaction</h1>
+        <div class="navbar-end">
+          <a class="btn btn-outline lg:text-3xl btn-secondary">Contact</a>
         </div>
-        <div class="certificates">
-            <div class="ssc">
-                <h3>SSC</h3>
+      </div>
+
+    <!-- Hero -->
+    <div class="hero bg-white lg:bg-black min-h-screen">
+        <div class="hero-content flex-col lg:flex-row">
+          <img
+            src="images/ichigo.png"
+            class="max-w-sm rounded-lg shadow-2xl" />
+          <div>
+            <h1 class="text-5xl font-bold">Tanjip Surait Mahdin</h1>
+            <p class="py-6">
+              Strive for progress,not perfection,and let your curiosity shape the future you want to create.
+            </p>
+            <button class="btn btn-primary"><a href="projects.html">Explore My Work</a></button>
+          </div>
+        </div>
+      </div>
+    <!-- Education cards -->
+     <div class="text-center mt-10 mb-10"><h1 class="text-2xl lg:text-5xl font-bold">Education</h1></div>
+     <div class="flex flex-col mx-20 gap-4 lg:flex-row justify-center">
+        <div class="card bg-orange-400 w-96 shadow-xl">
+            <div class="card-body text-black font-bold">
+                <h3 class="text-3xl">SSC</h3>
                 <h5>Group: Science</h5>
                 <h5>Passing Year: 2019</h5>
                 <h5>GPA: 5.00</h5>
             </div>
-            <div class="hsc">
-                <h3>HSC</h3>
+          </div>
+          <div class="card bg-orange-400 w-96 shadow-xl">
+            <div class="card-body text-black font-bold">
+                <h3 class="text-3xl">HSC</h3>
                 <h5>Group: Science</h5>
                 <h5>Passing Year: 2021</h5>
                 <h5>GPA: 5.00</h5>
             </div>
-            <div class="ug">
-                <h3>Undergraduation</h3>
+          </div>
+          <div class="card bg-orange-400 w-96 shadow-xl">
+            <div class="card-body text-black font-bold">
+                <h3 class="text-3xl">Undergraduation</h3>
                 <h5>Degree: Computer Science & Engineering</h5>
                 <h5>Timespan: 2022-2026</h5>
-                <h5>CGPA: 3.82</h5>
+                <h5>CGPA: 3.81</h5>
             </div>
-        </div>
-    </div>
-    <h1 class="learning">Learnings</h1>
-    <div class="learnings" id="learnings">
-        <div class="topic">
-            <h5>Python</h5>
-            <h6>Learned: Core concepts and OOP</h6>
-            <h6>Status: <i class="fa-solid fa-check"></i></h6>
-        </div>
-        <div class="topic">
-            <h5>HTML</h5>
-            <h6>Learned: Structuring web pages with different tags</h6>
-            <h6>Status: <i class="fa-solid fa-check"></i></h6>
-        </div>
-        <div class="topic">
-            <h5>CSS</h5>
-            <h6>Remaining: Responsive design & many more.</h6>
-            <h6>Status: <i class="fa-solid fa-spinner"></i></h6>
-        </div>
-        <div class="topic">
-            <h5>Tailwind</h5>
-            <h6>Will Learn</h6>
-            <h6>Status:<i class="fa-solid fa-spinner"></i></h6>
-        </div>
-        <div class="topic">
-            <h5>Javascript</h5>
-            <h6>Will Learn</h6>
-            <h6>Status:<i class="fa-solid fa-spinner"></i></h6>
-        </div>
-        <div class="topic">
-            <h5>React</h5>
-            <h6>Will Learn</h6>
-            <h6>Status:<i class="fa-solid fa-spinner"></i></h6>
-        </div>
-        <div class="topic">
-            <h5>Node.js</h5>
-            <h6>Will Learn</h6>
-            <h6>Status:<i class="fa-solid fa-spinner"></i></h6>
-        </div>
-    </div>
-    <h1 class="course-title">Courses</h1>
-    <div class="courses" id="courses">
-        <div class="course-name">
-            <img src="images/programmming hero.jpg" alt="">
-            <h1>Institution: Programming Hero</h1>
-            <h2>Course Name: Web Development </h2>
-            <p>Description: This course guides you from basics to mastering the MERN stack with step-by-step lessons, hands-on projects, and assessments.</p>
-            <button><a href="https://web.programming-hero.com/home" target="_blank">Course Details</a></button>
-        </div>
-        <div class="course-name">
-            <img src="images/coding school.jpg" alt="">
-            <h1>Institution: The Coding School</h1>
-            <h2>Course Name: Quantum Computing</h2>
-            <p>Description: The coding school is offern=ing an in-depth exploration of quantum mechanics and its applications in computing.</p>
-            <button><a href="https://www.qubitbyqubit.org/programs" target="_blank">Course Details</a></button>
-        </div>
-    </div>
-    <div class="contact" id="contact">
-        <div class="information">
-            <h1>Contact</h1>
-            <h5>Email Address: tanjip.surait.mahdin@gmail.com</h5>
-            <h5>Contact No.: 01322071271</h5>
-            <div class="links">
-                <a href="https://www.linkedin.com/in/tanjip-surait-27bb6b297/"><i class="fa-brands fa-linkedin"></i></a>
-                <a href="https://www.facebook.com/tanjip.mahdin"><i class="fa-brands fa-facebook"></i></a>
-                <a href="https://www.instagram.com/tanjipmahdin/"><i class="fa-brands fa-instagram"></i></a>
-                <a href=""><i class="fa-brands fa-twitter"></i></a>
-            </div>
-        </div>
-        <div class="about-me">
-            <h1>About Me</h1>
-            <p>Hi, I'm, a passionate learner and problem solver exploring the world of Python programming. With a curious mindset and a dedication to growth,I'm constantly refining my skilss and testing projects on the go.</p>
-            <p>Let's connect and collaborate on ideas that push boundaries and bring visions to life!</p>
-        </div>
+          </div>
+     </div>
 
+    <!-- Learnings -->
+    <div class="text-center mt-10 mb-10"><h1 class="text-2xl lg:text-5xl font-bold">Learnings</h1></div>
+    <div class="ml-0 lg:ml-20 bg-white lg:bg-black flex flex-col items-center lg:grid grid-cols-3 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
+      <!-- HTML -->
+      <div class="max-w-sm bg-base-200 shadow-lg rounded-xl overflow-hidden">
+        <img class="w-full h-48 object-contain" src="https://cdn-icons-png.flaticon.com/512/732/732212.png" alt="HTML">
+        <div class="p-4">
+          <h2 class="text-xl font-bold">HTML</h2>
+          <p class="text-gray-400 mt-2 mb-5">Mastered semantic tags, forms, tables, and structuring web pages effectively.</p>
+          <div class="flex items-center gap-12">
+            <h1 class="font-bold">Progress:</h1>
+            <div class="radial-progress text-black lg:text-white" style="--value:95;" role="progressbar">95%</div>
+          </div>
+
+        </div>
+      </div>
+    
+      <!-- CSS -->
+      <div class="max-w-sm bg-base-200 shadow-lg rounded-xl overflow-hidden">
+        <img class="w-full h-48 object-contain" src="https://cdn-icons-png.flaticon.com/512/732/732190.png" alt="CSS">
+        <div class="p-4">
+          <h2 class="text-xl font-bold">CSS</h2>
+          <p class="text-gray-400 mt-2">Learned styling techniques, flexbox, grid, and responsive web design.</p>
+          <div class="flex items-center gap-12 mt-5">
+            <h1 class="font-bold">Progress:</h1>
+            <div class="radial-progress text-black lg:text-white" style="--value:90;" role="progressbar">90%</div>
+          </div>
+        </div>
+      </div>
+    
+      <!-- Tailwind CSS -->
+      <div class="max-w-sm bg-base-200 shadow-lg rounded-xl overflow-hidden">
+        <img class="w-full h-48 object-contain" src="https://upload.wikimedia.org/wikipedia/commons/d/d5/Tailwind_CSS_Logo.svg" alt="TailwindCSS">
+        <div class="p-4">
+          <h2 class="text-xl font-bold">TailwindCSS</h2>
+          <p class="text-gray-400 mt-2">Used utility-first approach for fast and responsive UI development.</p>
+          <div class="flex items-center gap-12 mt-5">
+            <h1 class="font-bold">Progress:</h1>
+            <div class="radial-progress text-black lg:text-white" style="--value:80;" role="progressbar">80%</div>
+          </div>
+        </div>
+      </div>
+    
+      <!-- JavaScript -->
+      <div class="max-w-sm bg-base-200 shadow-lg rounded-xl overflow-hidden">
+        <img class="w-full h-48 object-cover" src="https://upload.wikimedia.org/wikipedia/commons/6/6a/JavaScript-logo.png" alt="JavaScript">
+        <div class="p-4">
+          <h2 class="text-xl font-bold">JavaScript</h2>
+          <p class="text-gray-400 mt-2">Gained experience with ES6+, DOM manipulation, and async programming.</p>
+          <div class="flex items-center gap-12 mt-5">
+            <h1 class="font-bold">Progress:</h1>
+            <div class="radial-progress text-black lg:text-white" style="--value:0;" role="progressbar">0%</div>
+          </div>
+        </div>
+      </div>
+    
+      <!-- Node.js -->
+      <div class="max-w-sm bg-base-200 shadow-lg rounded-xl overflow-hidden">
+        <img class="w-full h-48 object-cover" src="https://upload.wikimedia.org/wikipedia/commons/d/d9/Node.js_logo.svg" alt="Node.js">
+        <div class="p-4">
+          <h2 class="text-xl font-bold">Node.js</h2>
+          <p class="text-gray-400 mt-2">Built REST APIs and worked with Express.js for backend development.</p>
+          <div class="flex items-center gap-12 mt-5">
+            <h1 class="font-bold">Progress:</h1>
+            <div class="radial-progress text-black lg:text-white" style="--value:0;" role="progressbar">0%</div>
+          </div>
+        </div>
+      </div>
+    
+      <!-- MongoDB -->
+      <div class="max-w-sm bg-base-200 shadow-lg rounded-xl overflow-hidden">
+        <img class="w-full h-48 object-contain" src="https://www.svgrepo.com/show/331488/mongodb.svg" alt="MongoDB">
+        <div class="p-4">
+          <h2 class="text-xl font-bold">MongoDB</h2>
+          <p class="text-gray-400 mt-2">Designed NoSQL databases and optimized queries using Mongoose.</p>
+          <div class="flex items-center gap-12 mt-5">
+            <h1 class="font-bold">Progress:</h1>
+            <div class="radial-progress text-black lg:text-white" style="--value:0;" role="progressbar">0%</div>
+          </div>
+        </div>
+      </div>
+    
+      <!-- React -->
+      <div class="max-w-sm bg-base-200 shadow-lg rounded-xl overflow-hidden">
+        <img class="w-full h-48 object-contain" src="https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg" alt="React">
+        <div class="p-4">
+          <h2 class="text-xl font-bold">React</h2>
+          <p class="text-gray-400 mt-2">Developed interactive UI components using hooks and state management.</p>
+          <div class="flex items-center gap-12 mt-5">
+            <h1 class="font-bold">Progress:</h1>
+            <div class="radial-progress text-black lg:text-white" style="--value:0;" role="progressbar">0%</div>
+          </div>
+        </div>
+      </div>
+    
+      <!-- Python -->
+      <div class="max-w-sm bg-base-200 shadow-lg rounded-xl overflow-hidden">
+        <img class="w-full h-48 object-contain" src="https://upload.wikimedia.org/wikipedia/commons/c/c3/Python-logo-notext.svg" alt="Python">
+        <div class="p-4">
+          <h2 class="text-xl font-bold">Python</h2>
+          <p class="text-gray-400 mt-2">Worked with data structures, OOP, and backend scripting.</p>
+          <div class="flex items-center gap-12 mt-5">
+            <h1 class="font-bold">Progress:</h1>
+            <div class="radial-progress text-black lg:text-white" style="--value:90;" role="progressbar">90%</div>
+          </div>
+        </div>
+      </div>
     </div>
+
+    <!-- Courses -->
+    <div class="text-center mt-10 mb-10"><h1 class="text-2xl lg:text-5xl font-bold">Courses</h1></div>
+    <div class="mx-5 lg:mx-20 p-4 lg:p-10">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-12 justify-center">
+        
+        <!-- Programming Hero Card -->
+        <div class="card card-compact bg-base-100 shadow-xl w-full">
+          <figure class="w-full h-60 bg-[#1a0a2e]">
+            <img class="w-full h-full object-contain" src="images/programmming hero.jpg" alt="Programming Hero">
+          </figure>
+          <div class="card-body">
+            <h1 class="text-2xl font-bold lg:text-3xl mt-5 text-center">
+              Institution <br> Programming Hero
+            </h1>
+            <h2 class="text-xl font-bold mt-5">Course Name: Web Development</h2>
+            <p class="font-bold mt-5">
+              Description: This course guides you from basics to mastering the MERN stack with step-by-step lessons, hands-on projects, and assessments.
+            </p>
+            <div class="card-actions justify-center">
+              <a href="https://web.programming-hero.com/home" target="_blank" class="btn btn-primary">Course Details</a>
+            </div>
+          </div>
+        </div>
+    
+        <!-- The Coding School Card -->
+        <div class="card card-compact bg-base-100 shadow-xl w-full">
+          <figure class="w-full h-60 bg-white">
+            <img class="w-full h-full object-contain" src="images/coding school.jpg" alt="The Coding School">
+          </figure>
+          <div class="card-body">
+            <h1 class="text-2xl font-bold lg:text-3xl mt-5 text-center">
+              Institution <br> The Coding School
+            </h1>
+            <h2 class="text-xl font-bold mt-5">Course Name: Quantum Computing</h2>
+            <p class="font-bold mt-5">
+              Description: The Coding School is offering an in-depth exploration of quantum mechanics and its applications in computing.
+            </p>
+            <div class="card-actions justify-center">
+              <a href="https://www.qubitbyqubit.org/programs" target="_blank" class="btn btn-primary">Course Details</a>
+            </div>
+          </div>
+        </div>
+    
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <details id="about-section" class="collapse bg-gray-900 text-white p-6 rounded-lg w-full mt-4">
+      <summary class="collapse-title text-3xl font-bold">About Me</summary>
+      <div class="collapse-content">
+        <p>Hi, I'm a passionate learner and problem solver exploring the world of Python programming. With a curious mindset and a dedication to growth, I'm constantly refining my skills and testing projects on the go.</p>
+        <p>Let's connect and collaborate on ideas that push boundaries and bring visions to life!</p>
+      </div>
+    </details>
+    
+    <!-- Contact Section -->
+    <details id="contact-section" class="collapse bg-gray-900 text-white p-6 rounded-lg w-full mt-4">
+      <summary class="collapse-title text-3xl font-bold">Contact</summary>
+      <div class="collapse-content">
+        <h5>Email: tanjip.surait.mahdin@gmail.com</h5>
+        <h5>Phone: 01322071271</h5>
+        <div class="mt-4 flex gap-4">
+          <a href="https://www.linkedin.com/in/tanjip-surait-27bb6b297/" class="text-blue-500">LinkedIn</a>
+          <a href="https://www.facebook.com/tanjip.mahdin" class="text-blue-600">Facebook</a>
+          <a href="https://www.instagram.com/tanjipmahdin/" class="text-pink-500">Instagram</a>
+          <a href="" class="text-blue-400">Twitter</a>
+        </div>
+      </div>
+    </details>
+    
+    
+    
+    
 </body>
 </html>
