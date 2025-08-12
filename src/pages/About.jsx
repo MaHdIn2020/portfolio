@@ -1,6 +1,6 @@
 // src/components/About.jsx
 import { motion } from "framer-motion";
-import { FaGraduationCap, FaCode, FaRunning, FaPaintBrush } from "react-icons/fa";
+import { FaCode, FaRunning, FaPaintBrush, FaBullseye } from "react-icons/fa";
 
 const About = () => {
   return (
@@ -27,7 +27,7 @@ const About = () => {
           visible: { opacity: 1, y: 0, transition: { staggerChildren: 0.2 } },
         }}
       >
-        {/* Education */}
+      {/* Professional Focus */}
         <motion.div
           className="space-y-4 border border-gray-800 rounded-lg p-6 hover:shadow-indigo-500/50 transition-shadow cursor-default"
           variants={{
@@ -36,12 +36,13 @@ const About = () => {
           }}
         >
           <div className="flex items-center space-x-3 text-indigo-400 text-2xl">
-            <FaGraduationCap />
-            <h3 className="text-xl font-semibold">Education</h3>
+            <FaBullseye />
+            <h3 className="text-xl font-semibold">Professional Focus</h3>
           </div>
           <p>
-            Pursuing B.Sc. in Computer Science at BRAC University with a CGPA of 3.79.
-            I have developed a strong foundation in algorithms, data structures, and software engineering principles.
+            I specialize in building responsive, user-friendly web applications using modern technologies.
+            My work blends clean design with efficient code, ensuring both functionality and performance.
+            I aim to create solutions that are scalable, maintainable, and enjoyable to use.
           </p>
         </motion.div>
 
