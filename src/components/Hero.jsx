@@ -95,7 +95,7 @@ const Hero = () => {
         transition={{ delay: 0.5, duration: 0.8 }}
       >
         <motion.img
-          src="https://ibb.co.com/HL8YfZVf"
+          src="/profile.jpeg"
           alt="Tanjip Mahdin"
           className="w-64 h-64 md:w-80 md:h-80 object-cover rounded-full border-4 border-gray-800 shadow-[0_0_30px_rgba(99,102,241,0.5)]"
           whileHover={{ scale: 1.05, rotate: 2 }}
