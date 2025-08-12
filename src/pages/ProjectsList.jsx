@@ -7,7 +7,7 @@ const ProjectsList = () => {
   {
     id: 1,
     name: "Match Finder",
-    image: "../../public/match-finder.jpeg",
+    image: "https://ibb.co.com/CKnyjFXb",
     description: "A matrimonial website connecting users based on preferences.",
     technologies: ["React", "Tailwind CSS", "Framer Motion"],
     liveLink: "https://match-finder-2c918.web.app/",
@@ -18,7 +18,7 @@ const ProjectsList = () => {
   {
     id: 2,
     name: "HobbyHive",
-    image: "../../public/HobbyHive.jpeg",
+    image: "https://ibb.co.com/ZRr3dNyW",
     description: "Group buying platform for hobby enthusiasts with user reviews.",
     technologies: ["Node.js", "React.js", "MongoDB", "Express.js"],
     liveLink: "https://hobbyhive-d81af.web.app/",
@@ -29,7 +29,7 @@ const ProjectsList = () => {
   {
     id: 3,
     name: "Review Hub",
-    image: "../../public/review-hub.jpeg",
+    image: "https://ibb.co.com/gLsX29NJ",
     description: "Responsive review platform for products with user authentication.",
     technologies: ["Node.js", "React.js", "MongoDB", "Express.js"],
     liveLink: "https://review-hub-641bc.web.app/",
