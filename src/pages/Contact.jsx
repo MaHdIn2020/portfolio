@@ -22,9 +22,9 @@ const Contact = () => {
     setLoading(true);
     setStatus(null);
 
-    const serviceID = "service_0jvjsyb";     // Replace with your EmailJS service ID
-    const templateID = "template_u1xq09s";   // Replace with your EmailJS template ID
-    const userID = "yt00LSJjV_bZpV8-P";           // Replace with your EmailJS user ID
+    const serviceID = "service_0jvjsyb";
+    const templateID = "template_u1xq09s";
+    const userID = "yt00LSJjV_bZpV8-P";
 
 emailjs.send(
   serviceID,
@@ -53,60 +53,60 @@ emailjs.send(
   return (
     <section
       id="contact"
-      className="bg-black text-white py-16 px-6 sm:px-12 w-full"
+      className="bg-[#5C94FC] text-white py-16 px-6 sm:px-12 w-full"
     >
       <motion.h2
-        className="text-3xl font-bold mb-10 text-indigo-400 text-center"
+        className="text-3xl font-bold mb-10 text-[#FBD000] pixel-text text-center drop-shadow-[3px_3px_0_#000]"
         initial={{ opacity: 0, y: -20 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
       >
-        Contact Me
+        Contact Player 1
       </motion.h2>
 
       <motion.div
-        className="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-full"
+        className="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-5xl mx-auto items-center"
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
         transition={{ duration: 0.8 }}
       >
         {/* Contact Info */}
-        <div className="space-y-8">
-          <div className="flex items-center space-x-4">
-            <MdEmail className="text-indigo-400 text-3xl" />
+        <div className="space-y-8 bg-white text-black p-8 pixel-border bg-[url('https://i.imgur.com/3qV9Y0J.png')] bg-[length:20px] bg-repeat">
+          <div className="flex items-center space-x-4 bg-white/90 p-3 pixel-border">
+            <MdEmail className="text-[#E52521] text-4xl" />
             <div>
-              <p className="font-semibold">Email</p>
+              <p className="font-bold pixel-text text-xs uppercase mb-1">Email</p>
               <a
                 href="mailto:your.email@example.com"
-                className="text-gray-300 hover:text-indigo-400 transition-colors"
+                className="text-black font-bold hover:text-[#E52521] transition-colors"
               >
                 tanjip.surait.mahdin@gmail.com
               </a>
             </div>
           </div>
 
-          <div className="flex items-center space-x-4">
-            <MdPhone className="text-indigo-400 text-3xl" />
+          <div className="flex items-center space-x-4 bg-white/90 p-3 pixel-border">
+            <MdPhone className="text-[#43B047] text-4xl" />
             <div>
-              <p className="font-semibold">Phone</p>
+              <p className="font-bold pixel-text text-xs uppercase mb-1">Phone</p>
               <a
                 href="tel:+8801234567890"
-                className="text-gray-300 hover:text-indigo-400 transition-colors"
+                className="text-black font-bold hover:text-[#43B047] transition-colors"
               >
                 +880 1639322453
               </a>
             </div>
           </div>
 
-          <div className="flex items-center space-x-4">
-            <MdWhatsapp className="text-indigo-400 text-3xl" />
+          <div className="flex items-center space-x-4 bg-white/90 p-3 pixel-border">
+            <MdWhatsapp className="text-[#FBD000] text-4xl drop-shadow-[1px_1px_0_#000]" />
             <div>
-              <p className="font-semibold">WhatsApp</p>
+              <p className="font-bold pixel-text text-xs uppercase mb-1">WhatsApp</p>
               <a
                 href="https://wa.me/8801322071271"
                 target="_blank"
                 rel="noreferrer"
-                className="text-gray-300 hover:text-indigo-400 transition-colors"
+                className="text-black font-bold hover:text-[#FBD000] transition-colors"
               >
                 +880 1322071271
               </a>
@@ -117,7 +117,7 @@ emailjs.send(
         {/* Contact Form */}
         <form
           onSubmit={handleSubmit}
-          className="flex flex-col space-y-6 bg-gray-900 p-8 rounded-lg shadow-lg"
+          className="flex flex-col space-y-6 bg-[#d95f36] p-8 shadow-[8px_8px_0_#000] border-4 border-black"
         >
           <input
             type="text"
@@ -126,7 +126,7 @@ emailjs.send(
             required
             value={formData.name}
             onChange={handleChange}
-            className="p-3 rounded-md bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-indigo-400"
+            className="p-3 bg-white border-4 border-black text-black font-bold placeholder-gray-500 focus:outline-none focus:bg-[#FFF] shadow-[inset_4px_4px_0_#ccc]"
             disabled={loading}
           />
           <input
@@ -136,30 +136,30 @@ emailjs.send(
             required
             value={formData.email}
             onChange={handleChange}
-            className="p-3 rounded-md bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-indigo-400"
+            className="p-3 bg-white border-4 border-black text-black font-bold placeholder-gray-500 focus:outline-none focus:bg-[#FFF] shadow-[inset_4px_4px_0_#ccc]"
             disabled={loading}
           />
           <textarea
             name="message"
             rows="5"
-            placeholder="Your Message"
+            placeholder="Your Message..."
             required
             value={formData.message}
             onChange={handleChange}
-            className="p-3 rounded-md bg-gray-800 text-white resize-none focus:outline-none focus:ring-2 focus:ring-indigo-400"
+            className="p-3 bg-white border-4 border-black text-black font-bold placeholder-gray-500 resize-none focus:outline-none focus:bg-[#FFF] shadow-[inset_4px_4px_0_#ccc]"
             disabled={loading}
           />
           <button
             type="submit"
             disabled={loading}
-            className="bg-indigo-500 hover:bg-indigo-600 text-white py-3 rounded-md font-semibold transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="mario-button bg-[#FBD000] text-black w-full"
           >
-            {loading ? "Sending..." : "Send Message"}
+            {loading ? "SENDING..." : "SEND MESSAGE"}
           </button>
           {status && (
-            <p className={`font-medium text-center mt-2 ${status.includes("successfully") ? "text-green-400" : "text-red-500"}`}>
+            <div className={`font-bold pixel-text text-xs text-center mt-2 px-2 py-3 bg-white border-2 border-black ${status.includes("successfully") ? "text-[#43B047]" : "text-[#E52521]"}`}>
               {status}
-            </p>
+            </div>
           )}
         </form>
       </motion.div>

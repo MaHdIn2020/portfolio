@@ -24,19 +24,19 @@ const skills = [
   { name: "React", icon: <SiReact className="text-cyan-400" />, level: "Advanced" },
   { name: "Node.js", icon: <SiNodedotjs className="text-green-500" />, level: "Intermediate" },
   { name: "MongoDB", icon: <SiMongodb className="text-green-400" />, level: "Intermediate" },
-  { name: "Express.js", icon: <SiExpress className="text-gray-300" />, level: "Intermediate" },
-  { name: "Data Structures & Algorithms", icon: <FaBrain className="text-pink-400" />, level: "Advanced" },
-  { name: "Machine Learning & AI", icon: <SiTensorflow className="text-orange-400" />, level: "Intermediate" },
-  { name: "Problem-Solving Skills", icon: <FaBrain className="text-purple-400" />, level: "Advanced" },
-  { name: "Version Control (Git, GitHub)", icon: <SiGithub className="text-gray-400" />, level: "Advanced" },
+  { name: "Express.js", icon: <SiExpress className="text-black" />, level: "Intermediate" },
+  { name: "Algorithms", icon: <FaBrain className="text-pink-400" />, level: "Advanced" },
+  { name: "Machine Learning", icon: <SiTensorflow className="text-orange-400" />, level: "Intermediate" },
+  { name: "Problem Solving", icon: <FaBrain className="text-purple-400" />, level: "Advanced" },
+  { name: "Git / GitHub", icon: <SiGithub className="text-gray-800" />, level: "Advanced" },
 ];
 
 const Skills = () => {
   return (
-    <section id="skills" className="bg-black text-white py-16 px-6 md:px-12">
+    <section id="skills" className="bg-[#5C94FC] text-white py-16 px-6 md:px-12">
       <div className="max-w-6xl mx-auto">
         <motion.h2
-          className="text-3xl font-bold mb-12 text-indigo-400 text-center"
+          className="text-3xl font-bold mb-12 text-[#FBD000] pixel-text text-center drop-shadow-[3px_3px_0_#000]"
           initial={{ opacity: 0, y: -20 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
@@ -48,15 +48,15 @@ const Skills = () => {
           {skills.map((skill, index) => (
             <motion.div
               key={index}
-              className="bg-gray-900 p-6 rounded-xl flex flex-col items-center shadow-lg hover:shadow-indigo-500/50 transition-shadow"
+              className="bg-white p-6 flex flex-col items-center pixel-border text-black cursor-pointer"
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
-              whileHover={{ scale: 1.05 }}
-              transition={{ duration: 0.4, delay: index * 0.05 }}
+              whileHover={{ y: -10, rotate: index % 2 === 0 ? 2 : -2 }}
+              transition={{ duration: 0.2, delay: index * 0.05 }}
             >
-              <div className="text-5xl mb-4">{skill.icon}</div>
-              <h3 className="text-lg font-semibold">{skill.name}</h3>
-              <p className="text-gray-400 text-sm">{skill.level}</p>
+              <div className="text-5xl mb-4 drop-shadow-[2px_2px_0_#000] drop-shadow-color-white">{skill.icon}</div>
+              <h3 className="text-sm font-bold pixel-text text-center leading-snug h-8 flex items-center">{skill.name}</h3>
+              <p className="text-gray-600 font-bold text-xs mt-2 uppercase">{skill.level}</p>
             </motion.div>
           ))}
         </div>

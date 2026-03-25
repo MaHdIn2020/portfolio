@@ -43,9 +43,9 @@ const ProjectsList = () => {
   const closeDetails = () => setSelectedProject(null);
 
   return (
-    <section id="projects" className="py-16 px-6  mx-auto bg-black">
+    <section id="projects" className="py-16 px-6 mx-auto bg-[#5C94FC]">
         <motion.h2
-        className="text-3xl font-bold mb-12 text-indigo-400 text-center"
+        className="text-3xl font-bold mb-12 text-[#E52521] pixel-text text-center drop-shadow-[3px_3px_0_#000]"
         initial={{ opacity: 0, y: -30 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7 }}
@@ -53,7 +53,7 @@ const ProjectsList = () => {
         My Projects
       </motion.h2>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl mx-auto">
         {projects.map((project) => (
           <ProjectCard
             key={project.id}
@@ -66,48 +66,48 @@ const ProjectsList = () => {
       {/* Detailed Project Modal */}
       {selectedProject && (
         <div
-          className="fixed inset-0 bg-black bg-opacity-95 flex justify-center items-start overflow-auto p-8 z-50"
+          className="fixed inset-0 bg-black/90 flex justify-center items-start overflow-auto p-8 z-50 pt-20"
           onClick={closeDetails}
         >
           <div
-            className="bg-gray-900 rounded-lg shadow-xl max-w-4xl w-full p-8 relative text-gray-300"
+            className="bg-white pixel-border max-w-4xl w-full p-8 relative text-black"
             onClick={(e) => e.stopPropagation()}
           >
             <button
-              className="absolute top-4 right-4 text-gray-400 hover:text-white text-3xl font-bold"
+              className="absolute top-4 right-4 bg-black text-white px-3 py-1 pixel-border hover:bg-[#E52521] pixel-text"
               onClick={closeDetails}
               aria-label="Close project details"
             >
-              &times;
+              X
             </button>
 
-            <h3 className="text-4xl font-bold text-indigo-400 mb-4">
+            <h3 className="text-2xl font-bold text-[#E52521] mb-4 pixel-text drop-shadow-[2px_2px_0_#FBD000]">
               {selectedProject.name}
             </h3>
 
             <img
               src={selectedProject.image}
               alt={`${selectedProject.name} screenshot`}
-              className="rounded-md mb-6 object-cover max-h-96 w-full"
+              className="mb-8 object-cover max-h-[400px] w-full pixel-border"
             />
 
-            <p className="mb-4">
-              <strong className="text-white">Description:</strong>{" "}
+            <p className="mb-4 font-semibold text-lg">
+              <strong className="text-black pixel-text text-sm block mb-1">Description:</strong>
               {selectedProject.description}
             </p>
 
-            <p className="mb-4">
-              <strong className="text-white">Main Technologies:</strong>{" "}
+            <p className="mb-4 font-semibold text-lg">
+              <strong className="text-black pixel-text text-sm block mb-1">Main Technologies:</strong>
               {selectedProject.technologies.join(", ")}
             </p>
 
-            <p className="mb-4">
-              <strong className="text-white">Challenges Faced:</strong>{" "}
+            <p className="mb-4 font-semibold text-lg">
+              <strong className="text-black pixel-text text-sm block mb-1">Challenges Faced:</strong>
               {selectedProject.challenges}
             </p>
 
-            <p className="mb-6">
-              <strong className="text-white">Improvements & Future Plans:</strong>{" "}
+            <p className="mb-8 font-semibold text-lg">
+              <strong className="text-black pixel-text text-sm block mb-1">Improvements & Future Plans:</strong>
               {selectedProject.futurePlans}
             </p>
 
@@ -117,9 +117,9 @@ const ProjectsList = () => {
                   href={selectedProject.liveLink}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-6 py-3 bg-indigo-600 hover:bg-indigo-700 rounded-md text-white font-semibold transition"
+                  className="mario-button bg-[#43B047] hover:bg-green-600 text-sm"
                 >
-                  Live Project
+                  Start Game (Live)
                 </a>
               )}
               {selectedProject.githubClient && (
@@ -127,9 +127,9 @@ const ProjectsList = () => {
                   href={selectedProject.githubClient}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-6 py-3 bg-gray-800 hover:bg-gray-700 rounded-md text-white font-semibold transition"
+                  className="mario-button bg-gray-600 hover:bg-gray-800 text-sm"
                 >
-                  GitHub (Client)
+                  Source Code
                 </a>
               )}
             </div>

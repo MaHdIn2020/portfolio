@@ -28,10 +28,10 @@ const Education = () => {
   return (
     <section
       id="education"
-      className="bg-black text-white py-16 px-6 md:px-12 mx-auto"
+      className="bg-[#5C94FC] text-white py-16 px-6 md:px-12 mx-auto"
     >
       <motion.h2
-        className="text-3xl font-bold mb-12 text-indigo-400 text-center"
+        className="text-3xl font-bold mb-12 text-[#E52521] pixel-text text-center drop-shadow-[3px_3px_0_#000]"
         initial={{ opacity: 0, y: -30 }}
         whileInView={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.7 }}
@@ -40,7 +40,7 @@ const Education = () => {
       </motion.h2>
 
       <motion.div
-        className="grid grid-cols-1 md:grid-cols-3 gap-10 text-gray-300"
+        className="grid grid-cols-1 md:grid-cols-3 gap-10 text-black"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true }}
@@ -52,31 +52,31 @@ const Education = () => {
         {educationData.map((edu, index) => (
           <motion.div
             key={index}
-            className="space-y-4 border border-gray-800 rounded-lg p-6 hover:shadow-indigo-500/50 transition-shadow cursor-default"
+            className="space-y-4 bg-white pixel-border p-6 hover:-translate-y-2 transition-transform cursor-default"
             variants={{
               hidden: { opacity: 0, y: 20 },
               visible: { opacity: 1, y: 0 },
             }}
           >
-            <div className="flex items-center space-x-3 text-indigo-400 text-2xl">
+            <div className="flex items-center space-x-3 text-[#E52521] text-2xl">
               <FaGraduationCap />
-              <h3 className="text-lg font-semibold">{edu.degree}</h3>
+              <h3 className="text-lg font-bold pixel-text text-black leading-tight">{edu.degree}</h3>
             </div>
 
-            <p className="text-indigo-300">{edu.institution}</p>
-            <p className="text-sm text-gray-400">{edu.year}</p>
+            <p className="text-[#43B047] font-bold text-lg">{edu.institution}</p>
+            <p className="text-sm text-gray-600 font-bold">{edu.year}</p>
 
             {edu.gpa && (
-              <p>
-                <strong className="text-white">GPA:</strong> {edu.gpa}
+              <p className="font-semibold">
+                <strong className="text-black">GPA:</strong> <span className="text-[#d95f36] font-bold">{edu.gpa}</span>
               </p>
             )}
             {edu.cgpa && (
-              <p>
-                <strong className="text-white">CGPA:</strong> {edu.cgpa}
+              <p className="font-semibold">
+                <strong className="text-black">CGPA:</strong> <span className="text-[#d95f36] font-bold">{edu.cgpa}</span>
               </p>
             )}
-            {edu.note && <p className="text-gray-400">{edu.note}</p>}
+            {edu.note && <p className="text-[#E52521] pixel-text text-xs tracking-wider mt-2">{edu.note}</p>}
           </motion.div>
         ))}
       </motion.div>
