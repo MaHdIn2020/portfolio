@@ -3,6 +3,8 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import AnimeSearch from "../components/AnimeSearch";
 import AdminGate from "../components/AdminGate";
+import { db } from "../firebase/config";
+import { collection, onSnapshot, addDoc, query, orderBy, serverTimestamp } from "firebase/firestore";
 
 const AnimeSection = () => {
   const [activeTab, setActiveTab] = useState("watched"); // 'watched' or 'suggest'
@@ -13,44 +15,69 @@ const AnimeSection = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
-    // Load lists from localStorage on mount
-    const storedWatched = JSON.parse(localStorage.getItem("anime_watched") || "[]");
-    const storedSuggest = JSON.parse(localStorage.getItem("anime_suggested") || "[]");
-    setWatchedList(storedWatched);
-    setSuggestedList(storedSuggest);
+    // Listen to 'watched' collection
+    const qWatched = query(collection(db, "watched"), orderBy("createdAt", "desc"));
+    const unsubWatched = onSnapshot(qWatched, (snapshot) => {
+      setWatchedList(snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })));
+    });
+
+    // Listen to 'suggested' collection
+    const qSuggest = query(collection(db, "suggested"), orderBy("createdAt", "desc"));
+    const unsubSuggest = onSnapshot(qSuggest, (snapshot) => {
+      setSuggestedList(snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })));
+    });
+
+    return () => {
+      unsubWatched();
+      unsubSuggest();
+    };
   }, []);
 
-  const saveToStorage = (key, data) => {
-    localStorage.setItem(key, JSON.stringify(data));
-  };
-
-  const handleAddAnime = (anime) => {
+  const handleAddAnime = async (anime) => {
     if (activeTab === "watched") {
       if (!isAuthenticated) {
         setPendingAnime(anime);
         setShowAdminGate(true);
       } else {
-        addToWatched(anime);
+        await addToWatched(anime);
       }
     } else {
-      addToSuggested(anime);
+      await addToSuggested(anime);
     }
   };
 
-  const addToWatched = (anime) => {
-    if (!watchedList.find(a => a.id === anime.id)) {
-      const newList = [anime, ...watchedList];
-      setWatchedList(newList);
-      saveToStorage("anime_watched", newList);
+  const addToWatched = async (anime) => {
+    if (!watchedList.find(a => a.mal_id === anime.id)) {
+      try {
+        await addDoc(collection(db, "watched"), {
+           mal_id: anime.id,
+           title: anime.title,
+           image: anime.image,
+           year: anime.year,
+           type: anime.type,
+           createdAt: serverTimestamp()
+        });
+      } catch(e) {
+        console.error("Error adding document: ", e);
+      }
     }
     setPendingAnime(null);
   };
 
-  const addToSuggested = (anime) => {
-    if (!suggestedList.find(a => a.id === anime.id)) {
-      const newList = [anime, ...suggestedList];
-      setSuggestedList(newList);
-      saveToStorage("anime_suggested", newList);
+  const addToSuggested = async (anime) => {
+    if (!suggestedList.find(a => a.mal_id === anime.id)) {
+      try {
+        await addDoc(collection(db, "suggested"), {
+           mal_id: anime.id,
+           title: anime.title,
+           image: anime.image,
+           year: anime.year,
+           type: anime.type,
+           createdAt: serverTimestamp()
+        });
+      } catch(e) {
+        console.error("Error adding document: ", e);
+      }
     }
   };
 
