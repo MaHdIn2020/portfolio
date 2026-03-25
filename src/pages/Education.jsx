@@ -20,8 +20,8 @@ const Education = () => {
       degree: "B.Sc. in Computer Science and Engineering",
       institution: "BRAC University",
       year: "2022 – 2026 (Expected)",
-      cgpa: "3.79 / 4.00",
-      note: "Currently in 3rd Year",
+      cgpa: "3.78 / 4.00",
+      note: "Currently in 4th Year",
     },
   ];
 
