@@ -1,90 +1,95 @@
-// src/components/About.jsx
+// src/pages/About.jsx
 import { motion } from "framer-motion";
-import { FaCode, FaRunning, FaPaintBrush, FaBullseye } from "react-icons/fa";
+import { FiTarget, FiCode, FiHeart } from "react-icons/fi";
+
+const cards = [
+  {
+    icon: <FiTarget size={22} />,
+    title: "Professional Focus",
+    body: "I specialize in building responsive, scalable web applications using modern full-stack technologies. My work blends clean design with efficient code — ensuring both great user experience and solid performance.",
+  },
+  {
+    icon: <FiCode size={22} />,
+    title: "Programming Journey",
+    body: "My passion for software started with HTML, CSS and JavaScript and grew into full-stack mastery with the MERN stack. I'm continuously expanding into AI, machine learning, and cloud technologies — always leveling up.",
+  },
+  {
+    icon: <FiHeart size={22} />,
+    title: "Beyond the Code",
+    body: "I believe balance drives creativity. Outside of coding, I enjoy staying active, exploring new technologies, and applying what I learn to real-world projects. These habits keep me sharp and motivated.",
+  },
+];
 
 const About = () => {
   return (
     <section
       id="about"
-      className="bg-[#5C94FC] text-white py-16 px-6 md:px-12 mx-auto"
+      style={{
+        background: "#0d1117",
+        padding: "100px 24px",
+      }}
     >
-      <motion.h2
-        className="text-3xl font-bold mb-12 text-[#FBD000] pixel-text text-center drop-shadow-[3px_3px_0_#000]"
-        initial={{ opacity: 0, y: -30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.7 }}
-      >
-        About Me
-      </motion.h2>
-
-      <motion.div
-        className="grid grid-cols-1 md:grid-cols-3 gap-10 text-black"
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true }}
-        variants={{
-          hidden: { opacity: 0, y: 40 },
-          visible: { opacity: 1, y: 0, transition: { staggerChildren: 0.2 } },
-        }}
-      >
-      {/* Professional Focus */}
+      <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
+        {/* Heading */}
         <motion.div
-          className="space-y-4 bg-white pixel-border p-6 hover:-translate-y-2 transition-transform cursor-default"
-          variants={{
-            hidden: { opacity: 0, y: 20 },
-            visible: { opacity: 1, y: 0 },
-          }}
+          initial={{ opacity: 0, y: -20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          style={{ marginBottom: "60px" }}
         >
-          <div className="flex items-center space-x-3 text-[#E52521] text-2xl">
-            <FaBullseye />
-            <h3 className="text-xl font-bold pixel-text text-black">Professional Focus</h3>
-          </div>
-          <p className="font-semibold text-gray-800">
-            I specialize in building responsive, user-friendly web applications using modern technologies.
-            My work blends clean design with efficient code, ensuring both functionality and performance.
-            I aim to create solutions that are scalable, maintainable, and enjoyable to use.
+          <p style={{ color: "#00e5ff", fontSize: "0.8rem", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "12px" }}>
+            Get to know me
           </p>
+          <h2
+            className="section-heading cyan-underline"
+            style={{ fontSize: "clamp(2rem, 4vw, 2.8rem)", color: "#ffffff" }}
+          >
+            About Me
+          </h2>
         </motion.div>
 
-        {/* Programming Journey & Skills */}
+        {/* Cards */}
         <motion.div
-          className="space-y-4 bg-white pixel-border p-6 hover:-translate-y-2 transition-transform cursor-default"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
           variants={{
-            hidden: { opacity: 0, y: 20 },
-            visible: { opacity: 1, y: 0 },
+            hidden: {},
+            visible: { transition: { staggerChildren: 0.15 } },
           }}
+          style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "24px" }}
         >
-          <div className="flex items-center space-x-3 text-[#E52521] text-2xl">
-            <FaCode />
-            <h3 className="text-xl font-bold pixel-text text-black">Programming Journey</h3>
-          </div>
-          <p className="font-semibold text-gray-800">
-            My passion for software development began with exploring web technologies like HTML, CSS, and JavaScript.
-            Over time, I mastered full-stack development with the MERN stack and continuously expand my skills into AI and machine learning.
-            I enjoy solving complex problems and building scalable, efficient applications.
-          </p>
+          {cards.map((card, i) => (
+            <motion.div
+              key={i}
+              className="bento-card"
+              variants={{
+                hidden: { opacity: 0, y: 30 },
+                visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
+              }}
+              whileHover={{ y: -6 }}
+              style={{ padding: "32px" }}
+            >
+              {/* Icon */}
+              <div style={{
+                width: "48px", height: "48px", borderRadius: "12px",
+                background: "rgba(0,229,255,0.1)", border: "1px solid rgba(0,229,255,0.2)",
+                display: "flex", alignItems: "center", justifyContent: "center",
+                color: "#00e5ff", marginBottom: "20px",
+              }}>
+                {card.icon}
+              </div>
+              <h3 style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: "1.1rem", color: "#ffffff", marginBottom: "12px" }}>
+                {card.title}
+              </h3>
+              <p style={{ color: "#94a3b8", lineHeight: 1.75, fontSize: "0.92rem" }}>
+                {card.body}
+              </p>
+            </motion.div>
+          ))}
         </motion.div>
-
-        {/* Hobbies & Interests */}
-        <motion.div
-          className="space-y-4 bg-white pixel-border p-6 hover:-translate-y-2 transition-transform cursor-default"
-          variants={{
-            hidden: { opacity: 0, y: 20 },
-            visible: { opacity: 1, y: 0 },
-          }}
-        >
-          <div className="flex items-center space-x-3 text-[#E52521] text-2xl">
-            <div className="flex space-x-2">
-              <FaRunning />
-              <FaPaintBrush />
-            </div>
-            <h3 className="text-xl font-bold pixel-text text-black">Hobbies & Interests</h3>
-          </div>
-          <p className="font-semibold text-gray-800">
-            Maintaining balance is important to me — I enjoy staying active through regular walking and light exercise. I’m passionate about exploring new technologies, constantly learning, and applying what I’ve learned to build practical projects. These interests keep me motivated and help me approach challenges with a fresh, problem-solving mindset.
-          </p>
-        </motion.div>
-      </motion.div>
+      </div>
     </section>
   );
 };

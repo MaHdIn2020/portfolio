@@ -1,109 +1,376 @@
 // src/components/Hero.jsx
 import { motion } from "framer-motion";
-import { FaGithub, FaLinkedin, FaFacebook, FaTwitter } from "react-icons/fa";
+import { FaGithub, FaLinkedin, FaFacebook } from "react-icons/fa";
+import { HiArrowDown } from "react-icons/hi";
+import { Link as ScrollLink } from "react-scroll";
+import FloatingGraphics from "./FloatingGraphics";
+import TypeWriter from "./TypeWriter";
+
+const roles = [
+  "Full Stack Developer",
+  "MERN Stack Engineer",
+  "Coding Instructor",
+  "Problem Solver",
+  "React Developer",
+];
+
+const stats = [
+  { value: "3+", label: "Projects Built" },
+  { value: "3.78", label: "CGPA / 4.00" },
+  { value: "2026", label: "CSE Graduate" },
+  { value: "∞", label: "Passion for Code" },
+];
 
 const Hero = () => {
   return (
     <section
       id="home"
-      className="min-h-screen flex flex-col md:flex-row items-center justify-center text-white bg-[#5C94FC] px-6 md:px-12 pt-20 overflow-hidden"
+      className="hero-bg grid-bg"
+      style={{
+        minHeight: "100vh",
+        display: "flex",
+        flexDirection: "column",
+        justifyContent: "center",
+        paddingTop: "80px",
+        position: "relative",
+        overflow: "hidden",
+      }}
     >
-      {/* Left Content */}
-      <motion.div
-        className="flex-1 text-center md:text-left space-y-8 mt-16 md:mt-0"
-        initial={{ opacity: 0, x: -50 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.8 }}
-      >
-        <motion.div
-          className="inline-block bg-[#E52521] text-white px-4 py-2 pixel-border pixel-text text-xs"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.2, duration: 0.8 }}
-        >
-          PLAYER 1 READY
-        </motion.div>
+      {/* Animated background elements */}
+      <FloatingGraphics />
 
-        <motion.h1
-          className="text-4xl md:text-5xl font-bold pixel-text leading-tight text-white drop-shadow-[4px_4px_0_#000]"
-          initial={{ y: -20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.4, duration: 0.8 }}
+      <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 24px", width: "100%", position: "relative", zIndex: 1 }}>
+        {/* ── SPLIT LAYOUT ── */}
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "1fr 1fr",
+            gap: "64px",
+            alignItems: "center",
+            minHeight: "70vh",
+          }}
+          className="hero-grid"
         >
-          <span className="text-[#FBD000]">Tanjip Surait</span><br />
-          Mahdin
-        </motion.h1>
-
-        <motion.h2
-          className="text-xl md:text-2xl font-semibold pixel-text text-[#43B047] drop-shadow-[2px_2px_0_#000]"
-          initial={{ y: -20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.6, duration: 0.8 }}
-        >
-          Full Stack Developer
-        </motion.h2>
-
-        <motion.p
-          className="text-white max-w-lg font-bold drop-shadow-[1px_1px_0_#000] text-lg"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.8, duration: 0.8 }}
-        >
-          I’m a Computer Science student passionate about building modern,
-          user-friendly, and efficient web applications. Leveling up one project at a time.
-        </motion.p>
-
-        {/* Buttons */}
-        <motion.div
-          className="flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 mt-8"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1, duration: 0.8 }}
-        >
-          <a
-            className="mario-button inline-block text-center"
-            href="#"
+          {/* LEFT: Text */}
+          <motion.div
+            initial={{ opacity: 0, x: -40 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            style={{ display: "flex", flexDirection: "column", gap: "20px" }}
           >
-            START GAME (Resume)
-          </a>
-          <div className="flex justify-center sm:justify-start space-x-6 text-3xl">
-            {[
-            { icon: <FaGithub />, link: "https://github.com/MaHdIn2020", color: "#000" },
-            { icon: <FaLinkedin />, link: "https://www.linkedin.com/in/tanjip-surait-mahdin/", color: "#0077b5" },
-            { icon: <FaFacebook />, link: "https://www.facebook.com/tanjip.mahdin", color: "#1877f2" },
-          ].map((social, i) => (
-              <motion.a
-                key={i}
-                href={social.link}
-                target="_blank"
-                rel="noreferrer"
-                className="pixel-border bg-white p-2 hover:bg-[#FBD000] transition-colors duration-300"
-                style={{ color: social.color }}
-                whileHover={{ y: -5 }}
-                whileTap={{ scale: 0.9 }}
-              >
-                {social.icon}
-              </motion.a>
-            ))}
-          </div>
+            {/* Available badge */}
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2, duration: 0.6 }}
+              style={{
+                display: "inline-flex", alignItems: "center", gap: "8px",
+                background: "rgba(0,229,255,0.08)",
+                border: "1px solid rgba(0,229,255,0.25)",
+                borderRadius: "100px", padding: "6px 16px", width: "fit-content",
+              }}
+            >
+              <motion.span
+                animate={{ scale: [1, 1.4, 1], opacity: [1, 0.5, 1] }}
+                transition={{ repeat: Infinity, duration: 1.8 }}
+                style={{ width: "8px", height: "8px", background: "#00e5ff", borderRadius: "50%", flexShrink: 0 }}
+              />
+              <span style={{ color: "#00e5ff", fontSize: "0.8rem", fontWeight: 500 }}>
+                Available for opportunities
+              </span>
+            </motion.div>
+
+            {/* Name */}
+            <motion.h1
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3, duration: 0.8 }}
+              style={{
+                fontFamily: "'Space Grotesk', sans-serif",
+                fontWeight: 800,
+                fontSize: "clamp(2.8rem, 5vw, 4rem)",
+                lineHeight: 1.1,
+                letterSpacing: "-0.03em",
+                color: "#ffffff",
+              }}
+            >
+              Tanjip Surait
+              <br />
+              <span className="gradient-text">Mahdin</span>
+            </motion.h1>
+
+            {/* TypeWriter cycling roles */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.6, duration: 0.6 }}
+              style={{ fontSize: "1.15rem", fontFamily: "'Space Grotesk', sans-serif", minHeight: "1.8rem" }}
+            >
+              <TypeWriter words={roles} speed={75} pause={2000} deleteSpeed={40} />
+            </motion.div>
+
+            {/* Role pills */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.7, duration: 0.6 }}
+              style={{ display: "flex", flexWrap: "wrap", gap: "10px" }}
+            >
+              {["Full Stack Developer", "Coding Instructor"].map((tag, i) => (
+                <span key={i} className="skill-badge" style={{ fontSize: "0.78rem" }}>{tag}</span>
+              ))}
+            </motion.div>
+
+            {/* Bio */}
+            <motion.p
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.8, duration: 0.8 }}
+              style={{ color: "#94a3b8", fontSize: "1rem", lineHeight: 1.7, maxWidth: "440px" }}
+            >
+              CSE graduate from BRAC University passionate about building modern,
+              scalable web applications. Currently teaching the next generation of
+              coders at Codingal.
+            </motion.p>
+
+            {/* CTA buttons */}
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 1, duration: 0.6 }}
+              style={{ display: "flex", gap: "16px", flexWrap: "wrap", alignItems: "center" }}
+            >
+              <ScrollLink to="projects" smooth duration={600} offset={-70}>
+                <motion.span
+                  className="btn-primary"
+                  style={{ cursor: "pointer" }}
+                  whileHover={{ scale: 1.04 }}
+                  whileTap={{ scale: 0.97 }}
+                >
+                  View My Work
+                </motion.span>
+              </ScrollLink>
+              <ScrollLink to="contact" smooth duration={600} offset={-70}>
+                <motion.span
+                  className="btn-outline"
+                  style={{ cursor: "pointer" }}
+                  whileHover={{ scale: 1.04 }}
+                  whileTap={{ scale: 0.97 }}
+                >
+                  Contact Me
+                </motion.span>
+              </ScrollLink>
+            </motion.div>
+
+            {/* Social icons */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 1.2, duration: 0.6 }}
+              style={{ display: "flex", gap: "14px", alignItems: "center", paddingTop: "4px" }}
+            >
+              {[
+                { icon: <FaGithub />, href: "https://github.com/MaHdIn2020", label: "GitHub" },
+                { icon: <FaLinkedin />, href: "https://www.linkedin.com/in/tanjip-surait-mahdin/", label: "LinkedIn" },
+                { icon: <FaFacebook />, href: "https://www.facebook.com/tanjip.mahdin", label: "Facebook" },
+              ].map((s, i) => (
+                <motion.a
+                  key={i}
+                  href={s.href}
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label={s.label}
+                  whileHover={{ y: -4, scale: 1.2 }}
+                  whileTap={{ scale: 0.9 }}
+                  style={{
+                    width: "38px", height: "38px",
+                    borderRadius: "10px",
+                    background: "rgba(0,229,255,0.06)",
+                    border: "1px solid rgba(0,229,255,0.15)",
+                    display: "flex", alignItems: "center", justifyContent: "center",
+                    color: "#94a3b8", fontSize: "1.1rem", textDecoration: "none",
+                    transition: "color 0.3s, border-color 0.3s, background 0.3s",
+                  }}
+                  onMouseEnter={e => {
+                    e.currentTarget.style.color = "#00e5ff";
+                    e.currentTarget.style.borderColor = "rgba(0,229,255,0.4)";
+                    e.currentTarget.style.background = "rgba(0,229,255,0.1)";
+                  }}
+                  onMouseLeave={e => {
+                    e.currentTarget.style.color = "#94a3b8";
+                    e.currentTarget.style.borderColor = "rgba(0,229,255,0.15)";
+                    e.currentTarget.style.background = "rgba(0,229,255,0.06)";
+                  }}
+                >
+                  {s.icon}
+                </motion.a>
+              ))}
+            </motion.div>
+          </motion.div>
+
+          {/* RIGHT: Photo */}
+          <motion.div
+            initial={{ opacity: 0, x: 40 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.4, duration: 0.8, ease: "easeOut" }}
+            style={{ display: "flex", flexDirection: "column", alignItems: "center", position: "relative" }}
+          >
+            {/* Ghost text */}
+            <div style={{
+              position: "absolute", top: "-20px", right: "-20px",
+              fontFamily: "'Space Grotesk', sans-serif",
+              fontWeight: 900,
+              fontSize: "clamp(3rem, 6vw, 5rem)",
+              WebkitTextStroke: "1px rgba(0,229,255,0.12)",
+              color: "transparent",
+              letterSpacing: "-0.04em",
+              userSelect: "none", zIndex: 0, lineHeight: 1,
+            }}>
+              MAHDIN
+            </div>
+
+            {/* Outer glow ring — animated */}
+            <motion.div
+              animate={{ rotate: 360 }}
+              transition={{ repeat: Infinity, duration: 12, ease: "linear" }}
+              style={{
+                position: "absolute",
+                width: "clamp(260px, 32vw, 370px)",
+                height: "clamp(260px, 32vw, 370px)",
+                borderRadius: "16px",
+                border: "1px dashed rgba(0,229,255,0.18)",
+                zIndex: 0,
+              }}
+            />
+
+            {/* Photo with bracket frame */}
+            <motion.div
+              className="bracket-frame"
+              animate={{ y: [0, -10, 0] }}
+              transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
+              style={{ position: "relative", zIndex: 1, display: "inline-block" }}
+            >
+              <img
+                src="/Picture.jpg"
+                alt="Tanjip Surait Mahdin"
+                style={{
+                  width: "clamp(240px, 30vw, 340px)",
+                  height: "clamp(260px, 33vw, 380px)",
+                  objectFit: "cover",
+                  objectPosition: "top",
+                  borderRadius: "12px",
+                  display: "block",
+                  border: "1px solid rgba(0,229,255,0.25)",
+                }}
+              />
+              {/* Extra bracket corners */}
+              <div style={{ position: "absolute", top: "-8px", right: "-8px", width: "28px", height: "28px", borderTop: "3px solid #00e5ff", borderRight: "3px solid #00e5ff", borderRadius: "0 4px 0 0" }} />
+              <div style={{ position: "absolute", bottom: "-8px", left: "-8px", width: "28px", height: "28px", borderBottom: "3px solid #00e5ff", borderLeft: "3px solid #00e5ff", borderRadius: "0 0 0 4px" }} />
+            </motion.div>
+
+            {/* Floating mini cards around photo */}
+            <motion.div
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0, y: [0, -6, 0] }}
+              transition={{ delay: 1.2, duration: 0.5, y: { repeat: Infinity, duration: 3, ease: "easeInOut", delay: 0.5 } }}
+              style={{
+                position: "absolute", right: "-30px", top: "15%",
+                background: "#111827", border: "1px solid rgba(0,229,255,0.25)",
+                borderRadius: "12px", padding: "10px 14px",
+                display: "flex", alignItems: "center", gap: "8px",
+                boxShadow: "0 8px 24px rgba(0,0,0,0.4)",
+                zIndex: 10,
+              }}
+            >
+              <span style={{ fontSize: "1.2rem" }}>🎓</span>
+              <div>
+                <p style={{ color: "#ffffff", fontSize: "0.72rem", fontWeight: 700, lineHeight: 1.2 }}>BRAC University</p>
+                <p style={{ color: "#00e5ff", fontSize: "0.62rem" }}>CSE Graduate</p>
+              </div>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0, y: [0, 6, 0] }}
+              transition={{ delay: 1.4, duration: 0.5, y: { repeat: Infinity, duration: 3.5, ease: "easeInOut", delay: 1 } }}
+              style={{
+                position: "absolute", left: "-30px", bottom: "20%",
+                background: "#111827", border: "1px solid rgba(0,229,255,0.25)",
+                borderRadius: "12px", padding: "10px 14px",
+                display: "flex", alignItems: "center", gap: "8px",
+                boxShadow: "0 8px 24px rgba(0,0,0,0.4)",
+                zIndex: 10,
+              }}
+            >
+              <img src="/codingal.png" alt="Codingal" style={{ width: "22px", height: "22px", objectFit: "contain", borderRadius: "4px", background: "#fff", padding: "2px" }} />
+              <div>
+                <p style={{ color: "#ffffff", fontSize: "0.72rem", fontWeight: 700, lineHeight: 1.2 }}>Codingal</p>
+                <p style={{ color: "#00e5ff", fontSize: "0.62rem" }}>Instructor</p>
+              </div>
+            </motion.div>
+          </motion.div>
+        </div>
+
+        {/* ── STATS ROW ── */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 1.3, duration: 0.7 }}
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(4, 1fr)",
+            gap: "1px",
+            background: "rgba(0,229,255,0.08)",
+            borderRadius: "16px",
+            overflow: "hidden",
+            marginBottom: "40px",
+            border: "1px solid rgba(0,229,255,0.1)",
+          }}
+          className="stats-row"
+        >
+          {stats.map((s, i) => (
+            <motion.div
+              key={i}
+              whileHover={{ background: "rgba(0,229,255,0.06)" }}
+              style={{
+                padding: "20px",
+                textAlign: "center",
+                background: "#0d1117",
+                transition: "background 0.3s",
+              }}
+            >
+              <p style={{
+                fontFamily: "'Space Grotesk', sans-serif",
+                fontWeight: 800,
+                fontSize: "1.6rem",
+                color: "#00e5ff",
+                lineHeight: 1,
+                marginBottom: "6px",
+              }}>
+                {s.value}
+              </p>
+              <p style={{ color: "#94a3b8", fontSize: "0.75rem", fontWeight: 500 }}>{s.label}</p>
+            </motion.div>
+          ))}
         </motion.div>
+      </div>
+
+      {/* Scroll indicator */}
+      <motion.div
+        animate={{ y: [0, 8, 0] }}
+        transition={{ repeat: Infinity, duration: 2 }}
+        style={{ position: "absolute", bottom: "24px", left: "50%", transform: "translateX(-50%)", color: "#94a3b8", fontSize: "1.3rem", zIndex: 2 }}
+      >
+        <HiArrowDown />
       </motion.div>
 
-      {/* Right Image */}
-      <motion.div
-        className="flex-1 flex justify-center mt-12 md:mt-0"
-        initial={{ opacity: 0, x: 50 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ delay: 0.5, duration: 0.8 }}
-      >
-        <motion.img
-          src="/profile.jpeg"
-          alt="Tanjip Mahdin"
-          className="w-64 h-64 md:w-80 md:h-80 object-cover pixel-border bg-[#FBD000]"
-          whileHover={{ scale: 1.05, rotate: 2 }}
-          transition={{ type: "spring", stiffness: 200 }}
-        />
-      </motion.div>
+      <style>{`
+        @media (max-width: 768px) {
+          .hero-grid { grid-template-columns: 1fr !important; gap: 40px !important; text-align: center; }
+          .hero-grid > div:last-child { display: none !important; }
+          .stats-row { grid-template-columns: repeat(2,1fr) !important; }
+        }
+      `}</style>
     </section>
   );
 };

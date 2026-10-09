@@ -1,20 +1,25 @@
+// src/pages/Home.jsx
 import React from 'react';
 import Hero from '../components/Hero';
-import Skills from '../components/Skills';
+import TechMarquee from '../components/TechMarquee';
 import About from './About';
-import Contact from './Contact';
-import ProjectsList from './ProjectsList';
+import Experience from './Experience';
 import Education from './Education';
+import Skills from '../components/Skills';
+import ProjectsList from './ProjectsList';
+import Contact from './Contact';
 
 const Home = () => {
     return (
         <div>
-            <Hero></Hero>
-            <Skills></Skills>
-            <ProjectsList></ProjectsList>
-            <Education></Education>
-            <About></About>
-            <Contact></Contact>
+            <Hero />
+            <TechMarquee />
+            <About />
+            <Experience />
+            <Education />
+            <Skills />
+            <ProjectsList />
+            <Contact />
         </div>
     );
 };

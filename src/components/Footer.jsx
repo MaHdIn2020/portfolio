@@ -1,49 +1,79 @@
 // src/components/Footer.jsx
 import { motion } from "framer-motion";
-import { FaGithub, FaLinkedin, FaFacebook, FaTwitter } from "react-icons/fa";
+import { FaGithub, FaLinkedin, FaFacebook } from "react-icons/fa";
 
 const Footer = () => {
+  const socials = [
+    { icon: <FaGithub />, href: "https://github.com/MaHdIn2020", label: "GitHub" },
+    { icon: <FaLinkedin />, href: "https://www.linkedin.com/in/tanjip-surait-mahdin/", label: "LinkedIn" },
+    { icon: <FaFacebook />, href: "https://www.facebook.com/tanjip.mahdin", label: "Facebook" },
+  ];
+
   return (
-    <footer className="bg-[#E52521] border-t-8 border-black shadow-[0_-4px_0_rgba(0,0,0,0.1)] py-8 text-white relative">
-      <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6">
-        {/* Left Side */}
+    <footer style={{
+      background: "#0a0a12",
+      borderTop: "1px solid rgba(0,229,255,0.1)",
+      padding: "40px 24px",
+    }}>
+      <div style={{
+        maxWidth: "1200px", margin: "0 auto",
+        display: "flex", flexWrap: "wrap",
+        alignItems: "center", justifyContent: "space-between", gap: "24px",
+      }}>
+        {/* Left */}
         <motion.div
-          className="text-center md:text-left"
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
         >
-          <h2 className="text-xl font-bold text-white pixel-text drop-shadow-[2px_2px_0_#000]">
-            Tanjip Mahdin
-          </h2>
-          <p className="text-xs font-bold mt-2 text-white">
-            © {new Date().getFullYear()} All levels completed.
+          <p style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: "1.1rem", color: "#00e5ff", marginBottom: "4px" }}>
+            Tanjip Surait Mahdin
+          </p>
+          <p style={{ color: "#94a3b8", fontSize: "0.82rem" }}>
+            Full Stack Developer · Coding Instructor
+          </p>
+          <p style={{ color: "#475569", fontSize: "0.76rem", marginTop: "8px" }}>
+            © {new Date().getFullYear()} All rights reserved.
           </p>
         </motion.div>
 
-        {/* Social Links */}
+        {/* Right — Social icons */}
         <motion.div
-          className="flex space-x-6 text-2xl"
-          initial={{ opacity: 0, y: 20 }}
+          initial={{ opacity: 0, y: 10 }}
           whileInView={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2, duration: 0.6 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.2, duration: 0.5 }}
+          style={{ display: "flex", gap: "16px", alignItems: "center" }}
         >
-          {[
-            { icon: <FaGithub />, link: "https://github.com/MaHdIn2020", color: "#000" },
-            { icon: <FaLinkedin />, link: "https://www.linkedin.com/in/tanjip-surait-mahdin/", color: "#0077b5" },
-            { icon: <FaFacebook />, link: "https://www.facebook.com/tanjip.mahdin", color: "#1877f2" },
-          ].map((social, i) => (
+          {socials.map((s, i) => (
             <motion.a
               key={i}
-              href={social.link}
+              href={s.href}
               target="_blank"
               rel="noreferrer"
-              className="bg-white p-2 pixel-border hover:bg-[#FBD000] transition-colors duration-300"
-              style={{ color: social.color }}
-              whileHover={{ y: -5 }}
-              whileTap={{ scale: 0.9 }}
+              aria-label={s.label}
+              whileHover={{ y: -4, scale: 1.15 }}
+              style={{
+                width: "40px", height: "40px",
+                borderRadius: "10px",
+                background: "rgba(0,229,255,0.06)",
+                border: "1px solid rgba(0,229,255,0.15)",
+                display: "flex", alignItems: "center", justifyContent: "center",
+                color: "#94a3b8", fontSize: "1.1rem",
+                textDecoration: "none",
+                transition: "color 0.3s, border-color 0.3s",
+              }}
+              onMouseEnter={e => {
+                e.currentTarget.style.color = "#00e5ff";
+                e.currentTarget.style.borderColor = "rgba(0,229,255,0.4)";
+              }}
+              onMouseLeave={e => {
+                e.currentTarget.style.color = "#94a3b8";
+                e.currentTarget.style.borderColor = "rgba(0,229,255,0.15)";
+              }}
             >
-              {social.icon}
+              {s.icon}
             </motion.a>
           ))}
         </motion.div>

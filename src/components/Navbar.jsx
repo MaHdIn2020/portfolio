@@ -1,40 +1,145 @@
 // src/components/Navbar.jsx
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link as ScrollLink } from "react-scroll";
 import { Link as RouterLink, useLocation } from "react-router";
+import { FiMenu, FiX } from "react-icons/fi";
+import { motion, AnimatePresence } from "framer-motion";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
   const isHome = location.pathname === "/";
+
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 40);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const navLinks = [
     { id: 1, text: "Home", to: "home" },
     { id: 2, text: "About", to: "about" },
-    { id: 3, text: "Education", to: "education" },
-    { id: 4, text: "Skills", to: "skills" },
-    { id: 5, text: "Projects", to: "projects" },
-    { id: 6, text: "Contact", to: "contact" },
+    { id: 3, text: "Experience", to: "experience" },
+    { id: 4, text: "Education", to: "education" },
+    { id: 5, text: "Skills", to: "skills" },
+    { id: 6, text: "Projects", to: "projects" },
+    { id: 7, text: "Contact", to: "contact" },
   ];
 
   return (
-    <nav className="fixed w-full z-50 bg-[#E52521] border-b-4 border-black shadow-[0_4px_0_#000]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
-          <RouterLink to="/" className="text-sm sm:text-xl font-bold tracking-wide text-white pixel-text hover:text-[#FBD000] transition-colors duration-300 drop-shadow-[2px_2px_0_#000]">
-            Tanjip Mahdin
-          </RouterLink>
+    <nav
+      style={{
+        position: "fixed",
+        top: 0,
+        left: 0,
+        right: 0,
+        zIndex: 100,
+        background: scrolled ? "rgba(10,10,18,0.95)" : "transparent",
+        backdropFilter: scrolled ? "blur(16px)" : "none",
+        borderBottom: scrolled ? "1px solid rgba(0,229,255,0.12)" : "none",
+        transition: "all 0.3s ease",
+        padding: "0 24px",
+      }}
+    >
+      <div style={{ maxWidth: "1200px", margin: "0 auto", display: "flex", alignItems: "center", justifyContent: "space-between", height: "70px" }}>
+        {/* Logo */}
+        <RouterLink
+          to="/"
+          style={{ textDecoration: "none", display: "flex", alignItems: "center", gap: "10px" }}
+        >
+          <span
+            style={{
+              fontFamily: "'Space Grotesk', sans-serif",
+              fontWeight: 700,
+              fontSize: "1.4rem",
+              color: "#00e5ff",
+              letterSpacing: "-0.02em",
+            }}
+          >
+            TSM
+          </span>
+          <span style={{ width: "1px", height: "20px", background: "rgba(0,229,255,0.3)" }} />
+          <span style={{ fontSize: "0.8rem", color: "#94a3b8", fontWeight: 400 }}>Portfolio</span>
+        </RouterLink>
 
-          <div className="hidden md:flex space-x-6 lg:space-x-8 items-center">
-            {navLinks.map(({ id, text, to }) => (
+        {/* Desktop nav */}
+        <div style={{ display: "flex", alignItems: "center", gap: "32px" }} className="hidden md:flex">
+          {navLinks.map(({ id, text, to }) =>
+            isHome ? (
+              <ScrollLink
+                key={id}
+                to={to}
+                smooth={true}
+                duration={500}
+                offset={-70}
+                className="nav-link"
+                style={{ color: "#94a3b8", fontSize: "0.875rem", fontWeight: 500, cursor: "pointer", textDecoration: "none", transition: "color 0.3s" }}
+                activeClass="active"
+                onMouseEnter={e => (e.target.style.color = "#00e5ff")}
+                onMouseLeave={e => (e.target.style.color = "#94a3b8")}
+              >
+                {text}
+              </ScrollLink>
+            ) : (
+              <a
+                key={id}
+                href={`/#${to}`}
+                className="nav-link"
+                style={{ color: "#94a3b8", fontSize: "0.875rem", fontWeight: 500, textDecoration: "none" }}
+                onMouseEnter={e => (e.target.style.color = "#00e5ff")}
+                onMouseLeave={e => (e.target.style.color = "#94a3b8")}
+              >
+                {text}
+              </a>
+            )
+          )}
+          <a
+            href="mailto:tanjip.surait.mahdin@gmail.com"
+            className="btn-primary"
+            style={{ padding: "8px 20px", fontSize: "0.85rem" }}
+          >
+            Hire Me
+          </a>
+        </div>
+
+        {/* Mobile toggle */}
+        <button
+          onClick={() => setIsOpen(!isOpen)}
+          style={{ background: "none", border: "none", color: "#00e5ff", fontSize: "1.5rem", cursor: "pointer", display: "flex" }}
+          className="md:hidden"
+          aria-label="Toggle menu"
+        >
+          {isOpen ? <FiX /> : <FiMenu />}
+        </button>
+      </div>
+
+      {/* Mobile menu */}
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.2 }}
+            style={{
+              background: "rgba(10,10,18,0.98)",
+              backdropFilter: "blur(16px)",
+              borderTop: "1px solid rgba(0,229,255,0.12)",
+              padding: "16px 24px 24px",
+            }}
+            className="md:hidden"
+          >
+            {navLinks.map(({ id, text, to }) =>
               isHome ? (
                 <ScrollLink
                   key={id}
                   to={to}
                   smooth={true}
                   duration={500}
-                  offset={-60}
-                  className="relative text-white hover:text-[#FBD000] transition-colors duration-300 pixel-text text-xs lg:text-sm cursor-pointer group drop-shadow-[2px_2px_0_#000]"
+                  offset={-70}
+                  onClick={() => setIsOpen(false)}
+                  style={{ display: "block", padding: "12px 0", color: "#94a3b8", fontSize: "1rem", fontWeight: 500, cursor: "pointer", textDecoration: "none", borderBottom: "1px solid rgba(255,255,255,0.05)" }}
                 >
                   {text}
                 </ScrollLink>
@@ -42,70 +147,24 @@ const Navbar = () => {
                 <a
                   key={id}
                   href={`/#${to}`}
-                  className="relative text-white hover:text-[#FBD000] transition-colors duration-300 pixel-text text-xs lg:text-sm cursor-pointer group drop-shadow-[2px_2px_0_#000]"
+                  onClick={() => setIsOpen(false)}
+                  style={{ display: "block", padding: "12px 0", color: "#94a3b8", fontSize: "1rem", fontWeight: 500, textDecoration: "none", borderBottom: "1px solid rgba(255,255,255,0.05)" }}
                 >
                   {text}
                 </a>
               )
-            ))}
-            <RouterLink
-              to="/anime"
-              className="relative text-[#FBD000] hover:text-white transition-colors duration-300 pixel-text text-xs lg:text-sm cursor-pointer group drop-shadow-[2px_2px_0_#000] animate-pulse"
-            >
-              Anime
-            </RouterLink>
-          </div>
-
-          <div className="md:hidden">
-            <button
-              onClick={() => setIsOpen(!isOpen)}
-              className="text-white focus:outline-none hover:text-[#FBD000]"
-            >
-             <svg className="h-7 w-7" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d={isOpen ? "M6 18L18 6M6 6l12 12" : "M4 6h16M4 12h16M4 18h16"} />
-             </svg>
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {isOpen && (
-        <div className="md:hidden bg-[#43B047] border-t-4 border-black">
-          <div className="px-2 pt-2 pb-3 space-y-2">
-            {navLinks.map(({ id, text, to }) => (
-               isHome ? (
-                <ScrollLink
-                  key={id}
-                  to={to}
-                  smooth={true}
-                  duration={500}
-                  offset={-60}
-                  onClick={() => setIsOpen(false)}
-                  className="block px-4 py-3 text-white hover:text-[#FBD000] pixel-text text-sm drop-shadow-[2px_2px_0_#000]"
-                >
-                  {text}
-                </ScrollLink>
-               ) : (
-                <a
-                  key={id}
-                  href={`/#${to}`}
-                  onClick={() => setIsOpen(false)}
-                  className="block px-4 py-3 text-white hover:text-[#FBD000] pixel-text text-sm drop-shadow-[2px_2px_0_#000]"
-                >
-                  {text}
-                </a>
-               )
-            ))}
-            <RouterLink
-              to="/anime"
+            )}
+            <a
+              href="mailto:tanjip.surait.mahdin@gmail.com"
+              className="btn-primary"
+              style={{ display: "inline-block", marginTop: "16px" }}
               onClick={() => setIsOpen(false)}
-              className="block px-4 py-3 text-[#FBD000] hover:text-white pixel-text text-sm drop-shadow-[2px_2px_0_#000]"
             >
-              Anime
-            </RouterLink>
-          </div>
-        </div>
-      )}
+              Hire Me
+            </a>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </nav>
   );
 };

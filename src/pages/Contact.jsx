@@ -1,168 +1,219 @@
-// src/components/Contact.jsx
+// src/pages/Contact.jsx
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { MdEmail, MdPhone, MdWhatsapp } from "react-icons/md";
+import { FiMail, FiPhone, FiMessageCircle, FiSend } from "react-icons/fi";
 import emailjs from "@emailjs/browser";
 
 const Contact = () => {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    message: "",
-  });
+  const [formData, setFormData] = useState({ name: "", email: "", message: "" });
   const [status, setStatus] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  const handleChange = (e) => {
+  const handleChange = (e) =>
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setLoading(true);
     setStatus(null);
 
-    const serviceID = "service_0jvjsyb";
-    const templateID = "template_u1xq09s";
-    const userID = "yt00LSJjV_bZpV8-P";
-
-emailjs.send(
-  serviceID,
-  templateID,
-  {
-    name: formData.name,
-    email: formData.email,
-    message: formData.message,
-  },
-  userID
-)
+    emailjs
+      .send(
+        "service_0jvjsyb",
+        "template_u1xq09s",
+        { name: formData.name, email: formData.email, message: formData.message },
+        "yt00LSJjV_bZpV8-P"
+      )
       .then(
         () => {
-          setStatus("Message sent successfully!");
+          setStatus({ ok: true, msg: "Message sent successfully! I'll get back to you soon." });
           setFormData({ name: "", email: "", message: "" });
           setLoading(false);
         },
-        (error) => {
-          setStatus("Failed to send message. Please try again.");
+        (err) => {
+          setStatus({ ok: false, msg: "Failed to send. Please try again or email me directly." });
           setLoading(false);
-          console.error(error);
+          console.error(err);
         }
       );
   };
 
+  const contactInfo = [
+    { icon: <FiMail size={20} />, label: "Email", value: "tanjip.surait.mahdin@gmail.com", href: "mailto:tanjip.surait.mahdin@gmail.com" },
+    { icon: <FiPhone size={20} />, label: "Phone", value: "+880 1322 071271", href: "tel:+8801322071271" },
+    { icon: <FiMessageCircle size={20} />, label: "WhatsApp", value: "+880 1322 071271", href: "https://wa.me/8801322071271" },
+  ];
+
   return (
-    <section
-      id="contact"
-      className="bg-[#5C94FC] text-white py-16 px-6 sm:px-12 w-full"
-    >
-      <motion.h2
-        className="text-3xl font-bold mb-10 text-[#FBD000] pixel-text text-center drop-shadow-[3px_3px_0_#000]"
-        initial={{ opacity: 0, y: -20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-      >
-        Contact Player 1
-      </motion.h2>
-
-      <motion.div
-        className="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-5xl mx-auto items-center"
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
-        transition={{ duration: 0.8 }}
-      >
-        {/* Contact Info */}
-        <div className="space-y-8 bg-white text-black p-8 pixel-border bg-[url('https://i.imgur.com/3qV9Y0J.png')] bg-[length:20px] bg-repeat">
-          <div className="flex items-center space-x-4 bg-white/90 p-3 pixel-border">
-            <MdEmail className="text-[#E52521] text-4xl" />
-            <div>
-              <p className="font-bold pixel-text text-xs uppercase mb-1">Email</p>
-              <a
-                href="mailto:your.email@example.com"
-                className="text-black font-bold hover:text-[#E52521] transition-colors"
-              >
-                tanjip.surait.mahdin@gmail.com
-              </a>
-            </div>
-          </div>
-
-          <div className="flex items-center space-x-4 bg-white/90 p-3 pixel-border">
-            <MdPhone className="text-[#43B047] text-4xl" />
-            <div>
-              <p className="font-bold pixel-text text-xs uppercase mb-1">Phone</p>
-              <a
-                href="tel:+8801234567890"
-                className="text-black font-bold hover:text-[#43B047] transition-colors"
-              >
-                +880 1639322453
-              </a>
-            </div>
-          </div>
-
-          <div className="flex items-center space-x-4 bg-white/90 p-3 pixel-border">
-            <MdWhatsapp className="text-[#FBD000] text-4xl drop-shadow-[1px_1px_0_#000]" />
-            <div>
-              <p className="font-bold pixel-text text-xs uppercase mb-1">WhatsApp</p>
-              <a
-                href="https://wa.me/8801322071271"
-                target="_blank"
-                rel="noreferrer"
-                className="text-black font-bold hover:text-[#FBD000] transition-colors"
-              >
-                +880 1322071271
-              </a>
-            </div>
-          </div>
-        </div>
-
-        {/* Contact Form */}
-        <form
-          onSubmit={handleSubmit}
-          className="flex flex-col space-y-6 bg-[#d95f36] p-8 shadow-[8px_8px_0_#000] border-4 border-black"
+    <section id="contact" style={{ background: "#0d1117", padding: "100px 24px" }}>
+      <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
+        {/* Heading */}
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          style={{ marginBottom: "60px" }}
         >
-          <input
-            type="text"
-            name="name"
-            placeholder="Your Name"
-            required
-            value={formData.name}
-            onChange={handleChange}
-            className="p-3 bg-white border-4 border-black text-black font-bold placeholder-gray-500 focus:outline-none focus:bg-[#FFF] shadow-[inset_4px_4px_0_#ccc]"
-            disabled={loading}
-          />
-          <input
-            type="email"
-            name="email"
-            placeholder="Your Email"
-            required
-            value={formData.email}
-            onChange={handleChange}
-            className="p-3 bg-white border-4 border-black text-black font-bold placeholder-gray-500 focus:outline-none focus:bg-[#FFF] shadow-[inset_4px_4px_0_#ccc]"
-            disabled={loading}
-          />
-          <textarea
-            name="message"
-            rows="5"
-            placeholder="Your Message..."
-            required
-            value={formData.message}
-            onChange={handleChange}
-            className="p-3 bg-white border-4 border-black text-black font-bold placeholder-gray-500 resize-none focus:outline-none focus:bg-[#FFF] shadow-[inset_4px_4px_0_#ccc]"
-            disabled={loading}
-          />
-          <button
-            type="submit"
-            disabled={loading}
-            className="mario-button bg-[#FBD000] text-black w-full"
+          <p style={{ color: "#00e5ff", fontSize: "0.8rem", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "12px" }}>
+            Get in touch
+          </p>
+          <h2 className="section-heading cyan-underline" style={{ fontSize: "clamp(2rem, 4vw, 2.8rem)", color: "#ffffff" }}>
+            Contact Me
+          </h2>
+          <p style={{ color: "#94a3b8", marginTop: "16px", maxWidth: "480px", lineHeight: 1.7 }}>
+            Have a project in mind or want to collaborate? Feel free to reach out — I usually respond within 24 hours.
+          </p>
+        </motion.div>
+
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1.4fr", gap: "40px", alignItems: "start" }} className="contact-grid">
+          {/* Contact Info */}
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            style={{ display: "flex", flexDirection: "column", gap: "16px" }}
           >
-            {loading ? "SENDING..." : "SEND MESSAGE"}
-          </button>
-          {status && (
-            <div className={`font-bold pixel-text text-xs text-center mt-2 px-2 py-3 bg-white border-2 border-black ${status.includes("successfully") ? "text-[#43B047]" : "text-[#E52521]"}`}>
-              {status}
+            {contactInfo.map((info, i) => (
+              <a
+                key={i}
+                href={info.href}
+                target={info.label === "WhatsApp" ? "_blank" : undefined}
+                rel="noreferrer"
+                style={{ textDecoration: "none" }}
+              >
+                <motion.div
+                  className="bento-card"
+                  whileHover={{ y: -4, borderColor: "rgba(0,229,255,0.4)" }}
+                  style={{ padding: "20px 24px", display: "flex", alignItems: "center", gap: "16px" }}
+                >
+                  <div style={{
+                    width: "44px", height: "44px", borderRadius: "10px",
+                    background: "rgba(0,229,255,0.1)", border: "1px solid rgba(0,229,255,0.2)",
+                    display: "flex", alignItems: "center", justifyContent: "center",
+                    color: "#00e5ff", flexShrink: 0,
+                  }}>
+                    {info.icon}
+                  </div>
+                  <div>
+                    <p style={{ color: "#94a3b8", fontSize: "0.72rem", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.06em", marginBottom: "4px" }}>
+                      {info.label}
+                    </p>
+                    <p style={{ color: "#ffffff", fontSize: "0.88rem", fontWeight: 500 }}>{info.value}</p>
+                  </div>
+                </motion.div>
+              </a>
+            ))}
+          </motion.div>
+
+          {/* Form */}
+          <motion.form
+            onSubmit={handleSubmit}
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="bento-card"
+            style={{ padding: "36px", display: "flex", flexDirection: "column", gap: "20px" }}
+          >
+            {[
+              { name: "name", type: "text", placeholder: "Your Name", required: true },
+              { name: "email", type: "email", placeholder: "Your Email", required: true },
+            ].map((field) => (
+              <div key={field.name} style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+                <label style={{ color: "#94a3b8", fontSize: "0.78rem", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.06em" }}>
+                  {field.placeholder}
+                </label>
+                <input
+                  type={field.type}
+                  name={field.name}
+                  placeholder={field.placeholder}
+                  required={field.required}
+                  value={formData[field.name]}
+                  onChange={handleChange}
+                  disabled={loading}
+                  style={{
+                    background: "rgba(255,255,255,0.04)",
+                    border: "1px solid rgba(255,255,255,0.1)",
+                    borderRadius: "10px",
+                    padding: "13px 16px",
+                    color: "#ffffff",
+                    fontSize: "0.9rem",
+                    outline: "none",
+                    transition: "border-color 0.3s",
+                    fontFamily: "'Inter', sans-serif",
+                  }}
+                  onFocus={e => (e.target.style.borderColor = "rgba(0,229,255,0.5)")}
+                  onBlur={e => (e.target.style.borderColor = "rgba(255,255,255,0.1)")}
+                />
+              </div>
+            ))}
+            <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
+              <label style={{ color: "#94a3b8", fontSize: "0.78rem", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.06em" }}>
+                Message
+              </label>
+              <textarea
+                name="message"
+                rows={5}
+                placeholder="Your message..."
+                required
+                value={formData.message}
+                onChange={handleChange}
+                disabled={loading}
+                style={{
+                  background: "rgba(255,255,255,0.04)",
+                  border: "1px solid rgba(255,255,255,0.1)",
+                  borderRadius: "10px",
+                  padding: "13px 16px",
+                  color: "#ffffff",
+                  fontSize: "0.9rem",
+                  outline: "none",
+                  resize: "vertical",
+                  fontFamily: "'Inter', sans-serif",
+                  transition: "border-color 0.3s",
+                }}
+                onFocus={e => (e.target.style.borderColor = "rgba(0,229,255,0.5)")}
+                onBlur={e => (e.target.style.borderColor = "rgba(255,255,255,0.1)")}
+              />
             </div>
-          )}
-        </form>
-      </motion.div>
+
+            <button
+              type="submit"
+              disabled={loading}
+              className="btn-primary"
+              style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "8px", width: "100%", opacity: loading ? 0.7 : 1 }}
+            >
+              <FiSend size={16} />
+              {loading ? "Sending..." : "Send Message"}
+            </button>
+
+            {status && (
+              <motion.div
+                initial={{ opacity: 0, y: 6 }}
+                animate={{ opacity: 1, y: 0 }}
+                style={{
+                  padding: "12px 16px",
+                  borderRadius: "10px",
+                  background: status.ok ? "rgba(0,229,255,0.08)" : "rgba(239,68,68,0.08)",
+                  border: `1px solid ${status.ok ? "rgba(0,229,255,0.3)" : "rgba(239,68,68,0.3)"}`,
+                  color: status.ok ? "#00e5ff" : "#f87171",
+                  fontSize: "0.85rem",
+                  textAlign: "center",
+                }}
+              >
+                {status.msg}
+              </motion.div>
+            )}
+          </motion.form>
+        </div>
+      </div>
+
+      <style>{`
+        @media (max-width: 768px) {
+          .contact-grid { grid-template-columns: 1fr !important; }
+        }
+      `}</style>
     </section>
   );
 };

@@ -1,85 +1,120 @@
-// src/components/Education.jsx
+// src/pages/Education.jsx
 import { motion } from "framer-motion";
-import { FaGraduationCap } from "react-icons/fa";
+import { FiAward } from "react-icons/fi";
+
+const educationData = [
+  {
+    degree: "Secondary School Certificate (SSC)",
+    institution: "Monipur High School and College",
+    year: "2019",
+    result: "GPA 5.00 / 5.00",
+  },
+  {
+    degree: "Higher Secondary Certificate (HSC)",
+    institution: "Mirpur Cantonment High School and College",
+    year: "2022",
+    result: "GPA 5.00 / 5.00",
+  },
+  {
+    degree: "B.Sc. in Computer Science & Engineering",
+    institution: "BRAC University",
+    year: "Graduated — October 2026",
+    result: "CGPA 3.78 / 4.00",
+    highlight: true,
+  },
+];
 
 const Education = () => {
-  const educationData = [
-    {
-      degree: "Secondary School Certificate (SSC)",
-      institution: "Monipur High School and College",
-      year: "2019",
-      gpa: "5.00 / 5.00",
-    },
-    {
-      degree: "Higher Secondary Certificate (HSC)",
-      institution: "Mirpur Cantonment High School and College",
-      year: "2022",
-      gpa: "5.00 / 5.00",
-    },
-    {
-      degree: "B.Sc. in Computer Science and Engineering",
-      institution: "BRAC University",
-      year: "2022 – 2026 (Expected)",
-      cgpa: "3.78 / 4.00",
-      note: "Currently in 4th Year",
-    },
-  ];
-
   return (
-    <section
-      id="education"
-      className="bg-[#5C94FC] text-white py-16 px-6 md:px-12 mx-auto"
-    >
-      <motion.h2
-        className="text-3xl font-bold mb-12 text-[#E52521] pixel-text text-center drop-shadow-[3px_3px_0_#000]"
-        initial={{ opacity: 0, y: -30 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.7 }}
-      >
-        Education
-      </motion.h2>
+    <section id="education" style={{ background: "#0d1117", padding: "100px 24px" }}>
+      <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
+        {/* Heading */}
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          style={{ marginBottom: "60px" }}
+        >
+          <p style={{ color: "#00e5ff", fontSize: "0.8rem", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "12px" }}>
+            Academic background
+          </p>
+          <h2 className="section-heading cyan-underline" style={{ fontSize: "clamp(2rem, 4vw, 2.8rem)", color: "#ffffff" }}>
+            Education
+          </h2>
+        </motion.div>
 
-      <motion.div
-        className="grid grid-cols-1 md:grid-cols-3 gap-10 text-black"
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true }}
-        variants={{
-          hidden: { opacity: 0, y: 40 },
-          visible: { opacity: 1, y: 0, transition: { staggerChildren: 0.2 } },
-        }}
-      >
-        {educationData.map((edu, index) => (
-          <motion.div
-            key={index}
-            className="space-y-4 bg-white pixel-border p-6 hover:-translate-y-2 transition-transform cursor-default"
-            variants={{
-              hidden: { opacity: 0, y: 20 },
-              visible: { opacity: 1, y: 0 },
-            }}
-          >
-            <div className="flex items-center space-x-3 text-[#E52521] text-2xl">
-              <FaGraduationCap />
-              <h3 className="text-lg font-bold pixel-text text-black leading-tight">{edu.degree}</h3>
-            </div>
+        {/* Cards */}
+        <motion.div
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.15 } } }}
+          style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "24px" }}
+        >
+          {educationData.map((edu, i) => (
+            <motion.div
+              key={i}
+              className="bento-card"
+              variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0, transition: { duration: 0.5 } } }}
+              whileHover={{ y: -6 }}
+              style={{
+                padding: "32px",
+                borderColor: edu.highlight ? "rgba(0,229,255,0.35)" : undefined,
+                position: "relative",
+                overflow: "hidden",
+              }}
+            >
+              {edu.highlight && (
+                <div style={{
+                  position: "absolute", top: 0, left: 0, right: 0,
+                  height: "3px",
+                  background: "linear-gradient(90deg, #00e5ff, transparent)",
+                }} />
+              )}
 
-            <p className="text-[#43B047] font-bold text-lg">{edu.institution}</p>
-            <p className="text-sm text-gray-600 font-bold">{edu.year}</p>
+              {/* Icon */}
+              <div style={{
+                width: "44px", height: "44px", borderRadius: "10px",
+                background: edu.highlight ? "rgba(0,229,255,0.15)" : "rgba(0,229,255,0.08)",
+                border: "1px solid rgba(0,229,255,0.2)",
+                display: "flex", alignItems: "center", justifyContent: "center",
+                color: "#00e5ff", marginBottom: "16px",
+              }}>
+                <FiAward size={20} />
+              </div>
 
-            {edu.gpa && (
-              <p className="font-semibold">
-                <strong className="text-black">GPA:</strong> <span className="text-[#d95f36] font-bold">{edu.gpa}</span>
+              <h3 style={{
+                fontFamily: "'Space Grotesk', sans-serif",
+                fontWeight: 700,
+                fontSize: "1rem",
+                color: "#ffffff",
+                lineHeight: 1.4,
+                marginBottom: "10px",
+              }}>
+                {edu.degree}
+              </h3>
+
+              <p style={{ color: "#00e5ff", fontWeight: 600, fontSize: "0.88rem", marginBottom: "6px" }}>
+                {edu.institution}
               </p>
-            )}
-            {edu.cgpa && (
-              <p className="font-semibold">
-                <strong className="text-black">CGPA:</strong> <span className="text-[#d95f36] font-bold">{edu.cgpa}</span>
-              </p>
-            )}
-            {edu.note && <p className="text-[#E52521] pixel-text text-xs tracking-wider mt-2">{edu.note}</p>}
-          </motion.div>
-        ))}
-      </motion.div>
+              <p style={{ color: "#94a3b8", fontSize: "0.82rem", marginBottom: "12px" }}>{edu.year}</p>
+
+              <div style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "6px",
+                background: "rgba(0,229,255,0.06)",
+                border: "1px solid rgba(0,229,255,0.15)",
+                borderRadius: "8px",
+                padding: "6px 14px",
+              }}>
+                <span style={{ color: "#00e5ff", fontSize: "0.82rem", fontWeight: 700 }}>{edu.result}</span>
+              </div>
+            </motion.div>
+          ))}
+        </motion.div>
+      </div>
     </section>
   );
 };
