@@ -1,6 +1,6 @@
 # Tanjip Surait Mahdin — Portfolio
 
-Personal portfolio website for Tanjip Surait Mahdin — graduated CSE student from BRAC University, Full Stack Developer, ML Engineer, and Coding Instructor at Codingal.
+Personal portfolio website for Tanjip Surait Mahdin — CSE Graduate from BRAC University, Full Stack Developer, ML Engineer, and Coding Instructor at Codingal.
 
 ## Stack
 

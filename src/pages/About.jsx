@@ -41,7 +41,7 @@ const About = () => {
           style={{ padding: "40px", maxWidth: "780px" }}
         >
           <p style={{ color: "#cbd5e1", lineHeight: 1.85, fontSize: "1.05rem" }}>
-            I&apos;m Tanjip, a graduated CSE student from BRAC University in Dhaka. I build web apps
+            I&apos;m Tanjip, a CSE graduate from BRAC University in Dhaka. I build web apps
             and train ML models, and I teach coding at Codingal, where I&apos;ve worked with 50+
             students. My thesis is about physics tutoring for Class 9–10 students in Bangladesh.
             I like projects where a model ends up inside something a person can actually click.
