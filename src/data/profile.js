@@ -5,8 +5,8 @@
 export const profile = {
   name: "Tanjip Surait Mahdin",
   shortName: "TSM",
-  role: "Final-year CSE student",
-  bio: "I'm Tanjip, a final-year CSE student at BRAC University in Dhaka. I build web apps and train ML models, and I teach coding at Codingal, where I've worked with 50+ students. My thesis is about physics tutoring for Class 9–10 students in Bangladesh. I like projects where a model ends up inside something a person can actually click.",
+  role: "Graduated CSE student",
+  bio: "I'm Tanjip, a graduated CSE student from BRAC University in Dhaka. I build web apps and train ML models, and I teach coding at Codingal, where I've worked with 50+ students. My thesis is about physics tutoring for Class 9–10 students in Bangladesh. I like projects where a model ends up inside something a person can actually click.",
 
   education: {
     degree: "B.Sc. in Computer Science & Engineering",

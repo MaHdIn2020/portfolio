@@ -103,7 +103,7 @@ const Hero = () => {
               transition={{ delay: 0.8, duration: 0.8 }}
               style={{ color: "#94a3b8", fontSize: "1rem", lineHeight: 1.7, maxWidth: "440px" }}
             >
-              Final-year CSE student at BRAC University. Building web apps, training ML models,
+              Graduated CSE student at BRAC University. Building web apps, training ML models,
               and teaching coding at Codingal.
             </motion.p>
 
@@ -206,7 +206,7 @@ const Hero = () => {
             >
               <img
                 src="/Picture.jpg"
-                alt="Tanjip Surait Mahdin — Final-year CSE student at BRAC University"
+                alt="Tanjip Surait Mahdin — Graduated CSE student at BRAC University"
                 style={{
                   width: "clamp(240px, 30vw, 340px)",
                   height: "clamp(260px, 33vw, 380px)",

@@ -20,7 +20,7 @@ const projects = [
     technologies: ["Python", "scikit-learn", "TensorFlow/Keras", "KerasTuner", "Gensim", "NLP"],
     githubLink: "https://github.com/MaHdIn2020/Yahoo-Answers-Topic-Classification",
     reportLink:
-      "https://github.com/MaHdIn2020/Yahoo-Answers-Topic-Classification/raw/main/Yahoo_Answers_Topic_Classification_Report.pdf",
+      "https://github.com/MaHdIn2020/Yahoo-Answers-Topic-Classification/raw/main/report/Yahoo_Answers_Text_Classification_Report.pdf",
   },
   {
     id: 2,
