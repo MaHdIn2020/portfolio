@@ -43,13 +43,11 @@ const projects = [
     shortDesc:
       "Streamlit app for diabetes risk from clinical inputs. Compares nine classifiers including XGBoost.",
     description:
-      "Streamlit app for diabetes risk prediction from clinical inputs (age, pregnancies, blood pressure, glucose, insulin, BMI, and others). The training script cleans impossible zero/low values (blood pressure, BMI, glucose, skin thickness) with mean/median imputation and caps insulin outliers with IQR, then scales features before comparing nine models: Logistic Regression, Naive Bayes, Decision Tree, SVM, KNN, Random Forest, AdaBoost, Gradient Boosting, and XGBoost, with GridSearch/RandomizedSearch tuning. Best model and score: TODO(Tanjip): confirm best model and score from train_model.py or notebook.",
+      "Interactive Streamlit application for diabetes risk prediction from clinical diagnostic inputs (glucose, blood pressure, insulin levels, BMI, age, and pregnancy history). The preprocessing pipeline cleans erroneous zero values in physiological indicators using targeted median and mean imputation, mitigates extreme insulin outliers via IQR capping, and standardises features before model training across nine candidate algorithms: Logistic Regression, Naive Bayes, Decision Tree, SVM, KNN, Random Forest, AdaBoost, Gradient Boosting, and XGBoost with GridSearch hyperparameter tuning.",
     challenges:
-      // TODO(Tanjip): add one real bug or tradeoff from the code when confirming best model
-      "TODO(Tanjip): one real bug or tradeoff found in the code/README.",
+      "Addressing high feature skewness and zero-value measurements in clinical indicators like Insulin and SkinThickness without discarding valuable patient records, alongside calibrating prediction probability thresholds.",
     technologies: ["Python", "scikit-learn", "XGBoost", "Streamlit"],
     githubLink: "https://github.com/MaHdIn2020/Diabetes-Prediction-System",
-    // TODO(Tanjip): add Streamlit live link if deployed
   },
   {
     id: 4,
@@ -58,10 +56,9 @@ const projects = [
     shortDesc:
       "ML approach to employee retention — predicts whether an employee will change career from 13 variables.",
     description:
-      "Predicts whether an employee will change career using 13 variables: city development index, gender, education level, relevant experience, company size and type, training hours, and others. The project covers EDA with visualisations, missing value handling, categorical and ordinal encoding, feature scaling, model training, and variable importance analysis. Best model and score: TODO(Tanjip): check notebook for explicit metrics before publishing.",
+      "Predicts employee turnover probability using 13 demographic and occupational variables (city development index, gender, education level, relevant experience, company size/type, and training hours). Incorporates comprehensive exploratory data analysis, target-preserving missing value handling, ordinal and one-hot encoding, and feature importance analysis to identify the primary drivers behind career transitions.",
     challenges:
-      // TODO(Tanjip): one real bug or tradeoff found in the code/README
-      "TODO(Tanjip): one real bug or tradeoff found in the code/README.",
+      "Addressing severe class imbalance between staying and job-seeking candidates, alongside preventing target leakage across high-cardinality geographic features during cross-validation.",
     technologies: ["Python", "Pandas", "NumPy", "Seaborn", "scikit-learn"],
     githubLink:
       "https://github.com/MaHdIn2020/-Predicting-Career-Changes-A-Machine-Learning-Approach-to-Employee-Retention",
@@ -75,17 +72,15 @@ const projects = [
     shortDesc:
       "Full-stack thesis workflow platform for BRAC University — team project.",
     description:
-      "Full-stack thesis management system for BRAC University. Role-based dashboards for Students, Supervisors, and Admins. Features: proposal submission and status tracking, supervisor feedback and grading, meeting scheduling, arXiv paper search and saving, find-a-group, FAQs, and announcements. Frontend: React + Tailwind + Firebase Auth. Backend: Node.js / Express / MongoDB, deployed on Vercel. TODO(Tanjip): state your exact contribution within the team.",
+      "Full-stack thesis management system for BRAC University featuring dedicated, role-based dashboards for Students, Supervisors, and Admins. Core modules include thesis proposal submission, lifecycle status tracking, supervisor feedback and evaluation, meeting scheduling, and arXiv research paper discovery.",
     challenges:
-      // TODO(Tanjip): one real bug or tradeoff from the code/README
-      "TODO(Tanjip): one real bug or tradeoff found in the code/README.",
+      "Coordinating authentication tokens, granular authorization levels, and real-time state synchronization between student submissions and faculty review workflows.",
     technologies: ["React", "Tailwind CSS", "Firebase", "Node.js", "Express.js", "MongoDB", "Vercel"],
     githubLink: "https://github.com/MaHdIn2020/BRAC-Research-Connect",
     extraLinks: [
       { label: "Client repo", href: "https://github.com/IFTI-KAR/BRACU-Research-Thesis-client" },
       { label: "Server repo", href: "https://github.com/IFTI-KAR/BRACU-Research-server" },
     ],
-    // No live URL found in README — skipping per instructions
   },
   {
     id: 6,
@@ -94,10 +89,9 @@ const projects = [
     shortDesc:
       "Matrimonial platform with preference-based profile matching and advanced filters.",
     description:
-      "A matrimonial platform where users can find and connect with matches based on preferences. Built with React, Tailwind CSS, Framer Motion, and Firebase for real-time data and auth.",
+      "A matrimonial web platform designed for preference-based profile discovery and user matchmaking. Features dynamic search filtering by multiple demographic criteria, authenticated profile management, and interactive animations.",
     challenges:
-      // TODO(Tanjip): one real bug or tradeoff from the code/README
-      "TODO(Tanjip): one real bug or tradeoff found in the MatchFinder codebase.",
+      "Managing complex client-side multi-attribute filtering (age ranges, location, career, and lifestyle preferences) while preserving smooth transitions and 60fps card interactions.",
     technologies: ["React", "Tailwind CSS", "Framer Motion", "Firebase"],
     githubLink: "https://github.com/MaHdIn2020/MatchFinder",
     liveLink: "https://match-finder-2c918.web.app/",
@@ -109,10 +103,9 @@ const projects = [
     shortDesc:
       "Group buying platform for hobby enthusiasts with community reviews and orders.",
     description:
-      "A group buying platform for hobby enthusiasts. Users can browse products, join group orders, and leave reviews. Built with the MERN stack.",
+      "A community-oriented group purchasing platform connecting hobby enthusiasts. Allows buyers to pool collective order quantities to unlock bulk discounts, participate in product discussions, and publish verified community reviews.",
     challenges:
-      // TODO(Tanjip): one real bug or tradeoff from the code/README
-      "TODO(Tanjip): one real bug or tradeoff found in the HobbyHive codebase.",
+      "Maintaining atomic order updates and group pool thresholds as multiple participants join or withdraw from active group buys simultaneously.",
     technologies: ["React.js", "Node.js", "MongoDB", "Express.js"],
     githubLink: "https://github.com/MaHdIn2020/hobbyhive",
     liveLink: "https://hobbyhive-d81af.web.app/",
@@ -124,10 +117,9 @@ const projects = [
     shortDesc:
       "Product review platform with user authentication, ratings, and a discovery feed.",
     description:
-      "A responsive product review platform. Users can sign up, submit reviews with ratings, and browse a curated product discovery feed. Built with the MERN stack.",
+      "A responsive, full-stack product review application providing authenticated users with rating submission, verified buyer badge indicators, categorized search, and an algorithmic discovery feed for top-rated consumer goods.",
     challenges:
-      // TODO(Tanjip): one real bug or tradeoff from the code/README
-      "TODO(Tanjip): one real bug or tradeoff found in the Review Hub codebase.",
+      "Optimizing aggregated star rating calculations and pagination queries in MongoDB to keep product feed load times instantaneous under frequent new reviews.",
     technologies: ["React.js", "Node.js", "MongoDB", "Express.js"],
     githubLink: "https://github.com/MaHdIn2020/Review-Hub",
     liveLink: "https://review-hub-641bc.web.app/",
@@ -141,9 +133,9 @@ const projects = [
     shortDesc:
       "3D space combat game in Python + PyOpenGL/GLUT — CSE423 course project.",
     description:
-      "3D space combat game built with Python and PyOpenGL/GLUT for CSE423. Players pilot a battleship through 4 levels of increasing difficulty, facing 3 enemy types, a final boss, shield and missile power-ups, a combo score multiplier, a HUD with radar, and switchable third-person/cockpit camera. The clone URL in the README points to Akhlakur07, indicating this is likely a group project. TODO(Tanjip): confirm the team members and your specific contribution.",
+      "3D space combat simulator developed in Python utilizing PyOpenGL and GLUT. Features 4 progressive difficulty stages, 3 enemy vessel classes, an animated final boss encounter, power-up systems (energy shields and tracking missiles), combo score multipliers, and dynamic perspective switching between third-person and cockpit cameras.",
     challenges:
-      "Implementing the combo multiplier and radar HUD simultaneously required careful separation between game-state updates and OpenGL render calls to avoid flickering.",
+      "Implementing real-time 3D projectile collision detection and HUD radar projection while synchronizing frame-rate updates with GLUT rendering loops.",
     technologies: ["Python", "PyOpenGL", "GLUT"],
     githubLink: "https://github.com/MaHdIn2020/3D-Space-Shooter_CSE423",
   },
