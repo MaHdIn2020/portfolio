@@ -12,7 +12,7 @@ export const profile = {
     degree: "B.Sc. in Computer Science & Engineering",
     university: "BRAC University",
     location: "Dhaka, Bangladesh",
-    cgpa: "3.79",
+    cgpa: "3.78",
     cgpaOutOf: "4.00",
     status: "Expected graduation: September 2026",
   },
@@ -21,9 +21,8 @@ export const profile = {
 
   stats: [
     { value: "50+", label: "Students Taught" },
-    { value: "3.79", label: "CGPA / 4.00" },
+    { value: "3.78", label: "CGPA / 4.00" },
     { value: "9", label: "Projects" },
-    { value: "2", label: "Research Works" },
   ],
 
   roles: ["Full Stack Developer", "ML Engineer", "Coding Instructor"],

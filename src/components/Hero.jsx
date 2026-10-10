@@ -272,7 +272,7 @@ const Hero = () => {
           transition={{ delay: 1.3, duration: 0.7 }}
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(4, 1fr)",
+            gridTemplateColumns: `repeat(${profile.stats.length}, 1fr)`,
             gap: "1px",
             background: "rgba(0,229,255,0.08)",
             borderRadius: "16px",
@@ -322,7 +322,10 @@ const Hero = () => {
         @media (max-width: 768px) {
           .hero-grid { grid-template-columns: 1fr !important; gap: 40px !important; text-align: center; }
           .hero-grid > div:last-child { display: none !important; }
-          .stats-row { grid-template-columns: repeat(2,1fr) !important; }
+          .stats-row { grid-template-columns: repeat(3, 1fr) !important; }
+        }
+        @media (max-width: 500px) {
+          .stats-row { grid-template-columns: 1fr !important; }
         }
       `}</style>
     </section>
