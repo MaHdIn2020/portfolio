@@ -24,11 +24,13 @@ const Navbar = () => {
     { id: 4, text: "Education", to: "education" },
     { id: 5, text: "Skills", to: "skills" },
     { id: 6, text: "Projects", to: "projects" },
-    { id: 7, text: "Contact", to: "contact" },
+    { id: 7, text: "Research", to: "research" },
+    { id: 8, text: "Contact", to: "contact" },
   ];
 
   return (
     <nav
+      aria-label="Main navigation"
       style={{
         position: "fixed",
         top: 0,
@@ -46,6 +48,7 @@ const Navbar = () => {
         {/* Logo */}
         <RouterLink
           to="/"
+          aria-label="Tanjip Surait Mahdin — Home"
           style={{ textDecoration: "none", display: "flex", alignItems: "center", gap: "10px" }}
         >
           <span
@@ -64,7 +67,7 @@ const Navbar = () => {
         </RouterLink>
 
         {/* Desktop nav */}
-        <div style={{ display: "flex", alignItems: "center", gap: "32px" }} className="hidden md:flex">
+        <div style={{ display: "flex", alignItems: "center", gap: "28px" }} className="hidden md:flex">
           {navLinks.map(({ id, text, to }) =>
             isHome ? (
               <ScrollLink
@@ -76,8 +79,8 @@ const Navbar = () => {
                 className="nav-link"
                 style={{ color: "#94a3b8", fontSize: "0.875rem", fontWeight: 500, cursor: "pointer", textDecoration: "none", transition: "color 0.3s" }}
                 activeClass="active"
-                onMouseEnter={e => (e.target.style.color = "#00e5ff")}
-                onMouseLeave={e => (e.target.style.color = "#94a3b8")}
+                onMouseEnter={(e) => (e.target.style.color = "#00e5ff")}
+                onMouseLeave={(e) => (e.target.style.color = "#94a3b8")}
               >
                 {text}
               </ScrollLink>
@@ -87,8 +90,8 @@ const Navbar = () => {
                 href={`/#${to}`}
                 className="nav-link"
                 style={{ color: "#94a3b8", fontSize: "0.875rem", fontWeight: 500, textDecoration: "none" }}
-                onMouseEnter={e => (e.target.style.color = "#00e5ff")}
-                onMouseLeave={e => (e.target.style.color = "#94a3b8")}
+                onMouseEnter={(e) => (e.target.style.color = "#00e5ff")}
+                onMouseLeave={(e) => (e.target.style.color = "#94a3b8")}
               >
                 {text}
               </a>
@@ -97,6 +100,7 @@ const Navbar = () => {
           <a
             href="mailto:tanjip.surait.mahdin@gmail.com"
             className="btn-primary"
+            aria-label="Send email to hire Tanjip"
             style={{ padding: "8px 20px", fontSize: "0.85rem" }}
           >
             Hire Me
@@ -108,7 +112,8 @@ const Navbar = () => {
           onClick={() => setIsOpen(!isOpen)}
           style={{ background: "none", border: "none", color: "#00e5ff", fontSize: "1.5rem", cursor: "pointer", display: "flex" }}
           className="md:hidden"
-          aria-label="Toggle menu"
+          aria-label="Toggle navigation menu"
+          aria-expanded={isOpen}
         >
           {isOpen ? <FiX /> : <FiMenu />}
         </button>

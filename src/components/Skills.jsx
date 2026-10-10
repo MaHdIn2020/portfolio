@@ -1,48 +1,59 @@
 // src/components/Skills.jsx
 import { motion } from "framer-motion";
 import {
-  SiPython, SiHtml5, SiCss3, SiJavascript, SiReact, SiNodedotjs,
-  SiMongodb, SiExpress, SiGit, SiGithub, SiMysql, SiTailwindcss,
+  SiPython, SiJavascript, SiCplusplus, SiHtml5, SiCss3,
+  SiReact, SiNodedotjs, SiExpress, SiMongodb, SiTailwindcss,
+  SiStreamlit, SiScikitlearn, SiTensorflow, SiPandas, SiNumpy,
+  SiGit, SiGithub, SiVercel,
 } from "react-icons/si";
 import { FaBrain } from "react-icons/fa";
-import { FiCpu } from "react-icons/fi";
 
+// Skills grouped by area — only tools used across repos/experience
 const skillGroups = [
   {
-    category: "Frontend",
+    category: "Languages",
     skills: [
-      { name: "HTML5", icon: <SiHtml5 />, color: "#e34f26", level: 95 },
-      { name: "CSS3", icon: <SiCss3 />, color: "#1572b6", level: 90 },
-      { name: "JavaScript", icon: <SiJavascript />, color: "#f7df1e", level: 90 },
-      { name: "React", icon: <SiReact />, color: "#61dafb", level: 88 },
-      { name: "Tailwind", icon: <SiTailwindcss />, color: "#06b6d4", level: 85 },
+      { name: "Python", icon: <SiPython />, color: "#3776ab" },
+      { name: "JavaScript", icon: <SiJavascript />, color: "#f7df1e" },
+      { name: "C++", icon: <SiCplusplus />, color: "#00599c" },
+      { name: "HTML5", icon: <SiHtml5 />, color: "#e34f26" },
+      { name: "CSS3", icon: <SiCss3 />, color: "#1572b6" },
     ],
   },
   {
-    category: "Backend & Database",
+    category: "Web",
     skills: [
-      { name: "Node.js", icon: <SiNodedotjs />, color: "#339933", level: 80 },
-      { name: "Express.js", icon: <SiExpress />, color: "#ffffff", level: 78 },
-      { name: "MongoDB", icon: <SiMongodb />, color: "#47a248", level: 80 },
-      { name: "MySQL", icon: <SiMysql />, color: "#4479a1", level: 70 },
-      { name: "Python", icon: <SiPython />, color: "#3776ab", level: 85 },
+      { name: "React", icon: <SiReact />, color: "#61dafb" },
+      { name: "Node.js", icon: <SiNodedotjs />, color: "#339933" },
+      { name: "Express.js", icon: <SiExpress />, color: "#ffffff" },
+      { name: "MongoDB", icon: <SiMongodb />, color: "#47a248" },
+      { name: "Tailwind CSS", icon: <SiTailwindcss />, color: "#06b6d4" },
+      { name: "Streamlit", icon: <SiStreamlit />, color: "#ff4b4b" },
     ],
   },
   {
-    category: "Tools & Others",
+    category: "ML / Data",
     skills: [
-      { name: "Git", icon: <SiGit />, color: "#f05032", level: 88 },
-      { name: "GitHub", icon: <SiGithub />, color: "#ffffff", level: 88 },
-      { name: "Algorithms", icon: <FaBrain />, color: "#a855f7", level: 82 },
-      { name: "ML/AI", icon: <FiCpu />, color: "#00e5ff", level: 65 },
-      { name: "Problem Solving", icon: <FaBrain />, color: "#ec4899", level: 90 },
+      { name: "scikit-learn", icon: <SiScikitlearn />, color: "#f7931e" },
+      { name: "TensorFlow / Keras", icon: <SiTensorflow />, color: "#ff6f00" },
+      { name: "Pandas", icon: <SiPandas />, color: "#150458" },
+      { name: "NumPy", icon: <SiNumpy />, color: "#4dabcf" },
+      { name: "Gensim / NLP", icon: <FaBrain />, color: "#a855f7" },
+    ],
+  },
+  {
+    category: "Tools",
+    skills: [
+      { name: "Git", icon: <SiGit />, color: "#f05032" },
+      { name: "GitHub", icon: <SiGithub />, color: "#ffffff" },
+      { name: "Vercel", icon: <SiVercel />, color: "#ffffff" },
     ],
   },
 ];
 
 const Skills = () => {
   return (
-    <section id="skills" style={{ background: "#0a0a12", padding: "100px 24px" }}>
+    <section id="skills" aria-label="Skills and technologies" style={{ background: "#0a0a12", padding: "100px 24px" }}>
       <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
         {/* Heading */}
         <motion.div
@@ -56,7 +67,7 @@ const Skills = () => {
             What I work with
           </p>
           <h2 className="section-heading cyan-underline" style={{ fontSize: "clamp(2rem, 4vw, 2.8rem)", color: "#ffffff" }}>
-            Skills & Technologies
+            Skills &amp; Technologies
           </h2>
         </motion.div>
 
@@ -79,38 +90,33 @@ const Skills = () => {
               }}>
                 {group.category}
               </p>
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(180px, 1fr))", gap: "16px" }}>
+              {/* Chip grid — no bars, no percentages */}
+              <div style={{ display: "flex", flexWrap: "wrap", gap: "12px" }}>
                 {group.skills.map((skill, si) => (
                   <motion.div
                     key={si}
-                    className="bento-card"
-                    whileHover={{ y: -6, borderColor: "rgba(0,229,255,0.4)" }}
+                    whileHover={{ y: -4, borderColor: "rgba(0,229,255,0.5)", scale: 1.04 }}
                     initial={{ opacity: 0, scale: 0.95 }}
                     whileInView={{ opacity: 1, scale: 1 }}
                     viewport={{ once: true }}
                     transition={{ duration: 0.3, delay: si * 0.05 }}
-                    style={{ padding: "20px 18px" }}
+                    style={{
+                      display: "inline-flex",
+                      alignItems: "center",
+                      gap: "8px",
+                      padding: "10px 18px",
+                      background: "#111827",
+                      border: "1px solid rgba(0,229,255,0.15)",
+                      borderRadius: "100px",
+                      cursor: "default",
+                    }}
                   >
-                    {/* Icon */}
-                    <div style={{ fontSize: "2rem", marginBottom: "12px", color: skill.color, lineHeight: 1 }}>
+                    <span style={{ fontSize: "1.1rem", color: skill.color, lineHeight: 1 }}>
                       {skill.icon}
-                    </div>
-                    <p style={{ fontWeight: 600, fontSize: "0.88rem", color: "#ffffff", marginBottom: "10px" }}>
+                    </span>
+                    <span style={{ fontWeight: 600, fontSize: "0.85rem", color: "#e2e8f0" }}>
                       {skill.name}
-                    </p>
-                    {/* Progress bar */}
-                    <div style={{ height: "3px", background: "rgba(255,255,255,0.08)", borderRadius: "2px", overflow: "hidden" }}>
-                      <motion.div
-                        initial={{ width: 0 }}
-                        whileInView={{ width: `${skill.level}%` }}
-                        viewport={{ once: true }}
-                        transition={{ duration: 0.8, delay: 0.2 + si * 0.05, ease: "easeOut" }}
-                        style={{ height: "100%", background: "linear-gradient(90deg, #00e5ff, #00b8cc)", borderRadius: "2px" }}
-                      />
-                    </div>
-                    <p style={{ color: "#94a3b8", fontSize: "0.7rem", marginTop: "6px", textAlign: "right" }}>
-                      {skill.level}%
-                    </p>
+                    </span>
                   </motion.div>
                 ))}
               </div>

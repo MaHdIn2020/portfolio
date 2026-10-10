@@ -1,25 +1,7 @@
 // src/pages/About.jsx
 import { motion } from "framer-motion";
-import { FiTarget, FiCode, FiHeart } from "react-icons/fi";
 
-const cards = [
-  {
-    icon: <FiTarget size={22} />,
-    title: "Professional Focus",
-    body: "I specialize in building responsive, scalable web applications using modern full-stack technologies. My work blends clean design with efficient code — ensuring both great user experience and solid performance.",
-  },
-  {
-    icon: <FiCode size={22} />,
-    title: "Programming Journey",
-    body: "My passion for software started with HTML, CSS and JavaScript and grew into full-stack mastery with the MERN stack. I'm continuously expanding into AI, machine learning, and cloud technologies — always leveling up.",
-  },
-  {
-    icon: <FiHeart size={22} />,
-    title: "Beyond the Code",
-    body: "I believe balance drives creativity. Outside of coding, I enjoy staying active, exploring new technologies, and applying what I learn to real-world projects. These habits keep me sharp and motivated.",
-  },
-];
-
+// TODO(Tanjip): edit this paragraph in your own words when you're happy with the content
 const About = () => {
   return (
     <section
@@ -49,45 +31,21 @@ const About = () => {
           </h2>
         </motion.div>
 
-        {/* Cards */}
+        {/* Single paragraph */}
         <motion.div
-          initial="hidden"
-          whileInView="visible"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          variants={{
-            hidden: {},
-            visible: { transition: { staggerChildren: 0.15 } },
-          }}
-          style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "24px" }}
+          transition={{ duration: 0.6 }}
+          className="bento-card"
+          style={{ padding: "40px", maxWidth: "780px" }}
         >
-          {cards.map((card, i) => (
-            <motion.div
-              key={i}
-              className="bento-card"
-              variants={{
-                hidden: { opacity: 0, y: 30 },
-                visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
-              }}
-              whileHover={{ y: -6 }}
-              style={{ padding: "32px" }}
-            >
-              {/* Icon */}
-              <div style={{
-                width: "48px", height: "48px", borderRadius: "12px",
-                background: "rgba(0,229,255,0.1)", border: "1px solid rgba(0,229,255,0.2)",
-                display: "flex", alignItems: "center", justifyContent: "center",
-                color: "#00e5ff", marginBottom: "20px",
-              }}>
-                {card.icon}
-              </div>
-              <h3 style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: "1.1rem", color: "#ffffff", marginBottom: "12px" }}>
-                {card.title}
-              </h3>
-              <p style={{ color: "#94a3b8", lineHeight: 1.75, fontSize: "0.92rem" }}>
-                {card.body}
-              </p>
-            </motion.div>
-          ))}
+          <p style={{ color: "#cbd5e1", lineHeight: 1.85, fontSize: "1.05rem" }}>
+            I&apos;m Tanjip, a final-year CSE student at BRAC University in Dhaka. I build web apps
+            and train ML models, and I teach coding at Codingal, where I&apos;ve worked with 50+
+            students. My thesis is about physics tutoring for Class 9–10 students in Bangladesh.
+            I like projects where a model ends up inside something a person can actually click.
+          </p>
         </motion.div>
       </div>
     </section>

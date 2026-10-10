@@ -8,41 +8,55 @@ const LoadingScreen = ({ onComplete }) => {
   const [progress, setProgress] = useState(0);
   const [phase, setPhase] = useState("enter"); // enter | exit
 
+  const skip = () => {
+    setPhase("exit");
+    setTimeout(() => onComplete(), 400);
+  };
+
   useEffect(() => {
-    // Progress bar fills over 3 seconds
+    // Progress bar fills over 1 second
     const interval = setInterval(() => {
       setProgress((p) => {
         if (p >= 100) {
           clearInterval(interval);
           return 100;
         }
-        return p + 1;
+        return p + 4; // faster fill
       });
-    }, 30);
+    }, 25);
 
-    // Trigger exit after 3.4s
-    const exitTimer = setTimeout(() => setPhase("exit"), 3400);
+    // Trigger exit after 1.1s
+    const exitTimer = setTimeout(() => setPhase("exit"), 1100);
 
-    // Tell parent we're done after exit animation completes
-    const doneTimer = setTimeout(() => onComplete(), 4200);
+    // Tell parent we're done after exit animation completes (~1.5s total)
+    const doneTimer = setTimeout(() => onComplete(), 1500);
+
+    // Allow skipping with Escape
+    const handleKey = (e) => { if (e.key === "Escape") skip(); };
+    window.addEventListener("keydown", handleKey);
 
     return () => {
       clearInterval(interval);
       clearTimeout(exitTimer);
       clearTimeout(doneTimer);
+      window.removeEventListener("keydown", handleKey);
     };
-  }, [onComplete]);
+  }, [onComplete]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <AnimatePresence>
       {phase === "enter" && (
         <div
+          role="status"
+          aria-label="Loading portfolio"
+          onClick={skip}
           style={{
             position: "fixed",
             inset: 0,
             zIndex: 9999,
             overflow: "hidden",
             pointerEvents: "all",
+            cursor: "pointer",
           }}
         >
           {/* TOP PANEL */}

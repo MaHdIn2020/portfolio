@@ -1,12 +1,29 @@
-# React + Vite
+# Tanjip Surait Mahdin — Portfolio
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Personal portfolio website for Tanjip Surait Mahdin — final-year CSE student at BRAC University, Full Stack Developer, ML Engineer, and Coding Instructor at Codingal.
 
-Currently, two official plugins are available:
+## Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Framework**: React 19 + Vite
+- **Styling**: Tailwind CSS v4
+- **Animations**: Framer Motion
+- **Contact form**: EmailJS
+- **Deploy target**: Vercel
 
-## Expanding the ESLint configuration
+## Run locally
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```bash
+npm install
+npm run dev
+```
+
+## Build
+
+```bash
+npm run build
+```
+
+## Notes
+
+- `public/resume.pdf` is a placeholder. Replace it with the real CV before going live.
+- `firebase.json` and `.firebaserc` are left untouched in the repo root (legacy hosting config, not used by this app).

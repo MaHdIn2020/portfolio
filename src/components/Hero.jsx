@@ -2,24 +2,11 @@
 import { motion } from "framer-motion";
 import { FaGithub, FaLinkedin, FaFacebook } from "react-icons/fa";
 import { HiArrowDown } from "react-icons/hi";
+import { HiArrowDownTray } from "react-icons/hi2";
 import { Link as ScrollLink } from "react-scroll";
 import FloatingGraphics from "./FloatingGraphics";
 import TypeWriter from "./TypeWriter";
-
-const roles = [
-  "Full Stack Developer",
-  "MERN Stack Engineer",
-  "Coding Instructor",
-  "Problem Solver",
-  "React Developer",
-];
-
-const stats = [
-  { value: "3+", label: "Projects Built" },
-  { value: "3.78", label: "CGPA / 4.00" },
-  { value: "2026", label: "CSE Graduate" },
-  { value: "∞", label: "Passion for Code" },
-];
+import { profile } from "../data/profile";
 
 const Hero = () => {
   return (
@@ -106,19 +93,7 @@ const Hero = () => {
               transition={{ delay: 0.6, duration: 0.6 }}
               style={{ fontSize: "1.15rem", fontFamily: "'Space Grotesk', sans-serif", minHeight: "1.8rem" }}
             >
-              <TypeWriter words={roles} speed={75} pause={2000} deleteSpeed={40} />
-            </motion.div>
-
-            {/* Role pills */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.7, duration: 0.6 }}
-              style={{ display: "flex", flexWrap: "wrap", gap: "10px" }}
-            >
-              {["Full Stack Developer", "Coding Instructor"].map((tag, i) => (
-                <span key={i} className="skill-badge" style={{ fontSize: "0.78rem" }}>{tag}</span>
-              ))}
+              <TypeWriter words={profile.roles} speed={75} pause={2000} deleteSpeed={40} />
             </motion.div>
 
             {/* Bio */}
@@ -128,9 +103,8 @@ const Hero = () => {
               transition={{ delay: 0.8, duration: 0.8 }}
               style={{ color: "#94a3b8", fontSize: "1rem", lineHeight: 1.7, maxWidth: "440px" }}
             >
-              CSE graduate from BRAC University passionate about building modern,
-              scalable web applications. Currently teaching the next generation of
-              coders at Codingal.
+              Final-year CSE student at BRAC University. Building web apps, training ML models,
+              and teaching coding at Codingal.
             </motion.p>
 
             {/* CTA buttons */}
@@ -150,16 +124,24 @@ const Hero = () => {
                   View My Work
                 </motion.span>
               </ScrollLink>
-              <ScrollLink to="contact" smooth duration={600} offset={-70}>
-                <motion.span
-                  className="btn-outline"
-                  style={{ cursor: "pointer" }}
-                  whileHover={{ scale: 1.04 }}
-                  whileTap={{ scale: 0.97 }}
-                >
-                  Contact Me
-                </motion.span>
-              </ScrollLink>
+              <motion.a
+                href={profile.links.resume}
+                download
+                className="btn-outline"
+                style={{
+                  cursor: "pointer",
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "8px",
+                  textDecoration: "none",
+                }}
+                whileHover={{ scale: 1.04 }}
+                whileTap={{ scale: 0.97 }}
+              >
+                <HiArrowDownTray size={16} />
+                Download Resume
+                {/* TODO(Tanjip): replace public/resume.pdf with your real CV file */}
+              </motion.a>
             </motion.div>
 
             {/* Social icons */}
@@ -170,9 +152,9 @@ const Hero = () => {
               style={{ display: "flex", gap: "14px", alignItems: "center", paddingTop: "4px" }}
             >
               {[
-                { icon: <FaGithub />, href: "https://github.com/MaHdIn2020", label: "GitHub" },
-                { icon: <FaLinkedin />, href: "https://www.linkedin.com/in/tanjip-surait-mahdin/", label: "LinkedIn" },
-                { icon: <FaFacebook />, href: "https://www.facebook.com/tanjip.mahdin", label: "Facebook" },
+                { icon: <FaGithub />, href: profile.links.github, label: "GitHub" },
+                { icon: <FaLinkedin />, href: profile.links.linkedin, label: "LinkedIn" },
+                { icon: <FaFacebook />, href: profile.links.facebook, label: "Facebook" },
               ].map((s, i) => (
                 <motion.a
                   key={i}
@@ -215,34 +197,6 @@ const Hero = () => {
             transition={{ delay: 0.4, duration: 0.8, ease: "easeOut" }}
             style={{ display: "flex", flexDirection: "column", alignItems: "center", position: "relative" }}
           >
-            {/* Ghost text */}
-            <div style={{
-              position: "absolute", top: "-20px", right: "-20px",
-              fontFamily: "'Space Grotesk', sans-serif",
-              fontWeight: 900,
-              fontSize: "clamp(3rem, 6vw, 5rem)",
-              WebkitTextStroke: "1px rgba(0,229,255,0.12)",
-              color: "transparent",
-              letterSpacing: "-0.04em",
-              userSelect: "none", zIndex: 0, lineHeight: 1,
-            }}>
-              MAHDIN
-            </div>
-
-            {/* Outer glow ring — animated */}
-            <motion.div
-              animate={{ rotate: 360 }}
-              transition={{ repeat: Infinity, duration: 12, ease: "linear" }}
-              style={{
-                position: "absolute",
-                width: "clamp(260px, 32vw, 370px)",
-                height: "clamp(260px, 32vw, 370px)",
-                borderRadius: "16px",
-                border: "1px dashed rgba(0,229,255,0.18)",
-                zIndex: 0,
-              }}
-            />
-
             {/* Photo with bracket frame */}
             <motion.div
               className="bracket-frame"
@@ -252,7 +206,7 @@ const Hero = () => {
             >
               <img
                 src="/Picture.jpg"
-                alt="Tanjip Surait Mahdin"
+                alt="Tanjip Surait Mahdin — Final-year CSE student at BRAC University"
                 style={{
                   width: "clamp(240px, 30vw, 340px)",
                   height: "clamp(260px, 33vw, 380px)",
@@ -285,7 +239,7 @@ const Hero = () => {
               <span style={{ fontSize: "1.2rem" }}>🎓</span>
               <div>
                 <p style={{ color: "#ffffff", fontSize: "0.72rem", fontWeight: 700, lineHeight: 1.2 }}>BRAC University</p>
-                <p style={{ color: "#00e5ff", fontSize: "0.62rem" }}>CSE Graduate</p>
+                <p style={{ color: "#00e5ff", fontSize: "0.62rem" }}>CSE, CGPA {profile.education.cgpa}</p>
               </div>
             </motion.div>
 
@@ -305,7 +259,7 @@ const Hero = () => {
               <img src="/codingal.png" alt="Codingal" style={{ width: "22px", height: "22px", objectFit: "contain", borderRadius: "4px", background: "#fff", padding: "2px" }} />
               <div>
                 <p style={{ color: "#ffffff", fontSize: "0.72rem", fontWeight: 700, lineHeight: 1.2 }}>Codingal</p>
-                <p style={{ color: "#00e5ff", fontSize: "0.62rem" }}>Instructor</p>
+                <p style={{ color: "#00e5ff", fontSize: "0.62rem" }}>Instructor · {profile.studentsTaught} students</p>
               </div>
             </motion.div>
           </motion.div>
@@ -328,7 +282,7 @@ const Hero = () => {
           }}
           className="stats-row"
         >
-          {stats.map((s, i) => (
+          {profile.stats.map((s, i) => (
             <motion.div
               key={i}
               whileHover={{ background: "rgba(0,229,255,0.06)" }}

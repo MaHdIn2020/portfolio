@@ -1,6 +1,6 @@
 // src/pages/Experience.jsx
 import { motion } from "framer-motion";
-import { FiBriefcase, FiCalendar, FiMapPin } from "react-icons/fi";
+import { FiCalendar, FiMapPin } from "react-icons/fi";
 
 const experiences = [
   {
@@ -11,12 +11,12 @@ const experiences = [
     period: "2026 – Present",
     type: "Full-time",
     description:
-      "Teaching programming concepts and web development to students across different age groups. Designing engaging lesson plans, conducting live coding sessions, and mentoring aspiring developers to build real-world projects.",
+      "Teaching programming to students one-on-one and in small groups at Codingal. I've worked with 50+ students across different age groups and skill levels.",
     highlights: [
-      "Delivered 1-on-1 and group coding sessions for students aged 8–18",
-      "Taught Python, JavaScript, HTML/CSS and introductory web development",
-      "Designed structured curricula aligned with student learning objectives",
-      "Mentored students through project-based learning and hackathons",
+      "Taught 50+ students across individual and group sessions",
+      "Covered Python, JavaScript, HTML/CSS, and introductory web development",
+      "Designed lesson plans matched to each student's learning pace",
+      "Guided students through building small projects to apply what they learned",
     ],
   },
 ];
@@ -25,6 +25,7 @@ const Experience = () => {
   return (
     <section
       id="experience"
+      aria-label="Work experience"
       style={{ background: "#0a0a12", padding: "100px 24px" }}
     >
       <div style={{ maxWidth: "1200px", margin: "0 auto" }}>

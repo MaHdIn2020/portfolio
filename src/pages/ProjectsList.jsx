@@ -1,49 +1,195 @@
 // src/pages/ProjectsList.jsx
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { FiExternalLink, FiGithub, FiX, FiLayers, FiZap } from "react-icons/fi";
+import { FiExternalLink, FiGithub, FiX, FiLayers, FiFileText } from "react-icons/fi";
 
+// ── PROJECT DATA ──────────────────────────────────────────────────────────────
+// Order: ML projects → Web projects → Game
 const projects = [
+  // ── ML ────────────────────────────────────────────────────────────────────
   {
     id: 1,
-    name: "Match Finder",
-    image: "/match-finder.jpeg",
-    description: "A modern matrimonial platform connecting users based on preferences, with advanced filtering and profile matching.",
-    technologies: ["React", "Tailwind CSS", "Framer Motion", "Firebase"],
-    liveLink: "https://match-finder-2c918.web.app/",
-    githubClient: "https://github.com/MaHdIn2020/MatchFinder",
-    challenges: "Building a fully responsive layout with smooth animations and implementing complex filter logic for user preferences.",
-    futurePlans: "Adding real-time chat, user authentication, and AI-powered match recommendations.",
+    name: "Yahoo Answers Topic Classification",
+    category: "ML",
+    shortDesc:
+      "10-class NLP classification comparing classical ML vs. deep learning on the Yahoo Answers dataset.",
+    description:
+      "Multi-class text classification on the Yahoo Answers dataset (question title + content + best answer, 10 classes). Compares classical ML (Naive Bayes, Logistic Regression, SVM, Random Forest, tuned with GridSearchCV) against neural networks (DNN on TF-IDF + Truncated SVD; DNN, RNN, GRU, LSTM, and bidirectional variants on Skip-gram Word2Vec, tuned with KerasTuner). Preprocessing: lowercase, HTML strip, tokenize, stopword removal, lemmatize. Metrics: accuracy and macro F1. Finding: deep models outperform classical; Bidirectional LSTM achieves the best macro F1.",
+    challenges:
+      "Balancing fair comparison between TF-IDF and Word2Vec feature spaces required separate tuning pipelines; KerasTuner trials for the bidirectional models were compute-intensive and needed careful early stopping.",
+    technologies: ["Python", "scikit-learn", "TensorFlow/Keras", "KerasTuner", "Gensim", "NLP"],
+    githubLink: "https://github.com/MaHdIn2020/Yahoo-Answers-Topic-Classification",
+    reportLink:
+      "https://github.com/MaHdIn2020/Yahoo-Answers-Topic-Classification/raw/main/Yahoo_Answers_Topic_Classification_Report.pdf",
   },
   {
     id: 2,
-    name: "HobbyHive",
-    image: "/HobbyHive.jpeg",
-    description: "A group buying platform for hobby enthusiasts featuring product reviews, group orders, and community features.",
-    technologies: ["React.js", "Node.js", "MongoDB", "Express.js"],
-    liveLink: "https://hobbyhive-d81af.web.app/",
-    githubClient: "https://github.com/MaHdIn2020/hobbyhive",
-    challenges: "Handling concurrent user authentication, managing group purchase states, and implementing a review system.",
-    futurePlans: "Expanding hobby categories, improving UI/UX, and adding payment gateway integration.",
+    name: "Heart Failure Prediction",
+    category: "ML",
+    shortDesc:
+      "Binary heart-disease classifier deployed as a Streamlit app. Notebook built with AI assistance.",
+    description:
+      "Binary classifier on the Kaggle Heart Failure Prediction dataset (918 rows, 12 features). Compared five models: Logistic Regression, SVM, KNN, Naive Bayes, Decision Tree. Best result: Logistic Regression with 86.41% accuracy and 87.92% F1. The ML notebook was built with AI-assisted code generation, then deployed as an interactive Streamlit app with a sidebar for patient inputs, a risk gauge, and charts.",
+    challenges:
+      "172 zero-values in Cholesterol and some in RestingBP required imputation before any model training; ensuring the exported model matched the preprocessing pipeline used in the app required careful serialisation with joblib.",
+    technologies: ["Python", "scikit-learn", "Streamlit", "Plotly", "joblib"],
+    githubLink: "https://github.com/MaHdIn2020/Heart-Failure-Prediction",
+    liveLink: "https://heart-failure-prediction0.streamlit.app/",
   },
   {
     id: 3,
-    name: "Review Hub",
-    image: "/review-hub.jpeg",
-    description: "A responsive product review platform with user authentication, ratings, and a curated product discovery feed.",
+    name: "Diabetes Prediction System",
+    category: "ML",
+    shortDesc:
+      "Streamlit app for diabetes risk from clinical inputs. Compares nine classifiers including XGBoost.",
+    description:
+      "Streamlit app for diabetes risk prediction from clinical inputs (age, pregnancies, blood pressure, glucose, insulin, BMI, and others). The training script cleans impossible zero/low values (blood pressure, BMI, glucose, skin thickness) with mean/median imputation and caps insulin outliers with IQR, then scales features before comparing nine models: Logistic Regression, Naive Bayes, Decision Tree, SVM, KNN, Random Forest, AdaBoost, Gradient Boosting, and XGBoost, with GridSearch/RandomizedSearch tuning. Best model and score: TODO(Tanjip): confirm best model and score from train_model.py or notebook.",
+    challenges:
+      // TODO(Tanjip): add one real bug or tradeoff from the code when confirming best model
+      "TODO(Tanjip): one real bug or tradeoff found in the code/README.",
+    technologies: ["Python", "scikit-learn", "XGBoost", "Streamlit"],
+    githubLink: "https://github.com/MaHdIn2020/Diabetes-Prediction-System",
+    // TODO(Tanjip): add Streamlit live link if deployed
+  },
+  {
+    id: 4,
+    name: "Predicting Career Changes",
+    category: "ML",
+    shortDesc:
+      "ML approach to employee retention — predicts whether an employee will change career from 13 variables.",
+    description:
+      "Predicts whether an employee will change career using 13 variables: city development index, gender, education level, relevant experience, company size and type, training hours, and others. The project covers EDA with visualisations, missing value handling, categorical and ordinal encoding, feature scaling, model training, and variable importance analysis. Best model and score: TODO(Tanjip): check notebook for explicit metrics before publishing.",
+    challenges:
+      // TODO(Tanjip): one real bug or tradeoff found in the code/README
+      "TODO(Tanjip): one real bug or tradeoff found in the code/README.",
+    technologies: ["Python", "Pandas", "NumPy", "Seaborn", "scikit-learn"],
+    githubLink:
+      "https://github.com/MaHdIn2020/-Predicting-Career-Changes-A-Machine-Learning-Approach-to-Employee-Retention",
+  },
+
+  // ── WEB ────────────────────────────────────────────────────────────────────
+  {
+    id: 5,
+    name: "BRAC Research Connect",
+    category: "Web",
+    shortDesc:
+      "Full-stack thesis workflow platform for BRAC University — team project.",
+    description:
+      "Full-stack thesis management system for BRAC University. Role-based dashboards for Students, Supervisors, and Admins. Features: proposal submission and status tracking, supervisor feedback and grading, meeting scheduling, arXiv paper search and saving, find-a-group, FAQs, and announcements. Frontend: React + Tailwind + Firebase Auth. Backend: Node.js / Express / MongoDB, deployed on Vercel. TODO(Tanjip): state your exact contribution within the team.",
+    challenges:
+      // TODO(Tanjip): one real bug or tradeoff from the code/README
+      "TODO(Tanjip): one real bug or tradeoff found in the code/README.",
+    technologies: ["React", "Tailwind CSS", "Firebase", "Node.js", "Express.js", "MongoDB", "Vercel"],
+    githubLink: "https://github.com/MaHdIn2020/BRAC-Research-Connect",
+    extraLinks: [
+      { label: "Client repo", href: "https://github.com/IFTI-KAR/BRACU-Research-Thesis-client" },
+      { label: "Server repo", href: "https://github.com/IFTI-KAR/BRACU-Research-server" },
+    ],
+    // No live URL found in README — skipping per instructions
+  },
+  {
+    id: 6,
+    name: "Match Finder",
+    category: "Web",
+    shortDesc:
+      "Matrimonial platform with preference-based profile matching and advanced filters.",
+    description:
+      "A matrimonial platform where users can find and connect with matches based on preferences. Built with React, Tailwind CSS, Framer Motion, and Firebase for real-time data and auth.",
+    challenges:
+      // TODO(Tanjip): one real bug or tradeoff from the code/README
+      "TODO(Tanjip): one real bug or tradeoff found in the MatchFinder codebase.",
+    technologies: ["React", "Tailwind CSS", "Framer Motion", "Firebase"],
+    githubLink: "https://github.com/MaHdIn2020/MatchFinder",
+    liveLink: "https://match-finder-2c918.web.app/",
+  },
+  {
+    id: 7,
+    name: "HobbyHive",
+    category: "Web",
+    shortDesc:
+      "Group buying platform for hobby enthusiasts with community reviews and orders.",
+    description:
+      "A group buying platform for hobby enthusiasts. Users can browse products, join group orders, and leave reviews. Built with the MERN stack.",
+    challenges:
+      // TODO(Tanjip): one real bug or tradeoff from the code/README
+      "TODO(Tanjip): one real bug or tradeoff found in the HobbyHive codebase.",
     technologies: ["React.js", "Node.js", "MongoDB", "Express.js"],
+    githubLink: "https://github.com/MaHdIn2020/hobbyhive",
+    liveLink: "https://hobbyhive-d81af.web.app/",
+  },
+  {
+    id: 8,
+    name: "Review Hub",
+    category: "Web",
+    shortDesc:
+      "Product review platform with user authentication, ratings, and a discovery feed.",
+    description:
+      "A responsive product review platform. Users can sign up, submit reviews with ratings, and browse a curated product discovery feed. Built with the MERN stack.",
+    challenges:
+      // TODO(Tanjip): one real bug or tradeoff from the code/README
+      "TODO(Tanjip): one real bug or tradeoff found in the Review Hub codebase.",
+    technologies: ["React.js", "Node.js", "MongoDB", "Express.js"],
+    githubLink: "https://github.com/MaHdIn2020/Review-Hub",
     liveLink: "https://review-hub-641bc.web.app/",
-    githubClient: "https://github.com/MaHdIn2020/Review-Hub",
-    challenges: "Building a secure review system, preventing duplicate reviews, and handling user auth at scale.",
-    futurePlans: "Implementing AI-powered product recommendations and improving the overall UI/UX experience.",
+  },
+
+  // ── GAME ──────────────────────────────────────────────────────────────────
+  {
+    id: 9,
+    name: "3D Space Shooter",
+    category: "Game",
+    shortDesc:
+      "3D space combat game in Python + PyOpenGL/GLUT — CSE423 course project.",
+    description:
+      "3D space combat game built with Python and PyOpenGL/GLUT for CSE423. Players pilot a battleship through 4 levels of increasing difficulty, facing 3 enemy types, a final boss, shield and missile power-ups, a combo score multiplier, a HUD with radar, and switchable third-person/cockpit camera. The clone URL in the README points to Akhlakur07, indicating this is likely a group project. TODO(Tanjip): confirm the team members and your specific contribution.",
+    challenges:
+      "Implementing the combo multiplier and radar HUD simultaneously required careful separation between game-state updates and OpenGL render calls to avoid flickering.",
+    technologies: ["Python", "PyOpenGL", "GLUT"],
+    githubLink: "https://github.com/MaHdIn2020/3D-Space-Shooter_CSE423",
   },
 ];
 
+const CATEGORIES = ["All", "ML", "Web", "Game"];
+
+const categoryColors = {
+  ML: { bg: "rgba(168,85,247,0.12)", border: "rgba(168,85,247,0.35)", text: "#c084fc" },
+  Web: { bg: "rgba(0,229,255,0.10)", border: "rgba(0,229,255,0.30)", text: "#00e5ff" },
+  Game: { bg: "rgba(251,146,60,0.12)", border: "rgba(251,146,60,0.35)", text: "#fb923c" },
+};
+
+function CategoryBadge({ category }) {
+  const c = categoryColors[category] || {};
+  return (
+    <span
+      style={{
+        display: "inline-block",
+        padding: "3px 12px",
+        borderRadius: "100px",
+        fontSize: "0.7rem",
+        fontWeight: 700,
+        letterSpacing: "0.05em",
+        textTransform: "uppercase",
+        background: c.bg,
+        border: `1px solid ${c.border}`,
+        color: c.text,
+      }}
+    >
+      {category}
+    </span>
+  );
+}
+
 const ProjectsList = () => {
   const [selected, setSelected] = useState(null);
+  const [activeCategory, setActiveCategory] = useState("All");
+
+  const visible =
+    activeCategory === "All"
+      ? projects
+      : projects.filter((p) => p.category === activeCategory);
 
   return (
-    <section id="projects" style={{ background: "#0d1117", padding: "100px 24px" }}>
+    <section id="projects" aria-label="Projects" style={{ background: "#0d1117", padding: "100px 24px" }}>
       <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
         {/* Heading */}
         <motion.div
@@ -51,108 +197,151 @@ const ProjectsList = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          style={{ marginBottom: "60px" }}
+          style={{ marginBottom: "40px" }}
         >
           <p style={{ color: "#00e5ff", fontSize: "0.8rem", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "12px" }}>
-            What I've built
+            What I&apos;ve built
           </p>
           <h2 className="section-heading cyan-underline" style={{ fontSize: "clamp(2rem, 4vw, 2.8rem)", color: "#ffffff" }}>
             My Projects
           </h2>
         </motion.div>
 
+        {/* Category filter chips */}
+        <div style={{ display: "flex", gap: "10px", flexWrap: "wrap", marginBottom: "40px" }}>
+          {CATEGORIES.map((cat) => (
+            <motion.button
+              key={cat}
+              onClick={() => setActiveCategory(cat)}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.97 }}
+              style={{
+                padding: "8px 20px",
+                borderRadius: "100px",
+                border: activeCategory === cat
+                  ? "1px solid rgba(0,229,255,0.6)"
+                  : "1px solid rgba(255,255,255,0.1)",
+                background: activeCategory === cat
+                  ? "rgba(0,229,255,0.12)"
+                  : "rgba(255,255,255,0.04)",
+                color: activeCategory === cat ? "#00e5ff" : "#94a3b8",
+                fontSize: "0.82rem",
+                fontWeight: 600,
+                cursor: "pointer",
+                transition: "all 0.25s",
+                fontFamily: "'Space Grotesk', sans-serif",
+              }}
+            >
+              {cat}
+            </motion.button>
+          ))}
+        </div>
+
         {/* Project Grid */}
         <motion.div
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.15 } } }}
-          style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(320px, 1fr))", gap: "24px" }}
+          layout
+          style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(320px, 1fr))", gap: "24px" }}
         >
-          {projects.map((project) => (
-            <motion.div
-              key={project.id}
-              className="bento-card"
-              variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0, transition: { duration: 0.5 } } }}
-              whileHover={{ y: -6 }}
-              style={{ cursor: "pointer", overflow: "hidden" }}
-              onClick={() => setSelected(project)}
-            >
-              {/* Image */}
-              <div style={{ position: "relative", overflow: "hidden", height: "200px" }}>
-                <img
-                  src={project.image}
-                  alt={project.name}
-                  style={{ width: "100%", height: "100%", objectFit: "cover", transition: "transform 0.4s ease" }}
-                  onMouseEnter={e => (e.target.style.transform = "scale(1.06)")}
-                  onMouseLeave={e => (e.target.style.transform = "scale(1)")}
-                />
-                {/* Overlay */}
-                <div style={{
-                  position: "absolute", inset: 0,
-                  background: "linear-gradient(to bottom, transparent 50%, rgba(10,10,18,0.9) 100%)",
-                }} />
-              </div>
+          <AnimatePresence mode="popLayout">
+            {visible.map((project) => (
+              <motion.div
+                key={project.id}
+                layout
+                initial={{ opacity: 0, y: 24 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.97 }}
+                transition={{ duration: 0.35 }}
+                className="bento-card"
+                whileHover={{ y: -6 }}
+                style={{ cursor: "pointer", overflow: "hidden", display: "flex", flexDirection: "column" }}
+                onClick={() => setSelected(project)}
+              >
+                {/* Card content — no image */}
+                <div style={{ padding: "28px", display: "flex", flexDirection: "column", gap: "14px", flex: 1 }}>
+                  {/* Category badge + title */}
+                  <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: "10px" }}>
+                    <h3 style={{
+                      fontFamily: "'Space Grotesk', sans-serif",
+                      fontWeight: 700,
+                      fontSize: "1.1rem",
+                      color: "#ffffff",
+                      lineHeight: 1.35,
+                      flex: 1,
+                    }}>
+                      {project.name}
+                    </h3>
+                    <CategoryBadge category={project.category} />
+                  </div>
 
-              {/* Content */}
-              <div style={{ padding: "24px" }}>
-                <h3 style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: "1.15rem", color: "#ffffff", marginBottom: "10px" }}>
-                  {project.name}
-                </h3>
-                <p style={{ color: "#94a3b8", fontSize: "0.875rem", lineHeight: 1.65, marginBottom: "16px" }}>
-                  {project.description}
-                </p>
+                  <p style={{ color: "#94a3b8", fontSize: "0.875rem", lineHeight: 1.65 }}>
+                    {project.shortDesc}
+                  </p>
 
-                {/* Tech badges */}
-                <div style={{ display: "flex", flexWrap: "wrap", gap: "8px", marginBottom: "20px" }}>
-                  {project.technologies.map((tech, i) => (
-                    <span key={i} className="skill-badge" style={{ fontSize: "0.72rem", padding: "4px 10px" }}>
-                      {tech}
+                  {/* Tech chips */}
+                  <div style={{ display: "flex", flexWrap: "wrap", gap: "6px", marginTop: "auto" }}>
+                    {project.technologies.map((tech, i) => (
+                      <span key={i} className="skill-badge" style={{ fontSize: "0.7rem", padding: "3px 9px" }}>
+                        {tech}
+                      </span>
+                    ))}
+                  </div>
+
+                  {/* Links row */}
+                  <div style={{ display: "flex", gap: "12px", alignItems: "center", flexWrap: "wrap" }}>
+                    {project.liveLink && (
+                      <a
+                        href={project.liveLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={`Live demo of ${project.name}`}
+                        onClick={(e) => e.stopPropagation()}
+                        style={{ display: "flex", alignItems: "center", gap: "5px", color: "#00e5ff", fontSize: "0.8rem", fontWeight: 600, textDecoration: "none" }}
+                        onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.7")}
+                        onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
+                      >
+                        <FiExternalLink size={13} /> Live
+                      </a>
+                    )}
+                    {project.githubLink && (
+                      <a
+                        href={project.githubLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={`GitHub repository for ${project.name}`}
+                        onClick={(e) => e.stopPropagation()}
+                        style={{ display: "flex", alignItems: "center", gap: "5px", color: "#94a3b8", fontSize: "0.8rem", fontWeight: 600, textDecoration: "none" }}
+                        onMouseEnter={(e) => (e.currentTarget.style.color = "#ffffff")}
+                        onMouseLeave={(e) => (e.currentTarget.style.color = "#94a3b8")}
+                      >
+                        <FiGithub size={13} /> GitHub
+                      </a>
+                    )}
+                    {project.reportLink && (
+                      <a
+                        href={project.reportLink}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={`PDF report for ${project.name}`}
+                        onClick={(e) => e.stopPropagation()}
+                        style={{ display: "flex", alignItems: "center", gap: "5px", color: "#94a3b8", fontSize: "0.8rem", fontWeight: 600, textDecoration: "none" }}
+                        onMouseEnter={(e) => (e.currentTarget.style.color = "#ffffff")}
+                        onMouseLeave={(e) => (e.currentTarget.style.color = "#94a3b8")}
+                      >
+                        <FiFileText size={13} /> Report PDF
+                      </a>
+                    )}
+                    <span style={{ marginLeft: "auto", color: "#00e5ff", fontSize: "0.75rem", fontWeight: 500, opacity: 0.6 }}>
+                      Details →
                     </span>
-                  ))}
+                  </div>
                 </div>
-
-                {/* Links */}
-                <div style={{ display: "flex", gap: "12px" }}>
-                  {project.liveLink && (
-                    <a
-                      href={project.liveLink}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      onClick={e => e.stopPropagation()}
-                      style={{ display: "flex", alignItems: "center", gap: "6px", color: "#00e5ff", fontSize: "0.82rem", fontWeight: 600, textDecoration: "none" }}
-                      onMouseEnter={e => (e.currentTarget.style.opacity = "0.7")}
-                      onMouseLeave={e => (e.currentTarget.style.opacity = "1")}
-                    >
-                      <FiExternalLink size={14} /> Live Demo
-                    </a>
-                  )}
-                  {project.githubClient && (
-                    <a
-                      href={project.githubClient}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      onClick={e => e.stopPropagation()}
-                      style={{ display: "flex", alignItems: "center", gap: "6px", color: "#94a3b8", fontSize: "0.82rem", fontWeight: 600, textDecoration: "none" }}
-                      onMouseEnter={e => (e.currentTarget.style.color = "#ffffff")}
-                      onMouseLeave={e => (e.currentTarget.style.color = "#94a3b8")}
-                    >
-                      <FiGithub size={14} /> Source Code
-                    </a>
-                  )}
-                  <span
-                    style={{ marginLeft: "auto", color: "#00e5ff", fontSize: "0.78rem", fontWeight: 500, opacity: 0.7 }}
-                  >
-                    View Details →
-                  </span>
-                </div>
-              </div>
-            </motion.div>
-          ))}
+              </motion.div>
+            ))}
+          </AnimatePresence>
         </motion.div>
       </div>
 
-      {/* Modal */}
+      {/* ── MODAL ── */}
       <AnimatePresence>
         {selected && (
           <motion.div
@@ -173,7 +362,7 @@ const ProjectsList = () => {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
               transition={{ duration: 0.3 }}
-              onClick={e => e.stopPropagation()}
+              onClick={(e) => e.stopPropagation()}
               style={{
                 background: "#111827",
                 border: "1px solid rgba(0,229,255,0.2)",
@@ -184,66 +373,77 @@ const ProjectsList = () => {
                 overflowY: "auto",
               }}
             >
-              {/* Image */}
-              <div style={{ position: "relative" }}>
-                <img
-                  src={selected.image}
-                  alt={selected.name}
-                  style={{ width: "100%", height: "260px", objectFit: "cover", borderRadius: "20px 20px 0 0" }}
-                />
+              {/* Modal header */}
+              <div style={{ padding: "28px 32px 0", display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: "16px" }}>
+                <div>
+                  <CategoryBadge category={selected.category} />
+                  <h3 style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: "1.5rem", color: "#ffffff", marginTop: "10px" }}>
+                    {selected.name}
+                  </h3>
+                </div>
                 <button
                   onClick={() => setSelected(null)}
-                  aria-label="Close"
+                  aria-label="Close project details"
                   style={{
-                    position: "absolute", top: "16px", right: "16px",
                     background: "rgba(10,10,18,0.8)", border: "1px solid rgba(0,229,255,0.3)",
                     borderRadius: "50%", width: "36px", height: "36px",
                     display: "flex", alignItems: "center", justifyContent: "center",
-                    color: "#00e5ff", cursor: "pointer", fontSize: "1rem",
+                    color: "#00e5ff", cursor: "pointer", fontSize: "1rem", flexShrink: 0,
                   }}
                 >
                   <FiX />
                 </button>
               </div>
 
-              {/* Content */}
-              <div style={{ padding: "32px" }}>
-                <h3 style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: "1.6rem", color: "#ffffff", marginBottom: "8px" }}>
-                  {selected.name}
-                </h3>
-
+              {/* Modal content */}
+              <div style={{ padding: "24px 32px 32px" }}>
+                {/* Tech chips */}
                 <div style={{ display: "flex", flexWrap: "wrap", gap: "8px", marginBottom: "24px" }}>
                   {selected.technologies.map((t, i) => (
                     <span key={i} className="skill-badge" style={{ fontSize: "0.75rem" }}>{t}</span>
                   ))}
                 </div>
 
-                <div style={{ display: "flex", flexDirection: "column", gap: "18px" }}>
-                  {[
-                    { label: "Description", icon: <FiLayers size={14} />, text: selected.description },
-                    { label: "Challenges", icon: <FiZap size={14} />, text: selected.challenges },
-                    { label: "Future Plans", icon: <FiZap size={14} />, text: selected.futurePlans },
-                  ].map((item, i) => (
-                    <div key={i}>
-                      <p style={{ display: "flex", alignItems: "center", gap: "6px", color: "#00e5ff", fontSize: "0.78rem", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.07em", marginBottom: "6px" }}>
-                        {item.icon} {item.label}
-                      </p>
-                      <p style={{ color: "#94a3b8", lineHeight: 1.7, fontSize: "0.9rem" }}>{item.text}</p>
-                    </div>
-                  ))}
+                <div style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
+                  {/* Description */}
+                  <div>
+                    <p style={{ display: "flex", alignItems: "center", gap: "6px", color: "#00e5ff", fontSize: "0.78rem", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.07em", marginBottom: "8px" }}>
+                      <FiLayers size={13} /> Description
+                    </p>
+                    <p style={{ color: "#94a3b8", lineHeight: 1.75, fontSize: "0.9rem" }}>{selected.description}</p>
+                  </div>
+
+                  {/* Challenges */}
+                  <div>
+                    <p style={{ display: "flex", alignItems: "center", gap: "6px", color: "#00e5ff", fontSize: "0.78rem", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.07em", marginBottom: "8px" }}>
+                      Notes
+                    </p>
+                    <p style={{ color: "#94a3b8", lineHeight: 1.75, fontSize: "0.9rem" }}>{selected.challenges}</p>
+                  </div>
                 </div>
 
-                <div style={{ display: "flex", gap: "14px", marginTop: "28px", flexWrap: "wrap" }}>
+                {/* Links */}
+                <div style={{ display: "flex", gap: "12px", marginTop: "28px", flexWrap: "wrap" }}>
                   {selected.liveLink && (
                     <a href={selected.liveLink} target="_blank" rel="noopener noreferrer" className="btn-primary" style={{ fontSize: "0.85rem", padding: "10px 22px" }}>
                       Live Demo ↗
                     </a>
                   )}
-                  {selected.githubClient && (
-                    <a href={selected.githubClient} target="_blank" rel="noopener noreferrer" className="btn-outline" style={{ fontSize: "0.85rem", padding: "10px 22px", display: "flex", alignItems: "center", gap: "8px" }}>
-                      <FiGithub /> Source Code
+                  {selected.githubLink && (
+                    <a href={selected.githubLink} target="_blank" rel="noopener noreferrer" className="btn-outline" style={{ fontSize: "0.85rem", padding: "10px 22px", display: "flex", alignItems: "center", gap: "8px" }}>
+                      <FiGithub /> GitHub
                     </a>
                   )}
+                  {selected.reportLink && (
+                    <a href={selected.reportLink} target="_blank" rel="noopener noreferrer" className="btn-outline" style={{ fontSize: "0.85rem", padding: "10px 22px", display: "flex", alignItems: "center", gap: "8px" }}>
+                      <FiFileText /> Report PDF
+                    </a>
+                  )}
+                  {selected.extraLinks && selected.extraLinks.map((el, i) => (
+                    <a key={i} href={el.href} target="_blank" rel="noopener noreferrer" className="btn-outline" style={{ fontSize: "0.85rem", padding: "10px 22px", display: "flex", alignItems: "center", gap: "8px" }}>
+                      <FiGithub /> {el.label}
+                    </a>
+                  ))}
                 </div>
               </div>
             </motion.div>

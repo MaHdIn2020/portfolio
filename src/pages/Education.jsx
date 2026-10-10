@@ -1,6 +1,7 @@
 // src/pages/Education.jsx
 import { motion } from "framer-motion";
 import { FiAward } from "react-icons/fi";
+import { profile } from "../data/profile";
 
 const educationData = [
   {
@@ -16,17 +17,17 @@ const educationData = [
     result: "GPA 5.00 / 5.00",
   },
   {
-    degree: "B.Sc. in Computer Science & Engineering",
-    institution: "BRAC University",
-    year: "Graduated — October 2026",
-    result: "CGPA 3.78 / 4.00",
+    degree: profile.education.degree,
+    institution: profile.education.university,
+    year: profile.education.status,
+    result: `CGPA ${profile.education.cgpa} / ${profile.education.cgpaOutOf}`,
     highlight: true,
   },
 ];
 
 const Education = () => {
   return (
-    <section id="education" style={{ background: "#0d1117", padding: "100px 24px" }}>
+    <section id="education" aria-label="Education" style={{ background: "#0d1117", padding: "100px 24px" }}>
       <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
         {/* Heading */}
         <motion.div
