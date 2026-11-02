@@ -25,7 +25,7 @@ export const profile = {
     { value: "9", label: "Projects" },
   ],
 
-  roles: ["Full Stack Developer", "ML Engineer", "Coding Instructor"],
+  roles: ["Full Stack Developer", "ML Engineer", "ML/AI Researcher", "Coding Instructor"],
 
   links: {
     github: "https://github.com/MaHdIn2020",
