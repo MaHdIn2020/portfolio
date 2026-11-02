@@ -53,26 +53,26 @@ const skillGroups = [
 
 const Skills = () => {
   return (
-    <section id="skills" aria-label="Skills and technologies" className="bg-[#0a0a12] py-20 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-6xl mx-auto">
+    <section id="skills" aria-label="Skills and technologies" style={{ background: "#0a0a12", padding: "100px 24px" }}>
+      <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
         {/* Heading */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="mb-10 sm:mb-14"
+          style={{ marginBottom: "60px" }}
         >
-          <p className="text-[#00e5ff] text-xs font-semibold uppercase tracking-widest mb-3">
+          <p style={{ color: "#00e5ff", fontSize: "0.8rem", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "12px" }}>
             What I work with
           </p>
-          <h2 className="section-heading cyan-underline text-3xl sm:text-4xl lg:text-5xl text-white font-bold">
+          <h2 className="section-heading cyan-underline" style={{ fontSize: "clamp(2rem, 4vw, 2.8rem)", color: "#ffffff" }}>
             Skills &amp; Technologies
           </h2>
         </motion.div>
 
         {/* Skill Groups */}
-        <div className="flex flex-col gap-10 sm:gap-12">
+        <div style={{ display: "flex", flexDirection: "column", gap: "48px" }}>
           {skillGroups.map((group, gi) => (
             <motion.div
               key={gi}
@@ -81,25 +81,40 @@ const Skills = () => {
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: gi * 0.1 }}
             >
-              <p className="text-slate-400 text-xs font-semibold uppercase tracking-wider mb-4 pb-3 border-b border-slate-800">
+              <p style={{
+                color: "#94a3b8", fontSize: "0.78rem", fontWeight: 600,
+                textTransform: "uppercase", letterSpacing: "0.1em",
+                marginBottom: "20px",
+                paddingBottom: "12px",
+                borderBottom: "1px solid rgba(255,255,255,0.06)",
+              }}>
                 {group.category}
               </p>
-              {/* Chip grid */}
-              <div className="flex flex-wrap gap-2.5 sm:gap-3">
+              {/* Chip grid — no bars, no percentages */}
+              <div style={{ display: "flex", flexWrap: "wrap", gap: "12px" }}>
                 {group.skills.map((skill, si) => (
                   <motion.div
                     key={si}
-                    whileHover={{ y: -3, scale: 1.03 }}
+                    whileHover={{ y: -4, borderColor: "rgba(0,229,255,0.5)", scale: 1.04 }}
                     initial={{ opacity: 0, scale: 0.95 }}
                     whileInView={{ opacity: 1, scale: 1 }}
                     viewport={{ once: true }}
-                    transition={{ duration: 0.3, delay: si * 0.04 }}
-                    className="inline-flex items-center gap-2 px-3.5 py-2 sm:px-4 sm:py-2.5 bg-[#111827] border border-cyan-500/20 hover:border-cyan-500/50 rounded-full cursor-default transition-all shadow-sm"
+                    transition={{ duration: 0.3, delay: si * 0.05 }}
+                    style={{
+                      display: "inline-flex",
+                      alignItems: "center",
+                      gap: "8px",
+                      padding: "10px 18px",
+                      background: "#111827",
+                      border: "1px solid rgba(0,229,255,0.15)",
+                      borderRadius: "100px",
+                      cursor: "default",
+                    }}
                   >
-                    <span className="text-base sm:text-lg leading-none" style={{ color: skill.color }}>
+                    <span style={{ fontSize: "1.1rem", color: skill.color, lineHeight: 1 }}>
                       {skill.icon}
                     </span>
-                    <span className="font-medium text-xs sm:text-sm text-slate-200">
+                    <span style={{ fontWeight: 600, fontSize: "0.85rem", color: "#e2e8f0" }}>
                       {skill.name}
                     </span>
                   </motion.div>

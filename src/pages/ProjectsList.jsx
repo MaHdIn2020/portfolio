@@ -181,26 +181,26 @@ const ProjectsList = () => {
       : projects.filter((p) => p.category === activeCategory);
 
   return (
-    <section id="projects" aria-label="Projects" className="bg-[#0d1117] py-20 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-6xl mx-auto">
+    <section id="projects" aria-label="Projects" style={{ background: "#0d1117", padding: "100px 24px" }}>
+      <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
         {/* Heading */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="mb-10 sm:mb-12"
+          style={{ marginBottom: "40px" }}
         >
-          <p className="text-[#00e5ff] text-xs font-semibold uppercase tracking-widest mb-3">
+          <p style={{ color: "#00e5ff", fontSize: "0.8rem", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "12px" }}>
             What I&apos;ve built
           </p>
-          <h2 className="section-heading cyan-underline text-3xl sm:text-4xl lg:text-5xl text-white font-bold">
+          <h2 className="section-heading cyan-underline" style={{ fontSize: "clamp(2rem, 4vw, 2.8rem)", color: "#ffffff" }}>
             My Projects
           </h2>
         </motion.div>
 
         {/* Category filter chips */}
-        <div className="flex gap-2.5 flex-wrap mb-10">
+        <div style={{ display: "flex", gap: "10px", flexWrap: "wrap", marginBottom: "40px" }}>
           {CATEGORIES.map((cat) => (
             <motion.button
               key={cat}
@@ -232,7 +232,7 @@ const ProjectsList = () => {
         {/* Project Grid */}
         <motion.div
           layout
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+          style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(320px, 1fr))", gap: "24px" }}
         >
           <AnimatePresence mode="popLayout">
             {visible.map((project) => (
@@ -346,7 +346,7 @@ const ProjectsList = () => {
               background: "rgba(0,0,0,0.85)",
               backdropFilter: "blur(8px)",
               display: "flex", alignItems: "center", justifyContent: "center",
-              zIndex: 200, padding: "16px",
+              zIndex: 200, padding: "24px",
             }}
           >
             <motion.div
@@ -366,10 +366,10 @@ const ProjectsList = () => {
               }}
             >
               {/* Modal header */}
-              <div className="p-5 sm:p-7 pb-0 flex items-start justify-between gap-4">
+              <div style={{ padding: "28px 32px 0", display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: "16px" }}>
                 <div>
                   <CategoryBadge category={selected.category} />
-                  <h3 style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: "1.35rem", color: "#ffffff", marginTop: "10px" }}>
+                  <h3 style={{ fontFamily: "'Space Grotesk', sans-serif", fontWeight: 700, fontSize: "1.5rem", color: "#ffffff", marginTop: "10px" }}>
                     {selected.name}
                   </h3>
                 </div>
@@ -388,7 +388,7 @@ const ProjectsList = () => {
               </div>
 
               {/* Modal content */}
-              <div className="p-5 sm:p-7 pt-4">
+              <div style={{ padding: "24px 32px 32px" }}>
                 {/* Tech chips */}
                 <div style={{ display: "flex", flexWrap: "wrap", gap: "8px", marginBottom: "24px" }}>
                   {selected.technologies.map((t, i) => (

@@ -27,20 +27,20 @@ const educationData = [
 
 const Education = () => {
   return (
-    <section id="education" aria-label="Education" className="bg-[#0d1117] py-20 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-6xl mx-auto">
+    <section id="education" aria-label="Education" style={{ background: "#0d1117", padding: "100px 24px" }}>
+      <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
         {/* Heading */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="mb-10 sm:mb-14"
+          style={{ marginBottom: "60px" }}
         >
-          <p className="text-[#00e5ff] text-xs font-semibold uppercase tracking-widest mb-3">
+          <p style={{ color: "#00e5ff", fontSize: "0.8rem", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "12px" }}>
             Academic background
           </p>
-          <h2 className="section-heading cyan-underline text-3xl sm:text-4xl lg:text-5xl text-white font-bold">
+          <h2 className="section-heading cyan-underline" style={{ fontSize: "clamp(2rem, 4vw, 2.8rem)", color: "#ffffff" }}>
             Education
           </h2>
         </motion.div>
@@ -51,51 +51,66 @@ const Education = () => {
           whileInView="visible"
           viewport={{ once: true }}
           variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.15 } } }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+          style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: "24px" }}
         >
           {educationData.map((edu, i) => (
             <motion.div
               key={i}
-              className="bento-card p-6 sm:p-7 relative overflow-hidden flex flex-col justify-between"
+              className="bento-card"
               variants={{ hidden: { opacity: 0, y: 30 }, visible: { opacity: 1, y: 0, transition: { duration: 0.5 } } }}
-              whileHover={{ y: -5 }}
+              whileHover={{ y: -6 }}
               style={{
+                padding: "32px",
                 borderColor: edu.highlight ? "rgba(0,229,255,0.35)" : undefined,
+                position: "relative",
+                overflow: "hidden",
               }}
             >
               {edu.highlight && (
-                <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-[#00e5ff] to-transparent" />
+                <div style={{
+                  position: "absolute", top: 0, left: 0, right: 0,
+                  height: "3px",
+                  background: "linear-gradient(90deg, #00e5ff, transparent)",
+                }} />
               )}
 
-              <div>
-                {/* Icon */}
-                <div
-                  className={`w-11 h-11 rounded-xl flex items-center justify-center text-[#00e5ff] mb-4 border ${
-                    edu.highlight
-                      ? "bg-cyan-500/15 border-cyan-500/30"
-                      : "bg-cyan-500/10 border-cyan-500/20"
-                  }`}
-                >
-                  <FiAward size={20} />
-                </div>
-
-                <h3 className="font-['Space_Grotesk'] font-bold text-base sm:text-lg text-white leading-snug mb-2">
-                  {edu.degree}
-                </h3>
-
-                <p className="text-[#00e5ff] font-semibold text-xs sm:text-sm mb-1.5">
-                  {edu.institution}
-                </p>
-
-                <p className="text-slate-400 text-xs mb-4">
-                  {edu.year}
-                </p>
+              {/* Icon */}
+              <div style={{
+                width: "44px", height: "44px", borderRadius: "10px",
+                background: edu.highlight ? "rgba(0,229,255,0.15)" : "rgba(0,229,255,0.08)",
+                border: "1px solid rgba(0,229,255,0.2)",
+                display: "flex", alignItems: "center", justifyContent: "center",
+                color: "#00e5ff", marginBottom: "16px",
+              }}>
+                <FiAward size={20} />
               </div>
 
-              <div className="pt-3 border-t border-slate-800">
-                <span className="font-mono text-xs font-semibold text-slate-200 bg-slate-800/80 border border-slate-700/60 px-3 py-1 rounded-md inline-block">
-                  {edu.result}
-                </span>
+              <h3 style={{
+                fontFamily: "'Space Grotesk', sans-serif",
+                fontWeight: 700,
+                fontSize: "1rem",
+                color: "#ffffff",
+                lineHeight: 1.4,
+                marginBottom: "10px",
+              }}>
+                {edu.degree}
+              </h3>
+
+              <p style={{ color: "#00e5ff", fontWeight: 600, fontSize: "0.88rem", marginBottom: "6px" }}>
+                {edu.institution}
+              </p>
+              <p style={{ color: "#94a3b8", fontSize: "0.82rem", marginBottom: "12px" }}>{edu.year}</p>
+
+              <div style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "6px",
+                background: "rgba(0,229,255,0.06)",
+                border: "1px solid rgba(0,229,255,0.15)",
+                borderRadius: "8px",
+                padding: "6px 14px",
+              }}>
+                <span style={{ color: "#00e5ff", fontSize: "0.82rem", fontWeight: 700 }}>{edu.result}</span>
               </div>
             </motion.div>
           ))}

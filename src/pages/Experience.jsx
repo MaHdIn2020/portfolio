@@ -26,77 +26,93 @@ const Experience = () => {
     <section
       id="experience"
       aria-label="Work experience"
-      className="bg-[#0a0a12] py-20 px-4 sm:px-6 lg:px-8"
+      style={{ background: "#0a0a12", padding: "100px 24px" }}
     >
-      <div className="max-w-6xl mx-auto">
+      <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
         {/* Heading */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="mb-10 sm:mb-14"
+          style={{ marginBottom: "60px" }}
         >
-          <p className="text-[#00e5ff] text-xs font-semibold uppercase tracking-widest mb-3">
+          <p style={{ color: "#00e5ff", fontSize: "0.8rem", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "12px" }}>
             Work history
           </p>
-          <h2 className="section-heading cyan-underline text-3xl sm:text-4xl lg:text-5xl text-white font-bold">
+          <h2
+            className="section-heading cyan-underline"
+            style={{ fontSize: "clamp(2rem, 4vw, 2.8rem)", color: "#ffffff" }}
+          >
             Experience
           </h2>
         </motion.div>
 
         {/* Experience Cards */}
-        <div className="flex flex-col gap-8">
+        <div style={{ display: "flex", flexDirection: "column", gap: "32px" }}>
           {experiences.map((exp, i) => (
             <motion.div
               key={i}
-              className="bento-card p-6 sm:p-9"
+              className="bento-card"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: i * 0.1 }}
+              style={{ padding: "36px" }}
             >
               {/* Top row */}
-              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
-                <div className="flex items-center gap-3.5 sm:gap-5">
+              <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", flexWrap: "wrap", gap: "16px", marginBottom: "24px" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
                   {/* Logo */}
-                  <div className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl bg-white flex items-center justify-center p-2 shrink-0 border border-cyan-500/20 shadow-md">
-                    <img src={exp.logo} alt={exp.company} className="w-full h-full object-contain" />
+                  <div style={{
+                    width: "60px", height: "60px", borderRadius: "12px",
+                    background: "#ffffff",
+                    display: "flex", alignItems: "center", justifyContent: "center",
+                    padding: "8px", flexShrink: 0,
+                    border: "1px solid rgba(0,229,255,0.15)",
+                  }}>
+                    <img src={exp.logo} alt={exp.company} style={{ width: "100%", height: "100%", objectFit: "contain" }} />
                   </div>
 
                   <div>
-                    <h3 className="font-['Space_Grotesk'] font-bold text-lg sm:text-xl text-white leading-tight mb-1">
+                    <h3 style={{
+                      fontFamily: "'Space Grotesk', sans-serif",
+                      fontWeight: 700,
+                      fontSize: "1.3rem",
+                      color: "#ffffff",
+                      marginBottom: "4px",
+                    }}>
                       {exp.role}
                     </h3>
-                    <p className="text-[#00e5ff] font-semibold text-sm sm:text-base">{exp.company}</p>
+                    <p style={{ color: "#00e5ff", fontWeight: 600, fontSize: "1rem" }}>{exp.company}</p>
                   </div>
                 </div>
 
                 {/* Meta info badges */}
-                <div className="flex flex-wrap gap-2 text-xs">
-                  <span className="inline-flex items-center gap-1.5 bg-cyan-500/10 border border-cyan-500/25 rounded-full px-3 py-1 text-[#00e5ff] font-medium">
+                <div style={{ display: "flex", flexWrap: "wrap", gap: "10px" }}>
+                  <span style={{ display: "flex", alignItems: "center", gap: "6px", background: "rgba(0,229,255,0.08)", border: "1px solid rgba(0,229,255,0.2)", borderRadius: "100px", padding: "5px 14px", color: "#00e5ff", fontSize: "0.78rem", fontWeight: 500 }}>
                     <FiCalendar size={12} /> {exp.period}
                   </span>
-                  <span className="inline-flex items-center gap-1.5 bg-slate-800/80 border border-slate-700 rounded-full px-3 py-1 text-slate-300 font-medium">
+                  <span style={{ display: "flex", alignItems: "center", gap: "6px", background: "rgba(148,163,184,0.08)", border: "1px solid rgba(148,163,184,0.15)", borderRadius: "100px", padding: "5px 14px", color: "#94a3b8", fontSize: "0.78rem", fontWeight: 500 }}>
                     <FiMapPin size={12} /> {exp.location}
                   </span>
-                  <span className="bg-cyan-500/10 border border-cyan-500/20 rounded-full px-3 py-1 text-[#00e5ff] font-medium">
+                  <span style={{ background: "rgba(0,229,255,0.12)", border: "1px solid rgba(0,229,255,0.25)", borderRadius: "100px", padding: "5px 14px", color: "#00e5ff", fontSize: "0.78rem", fontWeight: 500 }}>
                     {exp.type}
                   </span>
                 </div>
               </div>
 
               {/* Description */}
-              <p className="text-slate-300 leading-relaxed text-sm sm:text-base mb-5">
+              <p style={{ color: "#94a3b8", lineHeight: 1.75, fontSize: "0.93rem", marginBottom: "24px" }}>
                 {exp.description}
               </p>
 
               {/* Highlights */}
-              <div className="flex flex-col gap-2.5">
+              <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
                 {exp.highlights.map((h, j) => (
-                  <div key={j} className="flex items-start gap-3">
-                    <div className="w-1.5 h-1.5 bg-[#00e5ff] rounded-full mt-2 shrink-0" />
-                    <p className="text-slate-300 text-xs sm:text-sm leading-relaxed">{h}</p>
+                  <div key={j} style={{ display: "flex", alignItems: "flex-start", gap: "12px" }}>
+                    <div style={{ width: "6px", height: "6px", background: "#00e5ff", borderRadius: "50%", marginTop: "7px", flexShrink: 0 }} />
+                    <p style={{ color: "#cbd5e1", fontSize: "0.88rem", lineHeight: 1.6 }}>{h}</p>
                   </div>
                 ))}
               </div>

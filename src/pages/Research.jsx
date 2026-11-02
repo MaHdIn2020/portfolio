@@ -68,16 +68,16 @@ const Research = () => {
     <section
       id="research"
       aria-label="Academic Research and Publications"
-      className="bg-[#0a0a12] py-20 px-4 sm:px-6 lg:px-8"
+      style={{ background: "#0a0a12", padding: "100px 24px" }}
     >
-      <div className="max-w-6xl mx-auto">
+      <div style={{ maxWidth: "1200px", margin: "0 auto" }}>
         {/* Section Heading */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="mb-10 sm:mb-14"
+          style={{ marginBottom: "60px" }}
         >
           <p
             style={{
@@ -219,4 +219,3 @@ const Research = () => {
 };
 
 export default Research;
-
