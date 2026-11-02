@@ -7,6 +7,7 @@ import Experience from './Experience';
 import Education from './Education';
 import Skills from '../components/Skills';
 import ProjectsList from './ProjectsList';
+import Research from './Research';
 import Contact from './Contact';
 
 const Home = () => {
@@ -19,6 +20,7 @@ const Home = () => {
             <Education />
             <Skills />
             <ProjectsList />
+            <Research />
             <Contact />
         </div>
     );
