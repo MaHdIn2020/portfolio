@@ -227,6 +227,7 @@ const Hero = () => {
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0, y: [0, -6, 0] }}
               transition={{ delay: 1.2, duration: 0.5, y: { repeat: Infinity, duration: 3, ease: "easeInOut", delay: 0.5 } }}
+              className="hero-float-card"
               style={{
                 position: "absolute", right: "-30px", top: "15%",
                 background: "#111827", border: "1px solid rgba(0,229,255,0.25)",
@@ -247,6 +248,7 @@ const Hero = () => {
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0, y: [0, 6, 0] }}
               transition={{ delay: 1.4, duration: 0.5, y: { repeat: Infinity, duration: 3.5, ease: "easeInOut", delay: 1 } }}
+              className="hero-float-card"
               style={{
                 position: "absolute", left: "-30px", bottom: "20%",
                 background: "#111827", border: "1px solid rgba(0,229,255,0.25)",

@@ -375,15 +375,8 @@ html, body { overflow-x: hidden; max-width: 100%; }
   .hero-grid h1 { font-size: clamp(1.9rem, 8vw, 2.8rem) !important; }
   .hero-grid p  { max-width: 100% !important; }
 
-  /* Pull floating mini-cards inward so they don't overflow */
-  .hero-grid > div:last-child > div[style*="right: \"-30px\""],
-  .hero-grid > div:last-child > div[style*='right: "-30px"'] {
-    right: -6px !important;
-  }
-  .hero-grid > div:last-child > div[style*="left: \"-30px\""],
-  .hero-grid > div:last-child > div[style*='left: "-30px"'] {
-    left: -6px !important;
-  }
+  /* Hide floating mini-cards on mobile — they overlap the photo */
+  .hero-float-card { display: none !important; }
 
   /* Stats row: keep 3 cols on phones */
   .stats-row { grid-template-columns: repeat(3, 1fr) !important; }
