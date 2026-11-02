@@ -16,11 +16,17 @@ const Home = () => {
             <Hero />
             <TechMarquee />
             <About />
+            <div className="section-divider" />
             <Experience />
+            <div className="section-divider" />
             <Education />
+            <div className="section-divider" />
             <Skills />
+            <div className="section-divider" />
             <ProjectsList />
+            <div className="section-divider" />
             <Research />
+            <div className="section-divider" />
             <Contact />
         </div>
     );

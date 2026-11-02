@@ -450,3 +450,225 @@ html, body { overflow-x: hidden; max-width: 100%; }
     font-size: 0.73rem !important;
   }
 }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   VISUAL ENHANCEMENTS — Micro-animations & Design Polish
+   Pure CSS additions. No JSX touched. Safe additive-only changes.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ── 1. BENTO-CARD: shimmer sweep on hover ─────────────────────────────── */
+.bento-card {
+  position: relative;
+  overflow: hidden;
+}
+.bento-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: -75%;
+  width: 50%; height: 100%;
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    rgba(0, 229, 255, 0.055) 50%,
+    transparent 100%
+  );
+  transform: skewX(-15deg);
+  transition: none;
+  pointer-events: none;
+  z-index: 1;
+}
+.bento-card:hover::before {
+  animation: card-shimmer 0.65s ease forwards;
+}
+@keyframes card-shimmer {
+  0%   { left: -75%; opacity: 1; }
+  100% { left: 125%; opacity: 0; }
+}
+
+/* ── 2. BTN-PRIMARY: shine sweep on hover ──────────────────────────────── */
+.btn-primary {
+  position: relative;
+  overflow: hidden;
+}
+.btn-primary::after {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 60%; height: 100%;
+  background: linear-gradient(
+    120deg,
+    transparent 0%,
+    rgba(255,255,255,0.22) 50%,
+    transparent 100%
+  );
+  transform: skewX(-20deg);
+  pointer-events: none;
+}
+.btn-primary:hover::after {
+  animation: btn-shine 0.55s ease forwards;
+}
+@keyframes btn-shine {
+  0%   { left: -100%; }
+  100% { left: 150%; }
+}
+
+/* ── 3. SKILL-BADGE: shimmer glow on hover ─────────────────────────────── */
+.skill-badge {
+  position: relative;
+  overflow: hidden;
+}
+.skill-badge:hover {
+  box-shadow: 0 0 12px rgba(0, 229, 255, 0.25);
+  transform: translateY(-2px);
+  transition: transform 0.2s ease, box-shadow 0.2s ease,
+              background 0.2s ease, border-color 0.2s ease;
+}
+
+/* ── 4. PULSE DOT — "Live" indicator (used in Experience present badge) ── */
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50%       { opacity: 0.45; transform: scale(1.55); }
+}
+.pulse-dot {
+  display: inline-block;
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: #00e5ff;
+  animation: pulse-dot 1.6s ease-in-out infinite;
+  flex-shrink: 0;
+}
+
+/* ── 5. SECTION HEADINGS: subtle letter-spacing animation on entry ──────── */
+@keyframes heading-in {
+  from { letter-spacing: -0.06em; opacity: 0; }
+  to   { letter-spacing: -0.02em; opacity: 1; }
+}
+.section-heading {
+  animation: heading-in 0.7s ease both;
+}
+
+/* ── 6. NAV LINK: active / hover glow ─────────────────────────────────── */
+.nav-link:hover {
+  color: #00e5ff !important;
+  text-shadow: 0 0 12px rgba(0, 229, 255, 0.5);
+}
+
+/* ── 7. CYAN-UNDERLINE: animated width on first render ─────────────────── */
+@keyframes underline-grow {
+  from { width: 0; }
+  to   { width: 100%; }
+}
+.cyan-underline::after {
+  animation: underline-grow 0.8s 0.3s ease both;
+}
+
+/* ── 8. RESEARCH-TAG: pop on hover ─────────────────────────────────────── */
+.research-tag:hover {
+  transform: translateY(-2px) scale(1.04);
+  transition: transform 0.18s ease, background 0.2s, border-color 0.2s;
+}
+.research-tag {
+  transition: transform 0.18s ease, background 0.2s, border-color 0.2s;
+}
+
+/* ── 9. GRADIENT GLOW on hero section background ───────────────────────── */
+@keyframes bg-pulse {
+  0%, 100% { opacity: 0.6; }
+  50%       { opacity: 1; }
+}
+#home .hero-bg,
+section#home {
+  background: radial-gradient(ellipse at 15% 55%, rgba(0,229,255,0.06) 0%, transparent 55%),
+              radial-gradient(ellipse at 85% 15%, rgba(0,184,204,0.05) 0%, transparent 50%),
+              #0a0a12;
+}
+
+/* ── 10. CONTACT INPUTS: focus glow ─────────────────────────────────────── */
+input:focus,
+textarea:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(0, 229, 255, 0.35), 0 0 16px rgba(0, 229, 255, 0.12);
+  border-color: rgba(0, 229, 255, 0.6) !important;
+}
+
+/* ── 11. BENTO-CARD hover: stronger glow ──────────────────────────────── */
+.bento-card:hover {
+  box-shadow: 0 8px 40px rgba(0, 229, 255, 0.14),
+              0 2px 12px rgba(0, 229, 255, 0.08) !important;
+}
+
+/* ── 12. SECTION-DIVIDER: fade in animated ──────────────────────────────── */
+.section-divider {
+  background: linear-gradient(90deg, transparent, rgba(0,229,255,0.25), transparent);
+  height: 1px;
+  border: none;
+  margin: 0;
+}
+
+/* ── 13. TIMELINE LINE: animated gradient ────────────────────────────────── */
+.timeline-line::before {
+  background: linear-gradient(180deg, #00e5ff 0%, rgba(0,229,255,0.3) 60%, transparent 100%);
+}
+
+/* ── 14. LOGO TSM: subtle glow pulse ────────────────────────────────────── */
+@keyframes logo-pulse {
+  0%, 100% { text-shadow: 0 0 8px rgba(0,229,255,0.3); }
+  50%       { text-shadow: 0 0 20px rgba(0,229,255,0.65); }
+}
+nav a[aria-label*="Home"] span:first-child {
+  animation: logo-pulse 3.5s ease-in-out infinite;
+}
+
+/* ── 15. STATS ROW cells: count-up shimmer backdrop ─────────────────────── */
+@keyframes stat-glow {
+  0%, 100% { background: #0d1117; }
+  50%       { background: rgba(0,229,255,0.035); }
+}
+.stats-row > div {
+  animation: stat-glow 5s ease-in-out infinite;
+}
+.stats-row > div:nth-child(2) { animation-delay: 1.6s; }
+.stats-row > div:nth-child(3) { animation-delay: 3.2s; }
+
+/* ── 16. SCROLLBAR: thicker thumb glow ──────────────────────────────────── */
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #00e5ff, #00b8cc);
+  box-shadow: 0 0 6px rgba(0,229,255,0.4);
+}
+
+/* ── 17. EXPERIENCE bullet dots: subtle pulse ────────────────────────────── */
+@keyframes dot-breathe {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(0,229,255,0.5); }
+  50%       { box-shadow: 0 0 0 4px rgba(0,229,255,0.0); }
+}
+
+/* Apply to the cyan bullet dots in experience/research highlight lists */
+div[style*="background: \"#00e5ff\""][style*="borderRadius: \"50%\""],
+div[style*='background: "#00e5ff"'][style*='borderRadius: "50%"'] {
+  animation: dot-breathe 2.5s ease-in-out infinite;
+}
+
+/* ── 18. PAGE-WIDE: subtle noise texture on hero (no img needed) ─────────── */
+section#home::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.4;
+}
+
+/* ── 19. GRID BACKGROUND on hero ─────────────────────────────────────────── */
+section#home {
+  background-image:
+    linear-gradient(rgba(0,229,255,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,229,255,0.025) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+
+/* ── 20. BENTO-CARD: micro-lift transition upgrade ────────────────────────── */
+.bento-card {
+  transition: border-color 0.3s ease, transform 0.28s cubic-bezier(.34,1.56,.64,1), box-shadow 0.3s ease;
+}
+

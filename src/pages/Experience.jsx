@@ -91,6 +91,7 @@ const Experience = () => {
                 {/* Meta info badges */}
                 <div style={{ display: "flex", flexWrap: "wrap", gap: "10px" }}>
                   <span style={{ display: "flex", alignItems: "center", gap: "6px", background: "rgba(0,229,255,0.08)", border: "1px solid rgba(0,229,255,0.2)", borderRadius: "100px", padding: "5px 14px", color: "#00e5ff", fontSize: "0.78rem", fontWeight: 500 }}>
+                    <span className="pulse-dot" style={{ background: "#00e5ff", boxShadow: "0 0 8px #00e5ff" }} />
                     <FiCalendar size={12} /> {exp.period}
                   </span>
                   <span style={{ display: "flex", alignItems: "center", gap: "6px", background: "rgba(148,163,184,0.08)", border: "1px solid rgba(148,163,184,0.15)", borderRadius: "100px", padding: "5px 14px", color: "#94a3b8", fontSize: "0.78rem", fontWeight: 500 }}>
