@@ -45,28 +45,28 @@ const Contact = () => {
   ];
 
   return (
-    <section id="contact" style={{ background: "#0d1117", padding: "100px 24px" }}>
-      <div style={{ maxWidth: "1100px", margin: "0 auto" }}>
+    <section id="contact" className="bg-[#0d1117] py-20 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-6xl mx-auto">
         {/* Heading */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          style={{ marginBottom: "60px" }}
+          className="mb-10 sm:mb-14"
         >
-          <p style={{ color: "#00e5ff", fontSize: "0.8rem", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.1em", marginBottom: "12px" }}>
+          <p className="text-[#00e5ff] text-xs font-semibold uppercase tracking-widest mb-3">
             Get in touch
           </p>
-          <h2 className="section-heading cyan-underline" style={{ fontSize: "clamp(2rem, 4vw, 2.8rem)", color: "#ffffff" }}>
+          <h2 className="section-heading cyan-underline text-3xl sm:text-4xl lg:text-5xl text-white font-bold">
             Contact Me
           </h2>
-          <p style={{ color: "#94a3b8", marginTop: "16px", maxWidth: "480px", lineHeight: 1.7 }}>
+          <p className="text-slate-400 mt-4 max-w-lg leading-relaxed text-sm sm:text-base">
             Have a project in mind or want to collaborate? Feel free to reach out — I usually respond within 24 hours.
           </p>
         </motion.div>
 
-        <div style={{ display: "grid", gridTemplateColumns: "1fr 1.4fr", gap: "40px", alignItems: "start" }} className="contact-grid">
+        <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.3fr] gap-8 sm:gap-10 items-start">
           {/* Contact Info */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
@@ -114,8 +114,7 @@ const Contact = () => {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="bento-card"
-            style={{ padding: "36px", display: "flex", flexDirection: "column", gap: "20px" }}
+            className="bento-card p-6 sm:p-9 flex flex-col gap-5"
           >
             {[
               { name: "name", type: "text", placeholder: "Your Name", required: true },
@@ -208,12 +207,6 @@ const Contact = () => {
           </motion.form>
         </div>
       </div>
-
-      <style>{`
-        @media (max-width: 768px) {
-          .contact-grid { grid-template-columns: 1fr !important; }
-        }
-      `}</style>
     </section>
   );
 };

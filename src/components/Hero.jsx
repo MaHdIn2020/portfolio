@@ -12,74 +12,45 @@ const Hero = () => {
   return (
     <section
       id="home"
-      className="hero-bg grid-bg"
-      style={{
-        minHeight: "100vh",
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "center",
-        paddingTop: "80px",
-        position: "relative",
-        overflow: "hidden",
-      }}
+      className="hero-bg grid-bg relative overflow-hidden min-h-screen flex flex-col justify-between pt-24 sm:pt-28 pb-10"
     >
       {/* Animated background elements */}
       <FloatingGraphics />
 
-      <div style={{ maxWidth: "1200px", margin: "0 auto", padding: "0 24px", width: "100%", position: "relative", zIndex: 1 }}>
-        {/* ── SPLIT LAYOUT ── */}
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "1fr 1fr",
-            gap: "64px",
-            alignItems: "center",
-            minHeight: "70vh",
-          }}
-          className="hero-grid"
-        >
-          {/* LEFT: Text */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full relative z-10 my-auto">
+        {/* Main Grid: Mobile Column / Desktop 2-Column */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 lg:gap-14 items-center">
+          
+          {/* TEXT CONTENT */}
           <motion.div
-            initial={{ opacity: 0, x: -40 }}
+            initial={{ opacity: 0, x: -30 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-            style={{ display: "flex", flexDirection: "column", gap: "20px" }}
+            transition={{ duration: 0.7, ease: "easeOut" }}
+            className="flex flex-col items-center md:items-start text-center md:text-left gap-4 sm:gap-5 order-1 md:order-1"
           >
             {/* Available badge */}
             <motion.div
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2, duration: 0.6 }}
-              style={{
-                display: "inline-flex", alignItems: "center", gap: "8px",
-                background: "rgba(0,229,255,0.08)",
-                border: "1px solid rgba(0,229,255,0.25)",
-                borderRadius: "100px", padding: "6px 16px", width: "fit-content",
-              }}
+              transition={{ delay: 0.15, duration: 0.5 }}
+              className="inline-flex items-center gap-2 bg-cyan-500/10 border border-cyan-500/25 rounded-full px-4 py-1.5 w-fit"
             >
               <motion.span
                 animate={{ scale: [1, 1.4, 1], opacity: [1, 0.5, 1] }}
                 transition={{ repeat: Infinity, duration: 1.8 }}
-                style={{ width: "8px", height: "8px", background: "#00e5ff", borderRadius: "50%", flexShrink: 0 }}
+                className="w-2 h-2 bg-[#00e5ff] rounded-full shrink-0"
               />
-              <span style={{ color: "#00e5ff", fontSize: "0.8rem", fontWeight: 500 }}>
+              <span className="text-[#00e5ff] text-xs sm:text-sm font-medium">
                 Available for opportunities
               </span>
             </motion.div>
 
-            {/* Name */}
+            {/* Headline Name */}
             <motion.h1
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3, duration: 0.8 }}
-              style={{
-                fontFamily: "'Space Grotesk', sans-serif",
-                fontWeight: 800,
-                fontSize: "clamp(2.8rem, 5vw, 4rem)",
-                lineHeight: 1.1,
-                letterSpacing: "-0.03em",
-                color: "#ffffff",
-              }}
+              transition={{ delay: 0.25, duration: 0.7 }}
+              className="font-['Space_Grotesk'] font-extrabold text-3xl sm:text-5xl lg:text-6xl text-white tracking-tight leading-[1.15]"
             >
               Tanjip Surait
               <br />
@@ -90,34 +61,75 @@ const Hero = () => {
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ delay: 0.6, duration: 0.6 }}
-              style={{ fontSize: "1.15rem", fontFamily: "'Space Grotesk', sans-serif", minHeight: "1.8rem" }}
+              transition={{ delay: 0.4, duration: 0.5 }}
+              className="text-base sm:text-xl font-['Space_Grotesk'] font-medium text-cyan-300 min-h-[1.75rem]"
             >
               <TypeWriter words={profile.roles} speed={75} pause={2000} deleteSpeed={40} />
             </motion.div>
+
+            {/* PHOTO ON MOBILE (shows right after name & roles on screens < md) */}
+            <div className="md:hidden w-full my-2 flex flex-col items-center">
+              <motion.div
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.3, duration: 0.6 }}
+                className="bracket-frame relative inline-block mx-auto"
+              >
+                <img
+                  src="/Picture.jpg"
+                  alt="Tanjip Surait Mahdin — CSE Graduate from BRAC University"
+                  className="w-52 h-64 sm:w-60 sm:h-72 object-cover object-top rounded-xl border border-cyan-500/30 shadow-[0_12px_32px_rgba(0,0,0,0.6)]"
+                />
+                {/* Extra bracket corners */}
+                <div className="absolute -top-2 -right-2 w-6 h-6 border-t-[3px] border-r-[3px] border-[#00e5ff] rounded-tr-sm pointer-events-none" />
+                <div className="absolute -bottom-2 -left-2 w-6 h-6 border-b-[3px] border-l-[3px] border-[#00e5ff] rounded-bl-sm pointer-events-none" />
+              </motion.div>
+
+              {/* Mobile Achievement Badges under Photo */}
+              <div className="flex flex-wrap justify-center gap-2.5 mt-4 max-w-sm">
+                <div className="bg-[#111827]/90 border border-cyan-500/25 rounded-xl px-3 py-1.5 flex items-center gap-2 shadow-lg">
+                  <span className="text-base">🎓</span>
+                  <div className="text-left">
+                    <p className="text-white text-xs font-bold leading-tight">BRAC University</p>
+                    <p className="text-[#00e5ff] text-[10px] font-mono">CSE · CGPA {profile.education.cgpa}</p>
+                  </div>
+                </div>
+
+                <div className="bg-[#111827]/90 border border-cyan-500/25 rounded-xl px-3 py-1.5 flex items-center gap-2 shadow-lg">
+                  <img
+                    src="/codingal.png"
+                    alt="Codingal"
+                    className="w-4 h-4 object-contain rounded bg-white p-0.5"
+                  />
+                  <div className="text-left">
+                    <p className="text-white text-xs font-bold leading-tight">Codingal</p>
+                    <p className="text-[#00e5ff] text-[10px] font-mono">Instructor · {profile.studentsTaught} students</p>
+                  </div>
+                </div>
+              </div>
+            </div>
 
             {/* Bio */}
             <motion.p
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ delay: 0.8, duration: 0.8 }}
-              style={{ color: "#94a3b8", fontSize: "1rem", lineHeight: 1.7, maxWidth: "440px" }}
+              transition={{ delay: 0.5, duration: 0.6 }}
+              className="text-slate-300 text-sm sm:text-base leading-relaxed max-w-md"
             >
               CSE Graduate from BRAC University. Building web apps, training ML models,
               and teaching coding at Codingal.
             </motion.p>
 
-            {/* CTA buttons */}
+            {/* CTA Buttons */}
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 1, duration: 0.6 }}
-              style={{ display: "flex", gap: "16px", flexWrap: "wrap", alignItems: "center" }}
+              transition={{ delay: 0.6, duration: 0.5 }}
+              className="flex flex-wrap gap-3 sm:gap-4 items-center justify-center md:justify-start w-full sm:w-auto pt-1"
             >
               <ScrollLink to="projects" smooth duration={600} offset={-70}>
                 <motion.span
-                  className="btn-primary"
-                  style={{ cursor: "pointer" }}
+                  className="btn-primary cursor-pointer text-sm font-semibold py-2.5 px-6 inline-flex items-center justify-center"
                   whileHover={{ scale: 1.04 }}
                   whileTap={{ scale: 0.97 }}
                 >
@@ -127,29 +139,21 @@ const Hero = () => {
               <motion.a
                 href={profile.links.resume}
                 download
-                className="btn-outline"
-                style={{
-                  cursor: "pointer",
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: "8px",
-                  textDecoration: "none",
-                }}
+                className="btn-outline cursor-pointer inline-flex items-center justify-center gap-2 text-sm font-semibold py-2.5 px-6"
                 whileHover={{ scale: 1.04 }}
                 whileTap={{ scale: 0.97 }}
               >
                 <HiArrowDownTray size={16} />
                 Download Resume
-                {/* TODO(Tanjip): replace public/resume.pdf with your real CV file */}
               </motion.a>
             </motion.div>
 
-            {/* Social icons */}
+            {/* Social Icons */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ delay: 1.2, duration: 0.6 }}
-              style={{ display: "flex", gap: "14px", alignItems: "center", paddingTop: "4px" }}
+              transition={{ delay: 0.7, duration: 0.5 }}
+              className="flex gap-3 items-center justify-center md:justify-start pt-2"
             >
               {[
                 { icon: <FaGithub />, href: profile.links.github, label: "GitHub" },
@@ -162,27 +166,9 @@ const Hero = () => {
                   target="_blank"
                   rel="noreferrer"
                   aria-label={s.label}
-                  whileHover={{ y: -4, scale: 1.2 }}
+                  whileHover={{ y: -3, scale: 1.15 }}
                   whileTap={{ scale: 0.9 }}
-                  style={{
-                    width: "38px", height: "38px",
-                    borderRadius: "10px",
-                    background: "rgba(0,229,255,0.06)",
-                    border: "1px solid rgba(0,229,255,0.15)",
-                    display: "flex", alignItems: "center", justifyContent: "center",
-                    color: "#94a3b8", fontSize: "1.1rem", textDecoration: "none",
-                    transition: "color 0.3s, border-color 0.3s, background 0.3s",
-                  }}
-                  onMouseEnter={e => {
-                    e.currentTarget.style.color = "#00e5ff";
-                    e.currentTarget.style.borderColor = "rgba(0,229,255,0.4)";
-                    e.currentTarget.style.background = "rgba(0,229,255,0.1)";
-                  }}
-                  onMouseLeave={e => {
-                    e.currentTarget.style.color = "#94a3b8";
-                    e.currentTarget.style.borderColor = "rgba(0,229,255,0.15)";
-                    e.currentTarget.style.background = "rgba(0,229,255,0.06)";
-                  }}
+                  className="w-10 h-10 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-slate-300 hover:text-[#00e5ff] hover:border-cyan-500/40 hover:bg-cyan-500/15 transition-all text-lg"
                 >
                   {s.icon}
                 </motion.a>
@@ -190,76 +176,66 @@ const Hero = () => {
             </motion.div>
           </motion.div>
 
-          {/* RIGHT: Photo */}
+          {/* DESKTOP PHOTO (visible on md: and up) */}
           <motion.div
-            initial={{ opacity: 0, x: 40 }}
+            initial={{ opacity: 0, x: 30 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.4, duration: 0.8, ease: "easeOut" }}
-            style={{ display: "flex", flexDirection: "column", alignItems: "center", position: "relative" }}
+            transition={{ delay: 0.35, duration: 0.8, ease: "easeOut" }}
+            className="hidden md:flex flex-col items-center justify-center relative order-2"
           >
             {/* Photo with bracket frame */}
             <motion.div
-              className="bracket-frame"
-              animate={{ y: [0, -10, 0] }}
-              transition={{ repeat: Infinity, duration: 4, ease: "easeInOut" }}
-              style={{ position: "relative", zIndex: 1, display: "inline-block" }}
+              className="bracket-frame relative z-10 inline-block"
+              animate={{ y: [0, -8, 0] }}
+              transition={{ repeat: Infinity, duration: 4.5, ease: "easeInOut" }}
             >
               <img
                 src="/Picture.jpg"
                 alt="Tanjip Surait Mahdin — CSE Graduate from BRAC University"
-                style={{
-                  width: "clamp(240px, 30vw, 340px)",
-                  height: "clamp(260px, 33vw, 380px)",
-                  objectFit: "cover",
-                  objectPosition: "top",
-                  borderRadius: "12px",
-                  display: "block",
-                  border: "1px solid rgba(0,229,255,0.25)",
-                }}
+                className="w-[280px] lg:w-[330px] h-[340px] lg:h-[390px] object-cover object-top rounded-xl border border-cyan-500/30 shadow-[0_16px_40px_rgba(0,0,0,0.6)]"
               />
               {/* Extra bracket corners */}
-              <div style={{ position: "absolute", top: "-8px", right: "-8px", width: "28px", height: "28px", borderTop: "3px solid #00e5ff", borderRight: "3px solid #00e5ff", borderRadius: "0 4px 0 0" }} />
-              <div style={{ position: "absolute", bottom: "-8px", left: "-8px", width: "28px", height: "28px", borderBottom: "3px solid #00e5ff", borderLeft: "3px solid #00e5ff", borderRadius: "0 0 0 4px" }} />
+              <div className="absolute -top-2 -right-2 w-7 h-7 border-t-[3px] border-r-[3px] border-[#00e5ff] rounded-tr-sm pointer-events-none" />
+              <div className="absolute -bottom-2 -left-2 w-7 h-7 border-b-[3px] border-l-[3px] border-[#00e5ff] rounded-bl-sm pointer-events-none" />
             </motion.div>
 
-            {/* Floating mini cards around photo */}
+            {/* Floating mini card 1: BRAC University */}
             <motion.div
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0, y: [0, -6, 0] }}
-              transition={{ delay: 1.2, duration: 0.5, y: { repeat: Infinity, duration: 3, ease: "easeInOut", delay: 0.5 } }}
-              style={{
-                position: "absolute", right: "-30px", top: "15%",
-                background: "#111827", border: "1px solid rgba(0,229,255,0.25)",
-                borderRadius: "12px", padding: "10px 14px",
-                display: "flex", alignItems: "center", gap: "8px",
-                boxShadow: "0 8px 24px rgba(0,0,0,0.4)",
-                zIndex: 10,
+              transition={{
+                delay: 0.9,
+                duration: 0.5,
+                y: { repeat: Infinity, duration: 3.2, ease: "easeInOut" },
               }}
+              className="absolute -right-4 lg:-right-8 top-[18%] bg-[#111827]/95 border border-cyan-500/30 rounded-xl px-3.5 py-2.5 flex items-center gap-2.5 shadow-[0_10px_25px_rgba(0,0,0,0.5)] z-20 backdrop-blur-md"
             >
-              <span style={{ fontSize: "1.2rem" }}>🎓</span>
+              <span className="text-xl">🎓</span>
               <div>
-                <p style={{ color: "#ffffff", fontSize: "0.72rem", fontWeight: 700, lineHeight: 1.2 }}>BRAC University</p>
-                <p style={{ color: "#00e5ff", fontSize: "0.62rem" }}>CSE, CGPA {profile.education.cgpa}</p>
+                <p className="text-white text-xs font-bold leading-tight">BRAC University</p>
+                <p className="text-[#00e5ff] text-[11px] font-mono">CSE · CGPA {profile.education.cgpa}</p>
               </div>
             </motion.div>
 
+            {/* Floating mini card 2: Codingal */}
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0, y: [0, 6, 0] }}
-              transition={{ delay: 1.4, duration: 0.5, y: { repeat: Infinity, duration: 3.5, ease: "easeInOut", delay: 1 } }}
-              style={{
-                position: "absolute", left: "-30px", bottom: "20%",
-                background: "#111827", border: "1px solid rgba(0,229,255,0.25)",
-                borderRadius: "12px", padding: "10px 14px",
-                display: "flex", alignItems: "center", gap: "8px",
-                boxShadow: "0 8px 24px rgba(0,0,0,0.4)",
-                zIndex: 10,
+              transition={{
+                delay: 1.1,
+                duration: 0.5,
+                y: { repeat: Infinity, duration: 3.6, ease: "easeInOut", delay: 0.5 },
               }}
+              className="absolute -left-4 lg:-left-8 bottom-[20%] bg-[#111827]/95 border border-cyan-500/30 rounded-xl px-3.5 py-2.5 flex items-center gap-2.5 shadow-[0_10px_25px_rgba(0,0,0,0.5)] z-20 backdrop-blur-md"
             >
-              <img src="/codingal.png" alt="Codingal" style={{ width: "22px", height: "22px", objectFit: "contain", borderRadius: "4px", background: "#fff", padding: "2px" }} />
+              <img
+                src="/codingal.png"
+                alt="Codingal"
+                className="w-5 h-5 object-contain rounded bg-white p-0.5"
+              />
               <div>
-                <p style={{ color: "#ffffff", fontSize: "0.72rem", fontWeight: 700, lineHeight: 1.2 }}>Codingal</p>
-                <p style={{ color: "#00e5ff", fontSize: "0.62rem" }}>Instructor · {profile.studentsTaught} students</p>
+                <p className="text-white text-xs font-bold leading-tight">Codingal</p>
+                <p className="text-[#00e5ff] text-[11px] font-mono">Instructor · {profile.studentsTaught} students</p>
               </div>
             </motion.div>
           </motion.div>
@@ -269,42 +245,21 @@ const Hero = () => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.3, duration: 0.7 }}
-          style={{
-            display: "grid",
-            gridTemplateColumns: `repeat(${profile.stats.length}, 1fr)`,
-            gap: "1px",
-            background: "rgba(0,229,255,0.08)",
-            borderRadius: "16px",
-            overflow: "hidden",
-            marginBottom: "40px",
-            border: "1px solid rgba(0,229,255,0.1)",
-          }}
-          className="stats-row"
+          transition={{ delay: 0.8, duration: 0.6 }}
+          className="grid grid-cols-3 gap-px bg-cyan-500/15 rounded-2xl overflow-hidden mt-12 sm:mt-16 border border-cyan-500/20 shadow-lg"
         >
           {profile.stats.map((s, i) => (
-            <motion.div
+            <div
               key={i}
-              whileHover={{ background: "rgba(0,229,255,0.06)" }}
-              style={{
-                padding: "20px",
-                textAlign: "center",
-                background: "#0d1117",
-                transition: "background 0.3s",
-              }}
+              className="p-3.5 sm:p-5 text-center bg-[#0d1117]/95 hover:bg-cyan-500/5 transition-colors"
             >
-              <p style={{
-                fontFamily: "'Space Grotesk', sans-serif",
-                fontWeight: 800,
-                fontSize: "1.6rem",
-                color: "#00e5ff",
-                lineHeight: 1,
-                marginBottom: "6px",
-              }}>
+              <p className="font-['Space_Grotesk'] font-extrabold text-lg sm:text-2xl lg:text-3xl text-[#00e5ff] leading-tight mb-1">
                 {s.value}
               </p>
-              <p style={{ color: "#94a3b8", fontSize: "0.75rem", fontWeight: 500 }}>{s.label}</p>
-            </motion.div>
+              <p className="text-slate-400 text-[10px] sm:text-xs font-medium tracking-wide">
+                {s.label}
+              </p>
+            </div>
           ))}
         </motion.div>
       </div>
@@ -313,21 +268,11 @@ const Hero = () => {
       <motion.div
         animate={{ y: [0, 8, 0] }}
         transition={{ repeat: Infinity, duration: 2 }}
-        style={{ position: "absolute", bottom: "24px", left: "50%", transform: "translateX(-50%)", color: "#94a3b8", fontSize: "1.3rem", zIndex: 2 }}
+        className="mx-auto mt-6 text-slate-400 text-lg flex items-center justify-center"
+        aria-hidden="true"
       >
         <HiArrowDown />
       </motion.div>
-
-      <style>{`
-        @media (max-width: 768px) {
-          .hero-grid { grid-template-columns: 1fr !important; gap: 40px !important; text-align: center; }
-          .hero-grid > div:last-child { display: none !important; }
-          .stats-row { grid-template-columns: repeat(3, 1fr) !important; }
-        }
-        @media (max-width: 500px) {
-          .stats-row { grid-template-columns: 1fr !important; }
-        }
-      `}</style>
     </section>
   );
 };
