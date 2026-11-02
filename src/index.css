@@ -328,3 +328,132 @@ body {
   background: linear-gradient(90deg, transparent, rgba(0,229,255,0.2), transparent);
   margin: 0;
 }
+
+
+/* ─── RESPONSIVE OVERRIDES ─────────────────────────────────────────────────────
+   All responsive fixes are ADDITIVE: desktop JSX is completely unchanged.
+   We only override what breaks at smaller viewports.
+─────────────────────────────────────────────────────────────────────────────── */
+
+/* Prevent horizontal scroll on all screen sizes */
+html, body { overflow-x: hidden; max-width: 100%; }
+
+/* ── TABLET (≤ 1024px) ──────────────────────────────────────────────────────── */
+@media (max-width: 1024px) {
+  /* Hero: tighten column gap */
+  .hero-grid { gap: 36px !important; }
+
+  /* Pull floating badges closer to avoid clipping */
+  .hero-float-right { right: -8px !important; }
+  .hero-float-left  { left: -8px !important; }
+}
+
+/* ── MOBILE + SMALL TABLET (≤ 768px) ────────────────────────────────────────── */
+@media (max-width: 768px) {
+
+  /* ── HERO ── */
+  .hero-grid {
+    grid-template-columns: 1fr !important;
+    gap: 32px !important;
+    text-align: center;
+  }
+
+  /* Show photo on mobile — hidden by existing rule, so override */
+  .hero-grid > div:last-child {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex-direction: column !important;
+  }
+
+  /* Center text-left elements under the name */
+  .hero-grid > div:first-child {
+    align-items: center !important;
+  }
+
+  /* Scale down hero name on small screens */
+  .hero-grid h1 { font-size: clamp(1.9rem, 8vw, 2.8rem) !important; }
+  .hero-grid p  { max-width: 100% !important; }
+
+  /* Pull floating mini-cards inward so they don't overflow */
+  .hero-grid > div:last-child > div[style*="right: \"-30px\""],
+  .hero-grid > div:last-child > div[style*='right: "-30px"'] {
+    right: -6px !important;
+  }
+  .hero-grid > div:last-child > div[style*="left: \"-30px\""],
+  .hero-grid > div:last-child > div[style*='left: "-30px"'] {
+    left: -6px !important;
+  }
+
+  /* Stats row: keep 3 cols on phones */
+  .stats-row { grid-template-columns: repeat(3, 1fr) !important; }
+
+  /* ── ALL SECTIONS: reduce vertical padding ── */
+  section[id] {
+    padding-top: 64px !important;
+    padding-bottom: 64px !important;
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+
+  /* ── CONTACT ── */
+  .contact-grid { grid-template-columns: 1fr !important; }
+
+  /* ── PROJECT CARDS: 1 column ── */
+  #projects > div > div[style*="grid-template-columns: repeat(auto-fill"] {
+    grid-template-columns: 1fr !important;
+  }
+
+  /* ── PROJECT MODAL PADDING ── */
+  #projects div[style*="padding: 28px 32px 0"] { padding: 18px 18px 0 !important; }
+  #projects div[style*="padding: 24px 32px 32px"] { padding: 14px 18px 20px !important; }
+
+  /* ── BENTO CARDS: reduce padding ── */
+  .bento-card { padding: 22px !important; }
+
+  /* Education grid: single column */
+  #education div[style*="grid-template-columns: repeat(auto-fit"] {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* ── VERY SMALL PHONES (≤ 480px) ─────────────────────────────────────────── */
+@media (max-width: 480px) {
+
+  /* Stats: vertical stack on tiny screens */
+  .stats-row { grid-template-columns: 1fr !important; }
+
+  /* Hero: name font size floor */
+  .hero-grid h1 { font-size: 1.75rem !important; }
+
+  /* Photo on tiny phones: smaller */
+  .hero-grid > div:last-child img {
+    width: 190px !important;
+    height: 220px !important;
+  }
+
+  /* Hero section: extra padding for fixed navbar */
+  section#home { padding-top: 90px !important; }
+
+  /* CTA buttons: stack vertically and go full width */
+  .hero-grid div[style*="gap: 16px"][style*="flexWrap"] {
+    flex-direction: column !important;
+    align-items: stretch !important;
+    width: 100% !important;
+  }
+  .hero-grid .btn-primary,
+  .hero-grid .btn-outline {
+    width: 100% !important;
+    text-align: center !important;
+    justify-content: center !important;
+  }
+
+  /* Navbar: hide the "Portfolio" subtitle on very tiny screens */
+  nav span[style*="0.8rem"][style*="94a3b8"] { display: none !important; }
+
+  /* Skills chips: tighter on tiny screens */
+  .skill-badge {
+    padding: 4px 10px !important;
+    font-size: 0.73rem !important;
+  }
+}

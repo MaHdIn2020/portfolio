@@ -319,13 +319,31 @@ const Hero = () => {
       </motion.div>
 
       <style>{`
+        /* Tablet */
+        @media (max-width: 1024px) {
+          .hero-grid { gap: 36px !important; }
+        }
+        /* Mobile: stack hero, SHOW photo */
         @media (max-width: 768px) {
-          .hero-grid { grid-template-columns: 1fr !important; gap: 40px !important; text-align: center; }
-          .hero-grid > div:last-child { display: none !important; }
+          .hero-grid {
+            grid-template-columns: 1fr !important;
+            gap: 32px !important;
+            text-align: center;
+          }
+          .hero-grid > div:last-child {
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: center !important;
+            justify-content: center !important;
+          }
+          .hero-grid > div:first-child { align-items: center !important; }
+          .hero-grid h1 { font-size: clamp(1.9rem, 8vw, 2.8rem) !important; }
           .stats-row { grid-template-columns: repeat(3, 1fr) !important; }
         }
-        @media (max-width: 500px) {
+        /* Tiny phones */
+        @media (max-width: 480px) {
           .stats-row { grid-template-columns: 1fr !important; }
+          .hero-grid h1 { font-size: 1.75rem !important; }
         }
       `}</style>
     </section>
