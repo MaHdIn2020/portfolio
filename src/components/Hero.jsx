@@ -82,26 +82,27 @@ function HeroPhoto({ reduced }) {
       }, delay));
     };
     scheduleBlink();
-    const stepIv = setInterval(() => setStep((v) => v + 1), 320);
+    const stepIv = setInterval(() => setStep((v) => v + 1), 150);
     return () => { timers.forEach(clearTimeout); clearInterval(stepIv); };
   }, [reduced]);
+
+  const [opacity, setOpacity] = useState(1);
 
   useEffect(() => {
     if (reduced) { setWalkX(40); return; }
     let raf = 0;
     const start = performance.now();
-    const DUR = 6800;
+    const DUR = 3400;
     let alive = true;
-    const run = () => {
-      const go = (now) => {
-        if (!alive) return;
-        const t = ((now - start) % DUR) / DUR;
-        setWalkX(-70 + t * 118);
-        raf = requestAnimationFrame(go);
-      };
+    const go = (now) => {
+      if (!alive) return;
+      const t = ((now - start) % DUR) / DUR;
+      const edgeFade = t < 0.12 ? t / 0.12 : t > 0.88 ? (1 - t) / 0.12 : 1;
+      setWalkX(-70 + t * 118);
+      setOpacity(edgeFade);
       raf = requestAnimationFrame(go);
     };
-    run();
+    raf = requestAnimationFrame(go);
     return () => { alive = false; cancelAnimationFrame(raf); };
   }, [reduced]);
 
@@ -200,6 +201,7 @@ function HeroPhoto({ reduced }) {
           position: "absolute", top: -8, left: -10, zIndex: 5, pointerEvents: "none",
           transform: `translateX(${walkX}px)`,
           transition: reduced ? "none" : "none",
+          opacity: reduced ? 1 : opacity,
           filter: "drop-shadow(0 8px 16px rgba(0,0,0,0.5))",
         }}
       >
@@ -231,18 +233,18 @@ function HeroPhoto({ reduced }) {
           {/* body */}
           <rect x="14" y="48" width="36" height="12" rx="6" fill="#f1f5f9" stroke="#cbd5e1" strokeWidth="1.5" />
           {/* legs — stepping */}
-          <g style={{ transformOrigin: "24px 60px", transform: `rotate(${reduced ? 0 : step % 2 === 0 ? 22 : -22}deg)`, transition: "transform .28s ease-in-out" }}>
-            <line x1="24" y1="60" x2="24" y2="66" stroke="#cbd5e1" strokeWidth="4.5" strokeLinecap="round" />
+          <g style={{ transformOrigin: "24px 60px", transform: `rotate(${reduced ? 0 : step % 2 === 0 ? 38 : -38}deg)`, transition: "transform .14s ease-in-out" }}>
+            <line x1="24" y1="60" x2="24" y2="67" stroke="#cbd5e1" strokeWidth="4.5" strokeLinecap="round" />
           </g>
-          <g style={{ transformOrigin: "40px 60px", transform: `rotate(${reduced ? 0 : step % 2 === 0 ? -22 : 22}deg)`, transition: "transform .28s ease-in-out" }}>
-            <line x1="40" y1="60" x2="40" y2="66" stroke="#cbd5e1" strokeWidth="4.5" strokeLinecap="round" />
+          <g style={{ transformOrigin: "40px 60px", transform: `rotate(${reduced ? 0 : step % 2 === 0 ? -38 : 38}deg)`, transition: "transform .14s ease-in-out" }}>
+            <line x1="40" y1="60" x2="40" y2="67" stroke="#cbd5e1" strokeWidth="4.5" strokeLinecap="round" />
           </g>
           {/* arms — swinging opposite to legs */}
-          <g style={{ transformOrigin: "14px 52px", transform: `rotate(${reduced ? 0 : step % 2 === 0 ? -18 : 18}deg)`, transition: "transform .28s ease-in-out" }}>
-            <line x1="14" y1="52" x2="10" y2="58" stroke="#cbd5e1" strokeWidth="4" strokeLinecap="round" />
+          <g style={{ transformOrigin: "14px 52px", transform: `rotate(${reduced ? 0 : step % 2 === 0 ? -30 : 30}deg)`, transition: "transform .14s ease-in-out" }}>
+            <line x1="14" y1="52" x2="10" y2="59" stroke="#cbd5e1" strokeWidth="4" strokeLinecap="round" />
           </g>
-          <g style={{ transformOrigin: "50px 52px", transform: `rotate(${reduced ? 0 : step % 2 === 0 ? 18 : -18}deg)`, transition: "transform .28s ease-in-out" }}>
-            <line x1="50" y1="52" x2="54" y2="58" stroke="#cbd5e1" strokeWidth="4" strokeLinecap="round" />
+          <g style={{ transformOrigin: "50px 52px", transform: `rotate(${reduced ? 0 : step % 2 === 0 ? 30 : -30}deg)`, transition: "transform .14s ease-in-out" }}>
+            <line x1="50" y1="52" x2="54" y2="59" stroke="#cbd5e1" strokeWidth="4" strokeLinecap="round" />
           </g>
           {/* bob */}
           <style>{`@keyframes walk-bob { 0%,100%{ transform: translateY(0) } 50%{ transform: translateY(-2.5px) } }`}</style>
