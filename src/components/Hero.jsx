@@ -66,6 +66,45 @@ function HeroPhoto({ reduced }) {
   };
   const onLeave = () => { mx.set(0); my.set(0); };
 
+  // Robot animation states (declared before effects that use them)
+  const [eyesClosed, setEyesClosed] = useState(false);
+  const [armWave, setArmWave] = useState(false);
+  const [heartBeat, setHeartBeat] = useState(false);
+  const [bob, setBob] = useState(false);
+  const [stareDown, setStareDown] = useState(false);
+
+  // Blinking eyes + arm wave — async delay loop
+  useEffect(() => {
+    if (reduced) return;
+    const timers = [];
+    const scheduleBlink = () => {
+      const delay = 2200 + Math.random() * 2800;
+      timers.push(setTimeout(() => {
+        setEyesClosed(true);
+        timers.push(setTimeout(() => { setEyesClosed(false); scheduleBlink(); }, 160));
+      }, delay));
+    };
+    scheduleBlink();
+    return () => timers.forEach(clearTimeout);
+  }, [reduced]);
+
+  // Robot wave, then stare-down at the end
+  useEffect(() => {
+    if (reduced) return;
+    const seq = (delay, fn) => setTimeout(fn, delay);
+    let alive = true;
+    const loop = () => {
+      if (!alive) return;
+      setArmWave(true); setStareDown(false);
+      const t1 = seq(2600, () => { if (alive) { setArmWave(false); setStareDown(true); } });
+      const t2 = seq(4200, () => { if (alive) { setStareDown(false); loop(); } });
+      timers.push(t1, t2);
+    };
+    const timers = [];
+    loop();
+    return () => { alive = false; timers.forEach(clearTimeout); };
+  }, [reduced]);
+
   return (
     <motion.div
       ref={wrapRef}
@@ -153,6 +192,74 @@ function HeroPhoto({ reduced }) {
         </div>
         <style>{`@keyframes float-tag { 0%,100%{ transform: translateY(0) } 50%{ transform: translateY(-4px) } }`}</style>
       </motion.div>
+
+      {/* ── Robot buddy peeking from top-right ── */}
+      <div
+        aria-hidden="true"
+        style={{
+          position: "absolute", top: -18, right: -10, zIndex: 5, pointerEvents: "none",
+          transform: `translateY(${reduced ? 0 : bob ? 6 : 0}px)`,
+          transition: "transform 1.1s cubic-bezier(.34,1.56,.64,1)",
+          filter: "drop-shadow(0 10px 22px rgba(0,0,0,0.5))",
+        }}
+      >
+        {/* speech bubble */}
+        <div style={{
+          position: "absolute", top: -36, right: 6, whiteSpace: "nowrap",
+          background: "#fff", color: "#0d1117", fontFamily: "var(--mono)", fontSize: 10, fontWeight: 700, letterSpacing: "0.08em",
+          padding: "6px 10px", borderRadius: 999, borderBottomRightRadius: 4,
+          opacity: armWave ? 1 : 0, transform: `translateY(${armWave ? 0 : 6}px)`, transition: "opacity .35s, transform .35s",
+        }}>
+          HI! THAT'S ME 👋
+        </div>
+
+        <svg width="86" height="92" viewBox="0 0 86 92" fill="none" style={{ display: "block", overflow: "visible" }}>
+          {/* antenna */}
+          <line x1="43" y1="18" x2="43" y2="30" stroke="#9ab" strokeWidth="4" strokeLinecap="round" />
+          <circle cx="43" cy="14" r="6" fill="#00e5ff" style={{ animation: reduced ? "none" : "antenna-pulse 1.6s ease-in-out infinite" }} />
+          <style>{`@keyframes antenna-pulse { 0%,100%{ opacity:1 } 50%{ opacity:.45 } }`}</style>
+
+          {/* head */}
+          <rect x="14" y="28" width="58" height="42" rx="14" fill="#eef6f8" stroke="#b9cdd6" strokeWidth="2" />
+          {/* face screen */}
+          <rect x="21" y="35" width="44" height="26" rx="10" fill="#0b1a1f" />
+          {/* eyes */}
+          {eyesClosed ? (
+            <>
+              <line x1="30" y1="48" x2="38" y2="48" stroke="#00e5ff" strokeWidth="3" strokeLinecap="round" />
+              <line x1="48" y1="48" x2="56" y2="48" stroke="#00e5ff" strokeWidth="3" strokeLinecap="round" />
+            </>
+          ) : (
+            <>
+              <circle cx="34" cy="48" r="4" fill="#00e5ff" />
+              <circle cx="52" cy="48" r="4" fill="#00e5ff" />
+            </>
+          )}
+          {/* smile */}
+          <path d="M36 56 Q43 60 50 56" stroke="#00e5ff" strokeWidth="2.5" strokeLinecap="round" fill="none" />
+          {/* blush */}
+          <circle cx="27" cy="54" r="3" fill="#ff8aa0" opacity="0.7" />
+          <circle cx="59" cy="54" r="3" fill="#ff8aa0" opacity="0.7" />
+          {/* ears / knobs */}
+          <rect x="8" y="42" width="8" height="16" rx="4" fill="#cbd5e1" stroke="#94a3b8" strokeWidth="1.5" />
+          <rect x="70" y="42" width="8" height="16" rx="4" fill="#cbd5e1" stroke="#94a3b8" strokeWidth="1.5" />
+          {/* body */}
+          <rect x="20" y="72" width="46" height="18" rx="8" fill="#f1f5f9" stroke="#cbd5e1" strokeWidth="2" />
+          {/* heart button */}
+          <path
+            d="M43 85 c-4-4-8-2-8 1 0 3 5 4 8 7 3-3 8-4 8-7 0-2.8-4-4.6-8-1z"
+            fill="#ff5a7a" style={{ transformOrigin: "43px 83px", animation: reduced ? "none" : `heart-${heartBeat ? "a" : "b"} .7s ease-in-out 1` }}
+          />
+          <style>{`@keyframes heart-a { 0%{ transform: scale(1) } 50%{ transform: scale(1.14) } 100%{ transform: scale(1) } } @keyframes heart-b { 0%{ transform: scale(1) } 50%{ transform: scale(1.14) } 100%{ transform: scale(1) } }`}</style>
+          {/* waving arm */}
+          <g style={{ transformOrigin: "70px 64px", transform: armWave ? "rotate(-22deg)" : "rotate(0deg)", transition: "transform .45s cubic-bezier(.34,1.56,.64,1)" }}>
+            <line x1="70" y1="64" x2="82" y2="52" stroke="#cbd5e1" strokeWidth="7" strokeLinecap="round" />
+            <circle cx="83" cy="51" r="6" fill="#e2e8f0" stroke="#94a3b8" strokeWidth="1.5" />
+          </g>
+          {/* other arm resting */}
+          <line x1="20" y1="66" x2="10" y2="76" stroke="#cbd5e1" strokeWidth="7" strokeLinecap="round" />
+        </svg>
+      </div>
     </motion.div>
   );
 }
