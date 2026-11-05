@@ -7,7 +7,7 @@ import DecryptedText from "../components/DecryptedText";
 const education = [
   { degree: "Secondary School Certificate (SSC)", institution: "Monipur High School and College", year: "2019", result: "GPA 5.00 / 5.00" },
   { degree: "Higher Secondary Certificate (HSC)", institution: "Mirpur Cantonment High School and College", year: "2022", result: "GPA 5.00 / 5.00" },
-  { degree: profile.education.degree, institution: profile.education.university, year: profile.education.status, result: `CGPA ${profile.education.cgpa} / ${profile.education.cgpaOutOf}`, highlight: true },
+  { degree: "B.Sc. in Computer Science & Engineering", institution: "BRAC University", year: "Expected graduation: September 2026", result: "CGPA 3.77 / 4.00", highlight: true },
 ];
 
 export default function Journey() {
