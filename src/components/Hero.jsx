@@ -73,36 +73,31 @@ function HeroPhoto({ reduced }) {
   const [bob, setBob] = useState(false);
   const [stareDown, setStareDown] = useState(false);
 
-  // Blinking eyes + arm wave — async delay loop
+  // Blinking eyes + arm wave + heart + bob — simple intervals, no timeout recursion
   useEffect(() => {
     if (reduced) return;
     const timers = [];
     const scheduleBlink = () => {
       const delay = 2200 + Math.random() * 2800;
       timers.push(setTimeout(() => {
+        if (reduced) return;
         setEyesClosed(true);
         timers.push(setTimeout(() => { setEyesClosed(false); scheduleBlink(); }, 160));
       }, delay));
     };
     scheduleBlink();
-    return () => timers.forEach(clearTimeout);
-  }, [reduced]);
-
-  // Robot wave, then stare-down at the end
-  useEffect(() => {
-    if (reduced) return;
-    const seq = (delay, fn) => setTimeout(fn, delay);
-    let alive = true;
-    const loop = () => {
-      if (!alive) return;
-      setArmWave(true); setStareDown(false);
-      const t1 = seq(2600, () => { if (alive) { setArmWave(false); setStareDown(true); } });
-      const t2 = seq(4200, () => { if (alive) { setStareDown(false); loop(); } });
-      timers.push(t1, t2);
+    const eyeTimers = timers;
+    const waveIv = setInterval(() => setArmWave(true), 4600);
+    const waveOff = setInterval(() => setArmWave(false), 4600);
+    setTimeout(() => setArmWave(true), 800);
+    const heartIv = setInterval(() => setHeartBeat((v) => !v), 1400);
+    const bobIv = setInterval(() => setBob((v) => !v), 2600);
+    const stareIv = setInterval(() => setStareDown((v) => !v), 4200);
+    return () => {
+      eyeTimers.forEach(clearTimeout);
+      clearInterval(waveIv); clearInterval(waveOff);
+      clearInterval(heartIv); clearInterval(bobIv); clearInterval(stareIv);
     };
-    const timers = [];
-    loop();
-    return () => { alive = false; timers.forEach(clearTimeout); };
   }, [reduced]);
 
   return (
