@@ -72,10 +72,18 @@ function HeroPhoto({ reduced }) {
   const [heartBeat, setHeartBeat] = useState(false);
   const [bob, setBob] = useState(false);
   const [stareDown, setStareDown] = useState(false);
+  const [visible, setVisible] = useState(false);
+
+  // Reveal once the wrapper has entered the viewport and the entrance is done
+  useEffect(() => {
+    const t = setTimeout(() => setVisible(true), 1200);
+    return () => clearTimeout(t);
+  }, []);
 
   // Blinking eyes + arm wave + heart + bob — simple intervals, no timeout recursion
   useEffect(() => {
     if (reduced) return;
+    if (!visible) return;
     const timers = [];
     const scheduleBlink = () => {
       const delay = 2200 + Math.random() * 2800;
@@ -89,16 +97,16 @@ function HeroPhoto({ reduced }) {
     const eyeTimers = timers;
     const waveIv = setInterval(() => setArmWave(true), 4600);
     const waveOff = setInterval(() => setArmWave(false), 4600);
-    setTimeout(() => setArmWave(true), 800);
+    const waveInit = setTimeout(() => setArmWave(true), 800);
     const heartIv = setInterval(() => setHeartBeat((v) => !v), 1400);
     const bobIv = setInterval(() => setBob((v) => !v), 2600);
     const stareIv = setInterval(() => setStareDown((v) => !v), 4200);
     return () => {
       eyeTimers.forEach(clearTimeout);
-      clearInterval(waveIv); clearInterval(waveOff);
+      clearInterval(waveIv); clearInterval(waveOff); clearTimeout(waveInit);
       clearInterval(heartIv); clearInterval(bobIv); clearInterval(stareIv);
     };
-  }, [reduced]);
+  }, [reduced, visible]);
 
   return (
     <motion.div
