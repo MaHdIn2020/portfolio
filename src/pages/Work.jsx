@@ -58,7 +58,7 @@ export default function Work() {
               {cat}{cat !== "All" && <sup style={{ marginLeft: 6, fontSize: 9 }}>{projects.filter((p) => p.category === cat).length}</sup>}
             </button>
           ))}
-          <span className="index-num" style={{ marginLeft: "auto", alignSelf: "center" }}>SHOWING <strong>{String(visible.length).padStart(2, "0")}</strong> / 09</span>
+          <span className="index-num" style={{ marginLeft: "auto", alignSelf: "center" }}>SHOWING {visible.length} OF {projects.length}</span>
         </div>
       </div>
 
@@ -78,7 +78,7 @@ export default function Work() {
             >
               <motion.div style={{ y: featY, position: "absolute", inset: 0, background: "radial-gradient(ellipse at 18% 0%, rgba(0,229,255,0.14), transparent 55%)", pointerEvents: "none" }} />
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", position: "relative" }}>
-                <span className="index-num">FEATURED · <strong>{String(featured.id).padStart(2, "0")}</strong> / {String(visible.length).padStart(2, "0")}</span>
+                <span className="index-num">FEATURED PROJECT</span>
                 <span style={{ fontFamily: "var(--mono)", fontSize: 11, color: "var(--muted)" }}>{featured.year}</span>
               </div>
               <span style={{ marginTop: 42, fontFamily: "var(--mono)", fontSize: 10, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--accent)", position: "relative" }}>{featured.category} · {featured.tags}</span>
@@ -115,7 +115,7 @@ export default function Work() {
                 }}
                 aria-label={`Feature ${p.name}`}
               >
-                <span className="index-num" style={{ fontSize: 12 }}><strong>{String(p.id).padStart(2, "0")}</strong></span>
+                <span className="index-num" style={{ fontSize: 12 }}><strong>{p.category}</strong></span>
                 <span>
                   <span className="display-title" style={{ display: "block", fontSize: 20, lineHeight: 1.1 }}>{p.name}</span>
                   <span style={{ display: "block", color: "var(--muted)", fontSize: 12, marginTop: 5, lineHeight: 1.55 }}>{p.shortDesc}</span>
@@ -148,7 +148,7 @@ export default function Work() {
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setSelected(null)} style={{ position: "fixed", inset: 0, zIndex: 200, background: "rgba(4,4,8,0.82)", backdropFilter: "blur(10px)", display: "flex", alignItems: "center", justifyContent: "center", padding: 20 }} role="dialog" aria-modal="true" aria-label={selected.name}>
             <motion.div initial={{ opacity: 0, y: 24, scale: 0.98 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, y: 12 }} onClick={(e) => e.stopPropagation()} style={{ width: "min(720px, 100%)", maxHeight: "86vh", overflow: "auto", background: "#0d1117", border: "1px solid rgba(0,229,255,0.3)", padding: "clamp(24px,4vw,44px)" }}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", gap: 12 }}>
-                <span className="index-num">PROJECT / <strong>{String(selected.id).padStart(2, "0")}</strong> · {selected.category}</span>
+                <span className="index-num">{selected.category}</span>
                 <button onClick={() => setSelected(null)} aria-label="Close" style={{ width: 36, height: 36, borderRadius: "50%", border: "1px solid var(--line)", display: "grid", placeItems: "center", background: "none", color: "#fff", cursor: "pointer" }}><FiX /></button>
               </div>
               <h3 className="display-title" style={{ fontSize: "clamp(32px,4vw,52px)", margin: "18px 0 12px" }}>{selected.name}</h3>

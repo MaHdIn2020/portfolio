@@ -111,7 +111,7 @@ export default function Research() {
                 }}
               >
                 <span style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 12 }}>
-                  <span className="index-num"><strong>{String(p.id).padStart(2, "0")}</strong> — {p.field}</span>
+                  <span className="index-num">{p.field}</span>
                   <span style={{ color: isActiveTab ? "var(--accent)" : "var(--muted)", fontSize: 16 }}>{isActiveTab ? "●" : "○"}</span>
                 </span>
                 <span className="display-title" style={{ display: "block", fontSize: "clamp(24px,2.6vw,36px)", lineHeight: 1.08, marginTop: 12, color: isActiveTab ? "#fff" : "rgba(255,255,255,0.72)" }}>{p.title}</span>
@@ -133,7 +133,7 @@ export default function Research() {
               style={{ border: "1px solid var(--line)", padding: "clamp(24px,3.5vw,42px)", background: "rgba(255,255,255,0.014)", position: "relative", overflow: "hidden" }}
             >
               <div aria-hidden="true" style={{ position: "absolute", top: 0, left: 0, right: 0, height: 2, background: "linear-gradient(90deg, rgba(0,229,255,0.6), transparent)" }} />
-              <p className="index-num">RESEARCH / <strong>{String(paper.id).padStart(2, "0")}</strong> — {paper.field}</p>
+              <p className="index-num">{paper.field}</p>
               <p style={{ fontFamily: "var(--mono)", fontSize: 12, lineHeight: 1.7, color: "var(--accent)", marginTop: 20 }}>{paper.paperTitle}</p>
               <p style={{ fontSize: 15, lineHeight: 1.78, color: "#c4d3df", marginTop: 16 }}>{paper.summary}</p>
 

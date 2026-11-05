@@ -107,8 +107,7 @@ export default function About() {
                     color: isActiveTab ? "#fff" : "var(--muted)", cursor: "pointer", position: "relative",
                   }}
                 >
-                  <span className="index-num" style={{ flexShrink: 0 }}><strong>{c.id}</strong></span>
-                  <span style={{ fontFamily: "var(--display)", fontWeight: 600, fontSize: 15, letterSpacing: "-0.01em", flex: 1 }}>{c.kicker.split("/")[1].trim().replace(/\b\w/g, (m) => m.toUpperCase())}</span>
+                  <span style={{ fontFamily: "var(--display)", fontWeight: 600, fontSize: 15, letterSpacing: "-0.01em", flex: 1 }}>{c.kicker.replace(/\b\w/g, (m) => m.toUpperCase())}</span>
                   <span style={{ width: isActiveTab ? 44 : 16, height: 2, background: isActiveTab ? "var(--accent)" : "rgba(255,255,255,0.15)", display: "inline-block", transition: "width .35s, background .35s", position: "relative", overflow: "hidden" }} aria-hidden="true">
                     {isActiveTab && !reduced.current && (
                       <motion.i key={active} initial={{ scaleX: 0 }} animate={{ scaleX: 1 }} transition={{ duration: DURATION / 1000, ease: "linear" }} style={{ position: "absolute", inset: 0, background: "#fff", transformOrigin: "left", display: "block" }} />
@@ -154,7 +153,7 @@ export default function About() {
               <div style={{ display: "flex", gap: 10, marginTop: 30 }}>
                 <button onClick={() => setActive((active - 1 + aboutChapters.length) % aboutChapters.length)} aria-label="Previous chapter" style={{ width: 42, height: 42, borderRadius: "50%", border: "1px solid var(--line)", display: "grid", placeItems: "center", background: "none", color: "#fff", cursor: "pointer" }}>←</button>
                 <button onClick={() => setActive((active + 1) % aboutChapters.length)} aria-label="Next chapter" style={{ width: 42, height: 42, borderRadius: "50%", border: "1px solid var(--line)", display: "grid", placeItems: "center", background: "none", color: "var(--accent)", cursor: "pointer" }}>→</button>
-                <span className="index-num" style={{ alignSelf: "center", marginLeft: 6 }}><strong>{chapter.id}</strong> / 04</span>
+                <span className="index-num" style={{ alignSelf: "center", marginLeft: 6 }}>CHAPTER {active + 1} OF {aboutChapters.length}</span>
               </div>
             </motion.article>
           </AnimatePresence>
