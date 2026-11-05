@@ -1,8 +1,8 @@
 // src/components/Hero.jsx
 // Original hero — "Tanjip builds software that ships." + rotating focus line.
-// No reference copy. No "01 / 08" anywhere.
+// No reference copy. No "01 / 08" anywhere. Photo uses orbit ring + glint sweeps.
 import { useEffect, useRef, useState } from "react";
-import { motion } from "framer-motion";
+import { motion, useMotionValue, useTransform, useSpring } from "framer-motion";
 import { FaGithub, FaLinkedin, FaFacebook } from "react-icons/fa";
 import { profile } from "../data/profile";
 import {
@@ -48,6 +48,133 @@ function LogoMarquee() {
 }
 
 const ease = [0.22, 0.61, 0.36, 1];
+
+/* Hero portrait — orbit ring + comet trail + glint sweeps + mouse tilt (new effect, no traveling dash). */
+function HeroPhoto({ reduced }) {
+  const wrapRef = useRef(null);
+  const mx = useMotionValue(0);
+  const my = useMotionValue(0);
+  const rxSpring = useSpring(useTransform(my, [-0.5, 0.5], [6, -6]), { stiffness: 180, damping: 22 });
+  const rySpring = useSpring(useTransform(mx, [-0.5, 0.5], [-7, 7]), { stiffness: 180, damping: 22 });
+
+  const onMove = (e) => {
+    if (reduced || !wrapRef.current) return;
+    const r = wrapRef.current.getBoundingClientRect();
+    mx.set(((e.clientX - r.left) / r.width) - 0.5);
+    my.set(((e.clientY - r.top) / r.height) - 0.5);
+  };
+  const onLeave = () => { mx.set(0); my.set(0); };
+
+  return (
+    <motion.div
+      ref={wrapRef}
+      initial={{ opacity: 0, y: 24 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: 0.45, duration: 0.9, ease }}
+      className="hero-photo-wrap"
+      onMouseMove={onMove}
+      onMouseLeave={onLeave}
+      style={{
+        position: "relative",
+        height: "min(520px, 52vh)",
+        perspective: 900,
+        background: "transparent",
+      }}
+    >
+      <motion.div
+        style={{
+          position: "relative",
+          width: "100%", height: "100%",
+          rotateX: rxSpring,
+          rotateY: rySpring,
+          transformStyle: "preserve-3d",
+          borderRadius: 18,
+          overflow: "hidden",
+          background: "#0d1117",
+          boxShadow: "0 30px 80px rgba(0,0,0,0.55)",
+        }}
+      >
+        <img
+          src="/Picture.jpg"
+          alt="Portrait of Tanjip Surait Mahdin"
+          style={{
+            width: "100%", height: "100%",
+            objectFit: "cover", objectPosition: "50% 20%",
+            filter: "grayscale(0.35) contrast(1.05)",
+            opacity: 0.95,
+            maskImage: "linear-gradient(to bottom, #000 78%, transparent 100%)",
+          }}
+        />
+
+        {/* soft cyan veil + bottom fade */}
+        <div aria-hidden="true" style={{ position: "absolute", inset: 0, zIndex: 1, background: "linear-gradient(180deg, rgba(0,229,255,0.04) 0%, transparent 40%, rgba(5,6,10,0.55) 100%)" }} />
+
+        {/* glint sweep */}
+        <div
+          aria-hidden="true"
+          style={{
+            position: "absolute", top: "-20%", bottom: "-20%", left: "-30%", width: "45%",
+            zIndex: 2, pointerEvents: "none",
+            background: "linear-gradient(105deg, transparent, rgba(255,255,255,0.28) 50%, transparent)",
+            transform: "skewX(-18deg)",
+            animation: reduced ? "none" : "glint-sweep 5.5s ease-in-out infinite",
+          }}
+        />
+        <style>{`@keyframes glint-sweep { 0%{ left:-30% } 55%{ left:120% } 100%{ left:120% } }`}</style>
+
+        {/* tags */}
+        <div style={{ position: "absolute", left: 14, top: 14, zIndex: 3, fontFamily: "var(--mono)", fontSize: 9, letterSpacing: "0.18em", color: "rgba(255,255,255,0.75)", border: "1px solid rgba(255,255,255,0.2)", padding: "6px 10px", borderRadius: 999, background: "rgba(5,6,10,0.45)", backdropFilter: "blur(6px)" }}>
+          DHAKA · 2026
+        </div>
+        <div style={{ position: "absolute", right: 14, bottom: 14, zIndex: 3, fontFamily: "var(--mono)", fontSize: 9, letterSpacing: "0.18em", color: "rgba(255,255,255,0.75)", border: "1px solid rgba(255,255,255,0.2)", padding: "6px 10px", borderRadius: 999, background: "rgba(5,6,10,0.45)", backdropFilter: "blur(6px)", animation: reduced ? "none" : "float-tag 5s ease-in-out infinite" }}>
+          ✦ TANJIP S. MAHDIN
+        </div>
+        <style>{`@keyframes float-tag { 0%,100%{ transform: translateY(0) } 50%{ transform: translateY(-4px) } }`}</style>
+      </motion.div>
+
+      {/* orbit ring + comet — concentric circles, NO dashed traveling border */}
+      <svg
+        viewBox="0 0 100 100"
+        preserveAspectRatio="none"
+        aria-hidden="true"
+        style={{ position: "absolute", inset: -6, width: "calc(100% + 12px)", height: "calc(100% + 12px)", pointerEvents: "none", zIndex: 4 }}
+      >
+        {/* soft glow ring */}
+        <ellipse cx="50" cy="50" rx="49" ry="47" fill="none" stroke="rgba(0,229,255,0.14)" strokeWidth="1.5" />
+        {/* orbit ring — dotted/circular, rotates smoothly */}
+        <ellipse
+          cx="50" cy="50" rx="49" ry="47"
+          fill="none"
+          stroke="#00e5ff"
+          strokeWidth="1.6"
+          strokeDasharray="2 10"
+          strokeLinecap="round"
+          style={{
+            transformOrigin: "50% 50%",
+            animation: reduced ? "none" : "orbit-spin 28s linear infinite",
+          }}
+        />
+        <style>{`@keyframes orbit-spin { from{ transform: rotate(0deg) } to{ transform: rotate(360deg) } }`}</style>
+
+        {/* comet — a short bright arc that chases the ring counter-clockwise */}
+        <ellipse
+          cx="50" cy="50" rx="49" ry="47"
+          fill="none"
+          stroke="rgba(0,229,255,0.95)"
+          strokeWidth="2.4"
+          strokeLinecap="round"
+          strokeDasharray="18 290"
+          style={{
+            transformOrigin: "50% 50%",
+            animation: reduced ? "none" : "comet-chase 7s linear infinite",
+            filter: "drop-shadow(0 0 6px rgba(0,229,255,0.8))",
+          }}
+        />
+        <style>{`@keyframes comet-chase { from{ transform: rotate(300deg) } to{ transform: rotate(-60deg) } }`}</style>
+      </svg>
+    </motion.div>
+  );
+}
 
 export default function Hero() {
   const [idx, setIdx] = useState(0);
@@ -126,14 +253,8 @@ export default function Hero() {
           </motion.div>
         </motion.div>
 
-        {/* Photo */}
-        <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.45, duration: 0.9, ease }} className="hero-photo-wrap" style={{ position: "relative", height: "min(520px, 52vh)", overflow: "hidden", background: "#0d1117" }}>
-          <img src="/Picture.jpg" alt="Portrait of Tanjip Surait Mahdin" style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "50% 20%", filter: "grayscale(0.35) contrast(1.05)", opacity: 0.92, maskImage: "linear-gradient(to bottom, #000 72%, transparent 100%)" }} />
-          <svg viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", color: "var(--accent)", pointerEvents: "none" }}>
-            <rect x="0.6" y="0.6" width="98.8" height="98.8" pathLength="100" fill="none" stroke="currentColor" strokeWidth="1.2" vectorEffect="non-scaling-stroke" strokeDasharray="16 84" style={{ animation: reduced.current ? "none" : "border-lap 10s linear infinite" }} />
-            <style>{`@keyframes border-lap { from{stroke-dashoffset:0} to{stroke-dashoffset:-100} }`}</style>
-          </svg>
-        </motion.div>
+        {/* Photo — new orbit ring + comet + tile (no infinity/dash border) */}
+        <HeroPhoto reduced={reduced} />
       </div>
 
       <LogoMarquee />

@@ -20,6 +20,29 @@ export default function RootLayout() {
     return () => { document.documentElement.style.overflow = ""; };
   }, [entered]);
 
+  // Cursor spotlight — lights the background wherever the pointer goes
+  useEffect(() => {
+    if (window.matchMedia("(pointer: coarse)").matches) return;
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    let raf = 0;
+    let targetX = window.innerWidth / 2;
+    let targetY = window.innerHeight / 3;
+    let currentX = targetX;
+    let currentY = targetY;
+    const root = document.documentElement;
+    const step = () => {
+      currentX += (targetX - currentX) * 0.12;
+      currentY += (targetY - currentY) * 0.12;
+      root.style.setProperty("--spot-x", `${currentX}px`);
+      root.style.setProperty("--spot-y", `${currentY}px`);
+      raf = requestAnimationFrame(step);
+    };
+    const onMove = (e) => { targetX = e.clientX; targetY = e.clientY; };
+    root.addEventListener("mousemove", onMove);
+    raf = requestAnimationFrame(step);
+    return () => { root.removeEventListener("mousemove", onMove); cancelAnimationFrame(raf); };
+  }, []);
+
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
     gsap.registerPlugin(ScrollTrigger);
@@ -52,6 +75,7 @@ export default function RootLayout() {
     <>
       <div className="viewport-frame" aria-hidden="true" />
       <div className="cursor-glow" aria-hidden="true" />
+      <div className="cursor-spot" aria-hidden="true" />
       {!entered && <Preloader onDone={() => { setEntered(true); setTimeout(() => ScrollTrigger.refresh(), 200); }} />}
       <div style={{ opacity: entered ? 1 : 0, transition: "opacity .6s ease" }}>
         <Navbar />
