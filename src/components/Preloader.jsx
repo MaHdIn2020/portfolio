@@ -1,6 +1,7 @@
 // src/components/Preloader.jsx
-// Flow: 0→100% loading → Welcome → Fresh AI quote (7s countdown) → site.
-// No button, no keyboard gate — auto-enters after timer. Skip button for impatient visitors.
+// Flow: 0→100% loading → ONE merged welcome+quote screen (7s countdown) → site.
+// Big "Welcome / Happy exploring." on top, fresh quote directly underneath.
+// No separate welcome page, no button, no keyboard gate — auto-enters after timer.
 import { useCallback, useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { generateQuote } from "../data/quoteGenerator";
@@ -8,7 +9,7 @@ import { generateQuote } from "../data/quoteGenerator";
 const QUOTE_SECONDS = 7;
 
 export default function Preloader({ onDone }) {
-  const [phase, setPhase] = useState("loading"); // loading → welcome → quote → done
+  const [phase, setPhase] = useState("loading"); // loading → welcomeQuote → done
   const [progress, setProgress] = useState(0);
   const [quote, setQuote] = useState(null);
   const [countdown, setCountdown] = useState(QUOTE_SECONDS);
@@ -40,7 +41,9 @@ export default function Preloader({ onDone }) {
       } else {
         const finish = () => {
           setProgress(100);
-          setPhase("welcome");
+          setQuote(generateQuote());
+          setCountdown(QUOTE_SECONDS);
+          setPhase("welcomeQuote");
         };
         if (loaded) finish();
         else {
@@ -60,20 +63,9 @@ export default function Preloader({ onDone }) {
     onDone?.();
   }, [onDone]);
 
-  // Welcome → generate quote → quote phase
+  // Countdown 7→0 on the merged screen
   useEffect(() => {
-    if (phase !== "welcome") return;
-    const t = setTimeout(() => {
-      setQuote(generateQuote());
-      setCountdown(QUOTE_SECONDS);
-      setPhase("quote");
-    }, reduced.current ? 600 : 1600);
-    return () => clearTimeout(t);
-  }, [phase, reduced]);
-
-  // Quote countdown 7→0, then enter site
-  useEffect(() => {
-    if (phase !== "quote") return;
+    if (phase !== "welcomeQuote") return;
     if (reduced.current) {
       const t = setTimeout(finishAll, 1200);
       return () => clearTimeout(t);
@@ -93,7 +85,7 @@ export default function Preloader({ onDone }) {
 
   if (phase === "done") return null;
   const pct = phase !== "loading" ? 100 : progress;
-  const ringSize = 64;
+  const ringSize = 56;
   const ringStroke = 3;
   const ringR = (ringSize - ringStroke) / 2;
   const ringC = 2 * Math.PI * ringR;
@@ -131,50 +123,43 @@ export default function Preloader({ onDone }) {
             </motion.div>
           )}
 
-          {phase === "welcome" && (
+          {phase === "welcomeQuote" && quote && (
             <motion.div
-              key="welcome"
+              key="welcomeQuote"
               initial={{ opacity: 0, y: 20, filter: "blur(6px)" }}
               animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
               exit={{ opacity: 0, y: -14, filter: "blur(4px)" }}
-              transition={{ duration: 0.55, ease: [0.22, 0.8, 0.3, 1] }}
-              style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 14, textAlign: "center" }}
+              transition={{ duration: 0.6, ease: [0.22, 0.8, 0.3, 1] }}
+              style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 0, textAlign: "center", maxWidth: 680, padding: "0 20px", width: "100%" }}
             >
-              <p className="preloader-hint" style={{ color: "var(--accent)", margin: 0 }}>✳ WELCOME</p>
-              <h2 className="display-title" style={{ fontSize: "clamp(44px, 7vw, 84px)", margin: 0, color: "#fff", letterSpacing: "-0.04em", lineHeight: 0.95 }}>
+              {/* — Welcome block — */}
+              <p className="preloader-hint" style={{ color: "var(--accent)", margin: "0 0 12px" }}>✳ WELCOME</p>
+              <h2 className="display-title" style={{ fontSize: "clamp(56px, 8vw, 96px)", margin: 0, color: "#fff", letterSpacing: "-0.05em", lineHeight: 0.92 }}>
                 Happy<br />
                 <span style={{ color: "var(--accent)" }}>exploring.</span>
               </h2>
-              <p style={{ color: "var(--muted)", fontFamily: "var(--mono)", fontSize: 11, letterSpacing: "0.14em", margin: "6px 0 0" }}>
+              <p style={{ color: "var(--muted)", fontFamily: "var(--mono)", fontSize: 11, letterSpacing: "0.14em", margin: "14px 0 0" }}>
                 FULL-STACK · ML · RESEARCH · TEACHING
               </p>
-            </motion.div>
-          )}
 
-          {phase === "quote" && quote && (
-            <motion.div
-              key="quote"
-              initial={{ opacity: 0, y: 20, filter: "blur(6px)" }}
-              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-              exit={{ opacity: 0, y: -14, filter: "blur(4px)" }}
-              transition={{ duration: 0.55, ease: [0.22, 0.8, 0.3, 1] }}
-              style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 16, textAlign: "center", maxWidth: 640, padding: "0 20px" }}
-            >
-              <p className="preloader-hint" style={{ color: "var(--accent)", margin: 0 }}>
+              {/* — Divider — */}
+              <div style={{ width: "min(420px, 70vw)", height: 1, background: "linear-gradient(90deg, transparent, rgba(0,229,255,0.5), transparent)", margin: "26px 0" }} aria-hidden="true" />
+
+              {/* — Quote block — */}
+              <p className="preloader-hint" style={{ color: "var(--accent)", margin: "0 0 12px" }}>
                 ✦ {quote.theme} · FRESH QUOTE
               </p>
-
               <blockquote style={{ margin: 0 }}>
-                <p style={{ fontFamily: "var(--display)", fontSize: "clamp(22px, 3.4vw, 34px)", lineHeight: 1.35, fontWeight: 600, letterSpacing: "-0.02em", color: "#fff", margin: 0 }}>
+                <p style={{ fontFamily: "var(--display)", fontSize: "clamp(20px, 3vw, 30px)", lineHeight: 1.4, fontWeight: 600, letterSpacing: "-0.02em", color: "#fff", margin: 0 }}>
                   “{quote.text}”
                 </p>
-                <cite style={{ display: "block", fontFamily: "var(--mono)", fontStyle: "normal", fontSize: 12, letterSpacing: "0.14em", color: "var(--muted)", marginTop: 14 }}>
+                <cite style={{ display: "block", fontFamily: "var(--mono)", fontStyle: "normal", fontSize: 12, letterSpacing: "0.14em", color: "var(--muted)", marginTop: 12 }}>
                   — {quote.author.toUpperCase()}
                 </cite>
               </blockquote>
 
-              {/* Countdown ring */}
-              <div style={{ display: "flex", alignItems: "center", gap: 14, marginTop: 8 }}>
+              {/* — Countdown + skip — */}
+              <div style={{ display: "flex", alignItems: "center", gap: 14, marginTop: 26 }}>
                 <div style={{ position: "relative", width: ringSize, height: ringSize }} role="timer" aria-label={`Entering site in ${countdown} seconds`}>
                   <svg width={ringSize} height={ringSize} viewBox={`0 0 ${ringSize} ${ringSize}`} aria-hidden="true">
                     <circle cx={ringSize / 2} cy={ringSize / 2} r={ringR} fill="none" stroke="rgba(255,255,255,0.12)" strokeWidth={ringStroke} />
@@ -204,7 +189,7 @@ export default function Preloader({ onDone }) {
                 </div>
               </div>
 
-              <div className="preloader-bar" style={{ width: "min(420px, 70vw)", marginTop: 6 }} aria-hidden="true">
+              <div className="preloader-bar" style={{ width: "min(420px, 70vw)", marginTop: 16 }} aria-hidden="true">
                 <i style={{ transform: `scaleX(${(QUOTE_SECONDS - countdown) / QUOTE_SECONDS})` }} />
               </div>
             </motion.div>
@@ -213,8 +198,8 @@ export default function Preloader({ onDone }) {
       </div>
 
       <div className="preloader-bottom">
-        <span>{phase === "loading" ? "LOADING" : phase === "welcome" ? "READY" : "QUOTE"}</span>
-        <span>{phase === "loading" ? `${String(pct).padStart(2, "0")}%` : phase === "welcome" ? "WELCOME" : `ENTERING ${countdown}…`}</span>
+        <span>{phase === "loading" ? "LOADING" : "WELCOME"}</span>
+        <span>{phase === "loading" ? `${String(pct).padStart(2, "0")}%` : `ENTERING ${countdown}…`}</span>
       </div>
     </div>
   );
