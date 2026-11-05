@@ -1,6 +1,6 @@
 // src/components/Hero.jsx
 // Original hero — "Tanjip builds software that ships." + rotating focus line.
-// No reference copy. No "01 / 08" anywhere. Photo uses orbit ring + glint sweeps.
+// No reference copy. No "01 / 08" anywhere. Photo: clean — glow, corner ticks, soft glint, tilt.
 import { useEffect, useRef, useState } from "react";
 import { motion, useMotionValue, useTransform, useSpring } from "framer-motion";
 import { FaGithub, FaLinkedin, FaFacebook } from "react-icons/fa";
@@ -49,13 +49,14 @@ function LogoMarquee() {
 
 const ease = [0.22, 0.61, 0.36, 1];
 
-/* Hero portrait — orbit ring + comet trail + glint sweeps + mouse tilt (new effect, no traveling dash). */
+/* Hero portrait — clean pros look: soft cyan glow, 4 cyan corner ticks, slow glint sweep, gentle mouse tilt.
+   No rings, no comet, no dashed borders. */
 function HeroPhoto({ reduced }) {
   const wrapRef = useRef(null);
   const mx = useMotionValue(0);
   const my = useMotionValue(0);
-  const rxSpring = useSpring(useTransform(my, [-0.5, 0.5], [6, -6]), { stiffness: 180, damping: 22 });
-  const rySpring = useSpring(useTransform(mx, [-0.5, 0.5], [-7, 7]), { stiffness: 180, damping: 22 });
+  const rxSpring = useSpring(useTransform(my, [-0.5, 0.5], [5, -5]), { stiffness: 160, damping: 20 });
+  const rySpring = useSpring(useTransform(mx, [-0.5, 0.5], [-5, 5]), { stiffness: 160, damping: 20 });
 
   const onMove = (e) => {
     if (reduced || !wrapRef.current) return;
@@ -81,6 +82,27 @@ function HeroPhoto({ reduced }) {
         background: "transparent",
       }}
     >
+      {/* soft cyan halo behind the portrait */}
+      <div aria-hidden="true" style={{
+        position: "absolute", inset: "-14px -10px -34px -10px", borderRadius: 28,
+        background: "radial-gradient(ellipse 70% 55% at 50% 32%, rgba(0,229,255,0.22), transparent 70%)",
+        filter: "blur(18px)",
+        pointerEvents: "none",
+      }} />
+
+      {/* outer rim — subtle hairline so it reads as a frame without a chase animation */}
+      <div aria-hidden="true" style={{
+        position: "absolute", inset: -1, borderRadius: 18,
+        border: "1px solid rgba(255,255,255,0.12)",
+        pointerEvents: "none", zIndex: 4,
+      }} />
+
+      {/* 4 small cyan corner ticks outside the portrait */}
+      <span aria-hidden="true" style={{ position: "absolute", left: -7, top: -7, width: 18, height: 18, borderLeft: "2px solid var(--accent)", borderTop: "2px solid var(--accent)", borderTopLeftRadius: 18, zIndex: 4, pointerEvents: "none" }} />
+      <span aria-hidden="true" style={{ position: "absolute", right: -7, top: -7, width: 18, height: 18, borderRight: "2px solid var(--accent)", borderTop: "2px solid var(--accent)", borderTopRightRadius: 18, zIndex: 4, pointerEvents: "none" }} />
+      <span aria-hidden="true" style={{ position: "absolute", left: -7, bottom: -7, width: 18, height: 18, borderLeft: "2px solid var(--accent)", borderBottom: "2px solid var(--accent)", borderBottomLeftRadius: 18, zIndex: 4, pointerEvents: "none" }} />
+      <span aria-hidden="true" style={{ position: "absolute", right: -7, bottom: -7, width: 18, height: 18, borderRight: "2px solid var(--accent)", borderBottom: "2px solid var(--accent)", borderBottomRightRadius: 18, zIndex: 4, pointerEvents: "none" }} />
+
       <motion.div
         style={{
           position: "relative",
@@ -109,18 +131,18 @@ function HeroPhoto({ reduced }) {
         {/* soft cyan veil + bottom fade */}
         <div aria-hidden="true" style={{ position: "absolute", inset: 0, zIndex: 1, background: "linear-gradient(180deg, rgba(0,229,255,0.04) 0%, transparent 40%, rgba(5,6,10,0.55) 100%)" }} />
 
-        {/* glint sweep */}
+        {/* gentle glint sweep — slow, subtle */}
         <div
           aria-hidden="true"
           style={{
-            position: "absolute", top: "-20%", bottom: "-20%", left: "-30%", width: "45%",
+            position: "absolute", top: "-20%", bottom: "-20%", left: "-32%", width: "38%",
             zIndex: 2, pointerEvents: "none",
-            background: "linear-gradient(105deg, transparent, rgba(255,255,255,0.28) 50%, transparent)",
+            background: "linear-gradient(105deg, transparent, rgba(255,255,255,0.16) 50%, transparent)",
             transform: "skewX(-18deg)",
-            animation: reduced ? "none" : "glint-sweep 5.5s ease-in-out infinite",
+            animation: reduced ? "none" : "glint-sweep 7s ease-in-out infinite",
           }}
         />
-        <style>{`@keyframes glint-sweep { 0%{ left:-30% } 55%{ left:120% } 100%{ left:120% } }`}</style>
+        <style>{`@keyframes glint-sweep { 0%{ left:-32% } 45%{ left:118% } 100%{ left:118% } }`}</style>
 
         {/* tags */}
         <div style={{ position: "absolute", left: 14, top: 14, zIndex: 3, fontFamily: "var(--mono)", fontSize: 9, letterSpacing: "0.18em", color: "rgba(255,255,255,0.75)", border: "1px solid rgba(255,255,255,0.2)", padding: "6px 10px", borderRadius: 999, background: "rgba(5,6,10,0.45)", backdropFilter: "blur(6px)" }}>
@@ -131,47 +153,6 @@ function HeroPhoto({ reduced }) {
         </div>
         <style>{`@keyframes float-tag { 0%,100%{ transform: translateY(0) } 50%{ transform: translateY(-4px) } }`}</style>
       </motion.div>
-
-      {/* orbit ring + comet — concentric circles, NO dashed traveling border */}
-      <svg
-        viewBox="0 0 100 100"
-        preserveAspectRatio="none"
-        aria-hidden="true"
-        style={{ position: "absolute", inset: -6, width: "calc(100% + 12px)", height: "calc(100% + 12px)", pointerEvents: "none", zIndex: 4 }}
-      >
-        {/* soft glow ring */}
-        <ellipse cx="50" cy="50" rx="49" ry="47" fill="none" stroke="rgba(0,229,255,0.14)" strokeWidth="1.5" />
-        {/* orbit ring — dotted/circular, rotates smoothly */}
-        <ellipse
-          cx="50" cy="50" rx="49" ry="47"
-          fill="none"
-          stroke="#00e5ff"
-          strokeWidth="1.6"
-          strokeDasharray="2 10"
-          strokeLinecap="round"
-          style={{
-            transformOrigin: "50% 50%",
-            animation: reduced ? "none" : "orbit-spin 28s linear infinite",
-          }}
-        />
-        <style>{`@keyframes orbit-spin { from{ transform: rotate(0deg) } to{ transform: rotate(360deg) } }`}</style>
-
-        {/* comet — a short bright arc that chases the ring counter-clockwise */}
-        <ellipse
-          cx="50" cy="50" rx="49" ry="47"
-          fill="none"
-          stroke="rgba(0,229,255,0.95)"
-          strokeWidth="2.4"
-          strokeLinecap="round"
-          strokeDasharray="18 290"
-          style={{
-            transformOrigin: "50% 50%",
-            animation: reduced ? "none" : "comet-chase 7s linear infinite",
-            filter: "drop-shadow(0 0 6px rgba(0,229,255,0.8))",
-          }}
-        />
-        <style>{`@keyframes comet-chase { from{ transform: rotate(300deg) } to{ transform: rotate(-60deg) } }`}</style>
-      </svg>
     </motion.div>
   );
 }
@@ -253,7 +234,7 @@ export default function Hero() {
           </motion.div>
         </motion.div>
 
-        {/* Photo — new orbit ring + comet + tile (no infinity/dash border) */}
+        {/* Photo — clean: glow halo, 4 corner ticks, soft glint, tilt (no rings / no chase) */}
         <HeroPhoto reduced={reduced} />
       </div>
 
