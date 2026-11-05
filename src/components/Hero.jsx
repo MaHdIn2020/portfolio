@@ -66,47 +66,44 @@ function HeroPhoto({ reduced }) {
   };
   const onLeave = () => { mx.set(0); my.set(0); };
 
-  // Robot animation states (declared before effects that use them)
+  // Walking robot — steps left→right along the top edge of the photo
+  const [walkX, setWalkX] = useState(-70);
+  const [step, setStep] = useState(0);
   const [eyesClosed, setEyesClosed] = useState(false);
-  const [armWave, setArmWave] = useState(false);
-  const [heartBeat, setHeartBeat] = useState(false);
-  const [bob, setBob] = useState(false);
-  const [stareDown, setStareDown] = useState(false);
-  const [visible, setVisible] = useState(false);
 
-  // Reveal once the wrapper has entered the viewport and the entrance is done
-  useEffect(() => {
-    const t = setTimeout(() => setVisible(true), 1200);
-    return () => clearTimeout(t);
-  }, []);
-
-  // Blinking eyes + arm wave + heart + bob — simple intervals, no timeout recursion
   useEffect(() => {
     if (reduced) return;
-    if (!visible) return;
     const timers = [];
     const scheduleBlink = () => {
-      const delay = 2200 + Math.random() * 2800;
+      const delay = 2600 + Math.random() * 3200;
       timers.push(setTimeout(() => {
-        if (reduced) return;
         setEyesClosed(true);
-        timers.push(setTimeout(() => { setEyesClosed(false); scheduleBlink(); }, 160));
+        timers.push(setTimeout(() => { setEyesClosed(false); scheduleBlink(); }, 150));
       }, delay));
     };
     scheduleBlink();
-    const eyeTimers = timers;
-    const waveIv = setInterval(() => setArmWave(true), 4600);
-    const waveOff = setInterval(() => setArmWave(false), 4600);
-    const waveInit = setTimeout(() => setArmWave(true), 800);
-    const heartIv = setInterval(() => setHeartBeat((v) => !v), 1400);
-    const bobIv = setInterval(() => setBob((v) => !v), 2600);
-    const stareIv = setInterval(() => setStareDown((v) => !v), 4200);
-    return () => {
-      eyeTimers.forEach(clearTimeout);
-      clearInterval(waveIv); clearInterval(waveOff); clearTimeout(waveInit);
-      clearInterval(heartIv); clearInterval(bobIv); clearInterval(stareIv);
+    const stepIv = setInterval(() => setStep((v) => v + 1), 320);
+    return () => { timers.forEach(clearTimeout); clearInterval(stepIv); };
+  }, [reduced]);
+
+  useEffect(() => {
+    if (reduced) { setWalkX(40); return; }
+    let raf = 0;
+    const start = performance.now();
+    const DUR = 6800;
+    let alive = true;
+    const run = () => {
+      const go = (now) => {
+        if (!alive) return;
+        const t = ((now - start) % DUR) / DUR;
+        setWalkX(-70 + t * 118);
+        raf = requestAnimationFrame(go);
+      };
+      raf = requestAnimationFrame(go);
     };
-  }, [reduced, visible]);
+    run();
+    return () => { alive = false; cancelAnimationFrame(raf); };
+  }, [reduced]);
 
   return (
     <motion.div
@@ -196,72 +193,62 @@ function HeroPhoto({ reduced }) {
         <style>{`@keyframes float-tag { 0%,100%{ transform: translateY(0) } 50%{ transform: translateY(-4px) } }`}</style>
       </motion.div>
 
-      {/* ── Robot buddy peeking from top-right ── */}
+      {/* ── Robot walking along the top edge ── */}
       <div
         aria-hidden="true"
         style={{
-          position: "absolute", top: -18, right: -10, zIndex: 5, pointerEvents: "none",
-          transform: `translateY(${reduced ? 0 : bob ? 6 : 0}px)`,
-          transition: "transform 1.1s cubic-bezier(.34,1.56,.64,1)",
-          filter: "drop-shadow(0 10px 22px rgba(0,0,0,0.5))",
+          position: "absolute", top: -8, left: -10, zIndex: 5, pointerEvents: "none",
+          transform: `translateX(${walkX}px)`,
+          transition: reduced ? "none" : "none",
+          filter: "drop-shadow(0 8px 16px rgba(0,0,0,0.5))",
         }}
       >
-        {/* speech bubble */}
-        <div style={{
-          position: "absolute", top: -36, right: 6, whiteSpace: "nowrap",
-          background: "#fff", color: "#0d1117", fontFamily: "var(--mono)", fontSize: 10, fontWeight: 700, letterSpacing: "0.08em",
-          padding: "6px 10px", borderRadius: 999, borderBottomRightRadius: 4,
-          opacity: armWave ? 1 : 0, transform: `translateY(${armWave ? 0 : 6}px)`, transition: "opacity .35s, transform .35s",
-        }}>
-          HI! THAT'S ME 👋
-        </div>
-
-        <svg width="86" height="92" viewBox="0 0 86 92" fill="none" style={{ display: "block", overflow: "visible" }}>
+        <svg width="64" height="68" viewBox="0 0 64 68" fill="none" style={{ display: "block", overflow: "visible" }}>
           {/* antenna */}
-          <line x1="43" y1="18" x2="43" y2="30" stroke="#9ab" strokeWidth="4" strokeLinecap="round" />
-          <circle cx="43" cy="14" r="6" fill="#00e5ff" style={{ animation: reduced ? "none" : "antenna-pulse 1.6s ease-in-out infinite" }} />
-          <style>{`@keyframes antenna-pulse { 0%,100%{ opacity:1 } 50%{ opacity:.45 } }`}</style>
-
+          <line x1="32" y1="12" x2="32" y2="20" stroke="#9ab" strokeWidth="3" strokeLinecap="round" />
+          <circle cx="32" cy="8" r="4" fill="#00e5ff" />
           {/* head */}
-          <rect x="14" y="28" width="58" height="42" rx="14" fill="#eef6f8" stroke="#b9cdd6" strokeWidth="2" />
+          <rect x="10" y="18" width="44" height="28" rx="10" fill="#eef6f8" stroke="#b9cdd6" strokeWidth="1.5" />
           {/* face screen */}
-          <rect x="21" y="35" width="44" height="26" rx="10" fill="#0b1a1f" />
+          <rect x="15" y="23" width="34" height="18" rx="7" fill="#0b1a1f" />
           {/* eyes */}
           {eyesClosed ? (
             <>
-              <line x1="30" y1="48" x2="38" y2="48" stroke="#00e5ff" strokeWidth="3" strokeLinecap="round" />
-              <line x1="48" y1="48" x2="56" y2="48" stroke="#00e5ff" strokeWidth="3" strokeLinecap="round" />
+              <line x1="21" y1="32" x2="26" y2="32" stroke="#00e5ff" strokeWidth="2.2" strokeLinecap="round" />
+              <line x1="38" y1="32" x2="43" y2="32" stroke="#00e5ff" strokeWidth="2.2" strokeLinecap="round" />
             </>
           ) : (
             <>
-              <circle cx="34" cy="48" r="4" fill="#00e5ff" />
-              <circle cx="52" cy="48" r="4" fill="#00e5ff" />
+              <circle cx="23.5" cy="32" r="2.7" fill="#00e5ff" />
+              <circle cx="40.5" cy="32" r="2.7" fill="#00e5ff" />
             </>
           )}
           {/* smile */}
-          <path d="M36 56 Q43 60 50 56" stroke="#00e5ff" strokeWidth="2.5" strokeLinecap="round" fill="none" />
-          {/* blush */}
-          <circle cx="27" cy="54" r="3" fill="#ff8aa0" opacity="0.7" />
-          <circle cx="59" cy="54" r="3" fill="#ff8aa0" opacity="0.7" />
-          {/* ears / knobs */}
-          <rect x="8" y="42" width="8" height="16" rx="4" fill="#cbd5e1" stroke="#94a3b8" strokeWidth="1.5" />
-          <rect x="70" y="42" width="8" height="16" rx="4" fill="#cbd5e1" stroke="#94a3b8" strokeWidth="1.5" />
+          <path d="M27 37 Q32 40 37 37" stroke="#00e5ff" strokeWidth="1.8" strokeLinecap="round" fill="none" />
+          {/* ears */}
+          <rect x="5" y="28" width="6" height="11" rx="3" fill="#cbd5e1" stroke="#94a3b8" strokeWidth="1" />
+          <rect x="53" y="28" width="6" height="11" rx="3" fill="#cbd5e1" stroke="#94a3b8" strokeWidth="1" />
           {/* body */}
-          <rect x="20" y="72" width="46" height="18" rx="8" fill="#f1f5f9" stroke="#cbd5e1" strokeWidth="2" />
-          {/* heart button */}
-          <path
-            d="M43 85 c-4-4-8-2-8 1 0 3 5 4 8 7 3-3 8-4 8-7 0-2.8-4-4.6-8-1z"
-            fill="#ff5a7a" style={{ transformOrigin: "43px 83px", animation: reduced ? "none" : `heart-${heartBeat ? "a" : "b"} .7s ease-in-out 1` }}
-          />
-          <style>{`@keyframes heart-a { 0%{ transform: scale(1) } 50%{ transform: scale(1.14) } 100%{ transform: scale(1) } } @keyframes heart-b { 0%{ transform: scale(1) } 50%{ transform: scale(1.14) } 100%{ transform: scale(1) } }`}</style>
-          {/* waving arm */}
-          <g style={{ transformOrigin: "70px 64px", transform: armWave ? "rotate(-22deg)" : "rotate(0deg)", transition: "transform .45s cubic-bezier(.34,1.56,.64,1)" }}>
-            <line x1="70" y1="64" x2="82" y2="52" stroke="#cbd5e1" strokeWidth="7" strokeLinecap="round" />
-            <circle cx="83" cy="51" r="6" fill="#e2e8f0" stroke="#94a3b8" strokeWidth="1.5" />
+          <rect x="14" y="48" width="36" height="12" rx="6" fill="#f1f5f9" stroke="#cbd5e1" strokeWidth="1.5" />
+          {/* legs — stepping */}
+          <g style={{ transformOrigin: "24px 60px", transform: `rotate(${reduced ? 0 : step % 2 === 0 ? 22 : -22}deg)`, transition: "transform .28s ease-in-out" }}>
+            <line x1="24" y1="60" x2="24" y2="66" stroke="#cbd5e1" strokeWidth="4.5" strokeLinecap="round" />
           </g>
-          {/* other arm resting */}
-          <line x1="20" y1="66" x2="10" y2="76" stroke="#cbd5e1" strokeWidth="7" strokeLinecap="round" />
+          <g style={{ transformOrigin: "40px 60px", transform: `rotate(${reduced ? 0 : step % 2 === 0 ? -22 : 22}deg)`, transition: "transform .28s ease-in-out" }}>
+            <line x1="40" y1="60" x2="40" y2="66" stroke="#cbd5e1" strokeWidth="4.5" strokeLinecap="round" />
+          </g>
+          {/* arms — swinging opposite to legs */}
+          <g style={{ transformOrigin: "14px 52px", transform: `rotate(${reduced ? 0 : step % 2 === 0 ? -18 : 18}deg)`, transition: "transform .28s ease-in-out" }}>
+            <line x1="14" y1="52" x2="10" y2="58" stroke="#cbd5e1" strokeWidth="4" strokeLinecap="round" />
+          </g>
+          <g style={{ transformOrigin: "50px 52px", transform: `rotate(${reduced ? 0 : step % 2 === 0 ? 18 : -18}deg)`, transition: "transform .28s ease-in-out" }}>
+            <line x1="50" y1="52" x2="54" y2="58" stroke="#cbd5e1" strokeWidth="4" strokeLinecap="round" />
+          </g>
+          {/* bob */}
+          <style>{`@keyframes walk-bob { 0%,100%{ transform: translateY(0) } 50%{ transform: translateY(-2.5px) } }`}</style>
         </svg>
+        {/* tiny step dust */}
+        <span style={{ position: "absolute", left: "50%", bottom: -2, transform: "translateX(-50%)", width: 30, height: 6, borderRadius: 999, background: "radial-gradient(ellipse, rgba(255,255,255,0.18), transparent 70%)", pointerEvents: "none" }} />
       </div>
     </motion.div>
   );
