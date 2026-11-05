@@ -1,35 +1,25 @@
 // src/pages/Home.jsx
-import React from 'react';
-import Hero from '../components/Hero';
-import TechMarquee from '../components/TechMarquee';
-import About from './About';
-import Experience from './Experience';
-import Education from './Education';
-import Skills from '../components/Skills';
-import ProjectsList from './ProjectsList';
-import Research from './Research';
-import Contact from './Contact';
+// Single-page assembly in editorial order.
+import Hero from "../components/Hero";
+import VideoDivider from "../components/VideoDivider";
+import About from "./About";
+import Work from "./Work";
+import Skills from "./Skills";
+import Research from "./Research";
+import Journey from "./Journey";
+import Contact from "./Contact";
 
-const Home = () => {
-    return (
-        <div>
-            <Hero />
-            <TechMarquee />
-            <About />
-            <div className="section-divider" />
-            <Experience />
-            <div className="section-divider" />
-            <Education />
-            <div className="section-divider" />
-            <Skills />
-            <div className="section-divider" />
-            <ProjectsList />
-            <div className="section-divider" />
-            <Research />
-            <div className="section-divider" />
-            <Contact />
-        </div>
-    );
-};
-
-export default Home;
+export default function Home() {
+  return (
+    <main style={{ position: "relative", zIndex: 1 }}>
+      <Hero />
+      <About />
+      <VideoDivider />
+      <Work />
+      <Skills />
+      <Research />
+      <Journey />
+      <Contact />
+    </main>
+  );
+}
