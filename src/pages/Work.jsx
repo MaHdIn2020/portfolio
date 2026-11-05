@@ -38,18 +38,18 @@ export default function Work() {
   const others = visible.filter((p) => p.id !== featured?.id);
 
   return (
-    <section id="work" aria-label="Selected work" style={{ overflow: "hidden", padding: "90px 0 8px" }}>
+    <section id="work" aria-label="Things I've built" style={{ overflow: "hidden", padding: "90px 0 8px" }}>
       <div style={{ padding: "0 var(--gutter)" }}>
         <div className="kicker" data-reveal>
-          <span><em>02</em> SELECTED WORK</span>
-          <span className="k-right">2023 — 2026</span>
+          <span>THINGS I'VE BUILT</span>
+          <span className="k-right">ML · WEB · GAMES</span>
         </div>
 
         <motion.h2 initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.75 }} className="display-title" style={{ fontSize: "clamp(56px, 8vw, 108px)", margin: "36px 0 12px" }}>
-          Made to <span style={{ color: "var(--accent)" }}>matter.</span>
+          Built, <span style={{ color: "var(--accent)" }}>tested, shipped.</span>
         </motion.h2>
         <p style={{ color: "var(--muted)", fontSize: 14, maxWidth: 460, marginBottom: 36 }}>
-          One featured build up front, the rest in a clean catalogue. Filter to narrow it down.
+          One build in the spotlight, the rest in a clean catalogue. Filter to narrow it down.
         </p>
 
         <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 32 }}>

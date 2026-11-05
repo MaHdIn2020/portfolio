@@ -12,14 +12,14 @@ const education = [
 
 export default function Journey() {
   return (
-    <section id="experience" className="section" aria-label="Experience and education">
+    <section id="experience" className="section" aria-label="Where I've been">
       <div className="kicker" data-reveal>
-        <span><em>05</em> JOURNEY</span>
-        <span className="k-right">WHERE I&apos;VE BEEN</span>
+        <span>WHERE I&apos;VE BEEN</span>
+        <span className="k-right">WORK &amp; SCHOOL</span>
       </div>
 
       <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }} className="display-title" style={{ fontSize: "clamp(44px, 6vw, 80px)", margin: "36px 0 48px" }}>
-        Experience <span style={{ color: "var(--muted)" }}>&amp;</span> <DecryptedText text="education" animateOn="both" encryptedClassName="decrypted-glyph" speed={40} sequential characters="ABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%&*" />
+        Work <span style={{ color: "var(--muted)" }}>&amp;</span> <DecryptedText text="school" animateOn="both" encryptedClassName="decrypted-glyph" speed={40} sequential characters="ABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%&*" />
       </motion.h2>
 
       {/* Current role */}

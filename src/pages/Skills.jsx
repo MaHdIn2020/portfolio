@@ -11,23 +11,23 @@ import { FaBrain } from "react-icons/fa";
 import DecryptedText from "../components/DecryptedText";
 
 const skillGroups = [
-  { category: "LANGUAGES & FRONTEND", skills: [
+  { category: "CODE & INTERFACE", skills: [
     { name: "Python", icon: <SiPython /> }, { name: "JavaScript", icon: <SiJavascript /> },
     { name: "C++", icon: <SiCplusplus /> }, { name: "HTML5", icon: <SiHtml5 /> },
     { name: "CSS3", icon: <SiCss3 /> }, { name: "React", icon: <SiReact /> },
     { name: "Tailwind CSS", icon: <SiTailwindcss /> }, { name: "Figma", icon: <FaBrain /> },
   ]},
-  { category: "BACKEND & DATABASES", skills: [
+  { category: "SERVERS & STORAGE", skills: [
     { name: "Node.js", icon: <SiNodedotjs /> }, { name: "Express.js", icon: <SiExpress /> },
     { name: "MongoDB", icon: <SiMongodb /> }, { name: "Firebase", icon: <SiFirebase /> },
     { name: "Streamlit", icon: <SiStreamlit /> },
   ]},
-  { category: "MACHINE LEARNING", skills: [
+  { category: "MODELS & DATA", skills: [
     { name: "scikit-learn", icon: <SiScikitlearn /> }, { name: "TensorFlow / Keras", icon: <SiTensorflow /> },
     { name: "Pandas", icon: <SiPandas /> }, { name: "NumPy", icon: <SiNumpy /> },
     { name: "XGBoost", icon: <FaBrain /> }, { name: "Gensim / NLP", icon: <FaBrain /> },
   ]},
-  { category: "DEVELOPER TOOLS", skills: [
+  { category: "EVERYDAY TOOLS", skills: [
     { name: "Git", icon: <SiGit /> }, { name: "GitHub", icon: <SiGithub /> },
     { name: "Vercel", icon: <SiVercel /> }, { name: "Postman", icon: <SiPostman /> },
   ]},
@@ -35,10 +35,10 @@ const skillGroups = [
 
 export default function Skills() {
   return (
-    <section id="skills" className="section" aria-label="Technologies">
+    <section id="skills" className="section" aria-label="Toolbox">
       <div className="kicker" data-reveal>
-        <span><em>03</em> TECHNOLOGIES</span>
-        <span className="k-right">TOOLS I USE TO BUILD</span>
+        <span>TOOLBOX</span>
+        <span className="k-right">WHAT'S IN THE BAG</span>
       </div>
 
       <motion.h2
@@ -47,7 +47,7 @@ export default function Skills() {
         style={{ fontSize: "clamp(52px, 7vw, 96px)", margin: "36px 0 56px" }}
       >
         <DecryptedText
-          text="Technologies"
+          text="The toolbox"
           animateOn="both"
           effect="scramble"
           sequential

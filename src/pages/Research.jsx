@@ -80,17 +80,17 @@ export default function Research() {
   const paper = papers[active];
 
   return (
-    <section id="research" className="section" aria-label="Research">
+    <section id="research" className="section" aria-label="Papers and writing">
       <div className="kicker" data-reveal>
-        <span><em>04</em> RESEARCH</span>
-        <span className="k-right">QUESTIONS, TESTED</span>
+        <span>PAPERS &amp; WRITING</span>
+        <span className="k-right">CLAIMS, CHECKED</span>
       </div>
 
       <motion.h2 initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.7 }} className="display-title" style={{ fontSize: "clamp(52px, 7vw, 96px)", margin: "36px 0 8px" }}>
-        Research <span style={{ color: "var(--accent)" }}>&amp; findings</span>
+        Papers, <span style={{ color: "var(--accent)" }}>verified.</span>
       </motion.h2>
       <p style={{ color: "var(--muted)", maxWidth: 420, fontSize: 14, lineHeight: 1.7, marginBottom: 48 }}>
-        <DecryptedText text="Two papers." animateOn="both" encryptedClassName="decrypted-glyph" speed={35} sequential characters="ABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%&*" className="" parentClassName="" /> Pick a thread on the left — the detail updates on the right.
+        <DecryptedText text="Two threads." animateOn="both" encryptedClassName="decrypted-glyph" speed={35} sequential characters="ABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%&*" className="" parentClassName="" /> Pick a thread on the left — the detail updates on the right.
       </p>
 
       <div style={{ display: "grid", gridTemplateColumns: "minmax(0, 0.9fr) minmax(0, 1.1fr)", gap: "clamp(20px,3.5vw,52px)", alignItems: "start" }} className="research-grid">

@@ -99,8 +99,8 @@ export default function Preloader({ onDone }) {
       aria-busy={phase !== "done"}
     >
       <div className="preloader-top">
-        <span>TANJIP SURAIT MAHDIN</span>
-        <span>PORTFOLIO — 2026</span>
+        <span>TSM</span>
+        <span>GOOD TO SEE YOU</span>
       </div>
 
       <div className="preloader-center">
@@ -119,7 +119,7 @@ export default function Preloader({ onDone }) {
                 <sup>%</sup>
               </div>
               <div className="preloader-bar" aria-hidden="true"><i style={{ transform: `scaleX(${pct / 100})` }} /></div>
-              <div className="preloader-hint">Loading Portfolio</div>
+              <div className="preloader-hint">Warming up the site…</div>
             </motion.div>
           )}
 
@@ -133,10 +133,11 @@ export default function Preloader({ onDone }) {
               style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 0, textAlign: "center", maxWidth: 680, padding: "0 20px", width: "100%" }}
             >
               {/* — Welcome block — */}
-              <p className="preloader-hint" style={{ color: "var(--accent)", margin: "0 0 12px" }}>✳ WELCOME</p>
+              <p className="preloader-hint" style={{ color: "var(--accent)", margin: "0 0 12px" }}>GREETINGS</p>
               <h2 className="display-title" style={{ fontSize: "clamp(56px, 8vw, 96px)", margin: 0, color: "#fff", letterSpacing: "-0.05em", lineHeight: 0.92 }}>
-                Happy<br />
-                <span style={{ color: "var(--accent)" }}>exploring.</span>
+                Good to
+                <br />
+                <span style={{ color: "var(--accent)" }}>see you.</span>
               </h2>
               <p style={{ color: "var(--muted)", fontFamily: "var(--mono)", fontSize: 11, letterSpacing: "0.14em", margin: "14px 0 0" }}>
                 FULL-STACK · ML · RESEARCH · TEACHING
@@ -198,7 +199,7 @@ export default function Preloader({ onDone }) {
       </div>
 
       <div className="preloader-bottom">
-        <span>{phase === "loading" ? "LOADING" : "WELCOME"}</span>
+        <span>{phase === "loading" ? "SETTING UP" : "ALL SET"}</span>
         <span>{phase === "loading" ? `${String(pct).padStart(2, "0")}%` : `ENTERING ${countdown}…`}</span>
       </div>
     </div>

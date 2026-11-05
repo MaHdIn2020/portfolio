@@ -39,20 +39,20 @@ export default function Contact() {
   return (
     <section id="contact" className="section" aria-label="Contact" style={{ paddingBottom: 40 }}>
       <div className="kicker" data-reveal>
-        <span><em>06</em> YOUR TURN</span>
-        <span className="k-right">HAVE SOMETHING IN MIND?</span>
+        <span>SAY HELLO</span>
+        <span className="k-right">GOT AN IDEA?</span>
       </div>
 
       <motion.h2 initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }} className="display-title" style={{ fontSize: "clamp(56px, 9vw, 128px)", margin: "40px 0 8px", lineHeight: 0.9 }}>
-        Let&apos;s build<br /><span style={{ color: "var(--accent)" }}>
-          <DecryptedText text="something" animateOn="both" encryptedClassName="decrypted-glyph" speed={38} sequential characters="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!@#$%&*" />
-        </span> useful.
+        Drop a line<br /><span style={{ color: "var(--accent)" }}>
+          <DecryptedText text="and we ship it" animateOn="both" encryptedClassName="decrypted-glyph" speed={38} sequential characters="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz!@#$%&*" />
+        </span>.
       </motion.h2>
       <p style={{ color: "var(--muted)", fontFamily: "var(--mono)", fontSize: 11, letterSpacing: "0.14em", marginBottom: 48 }}>OPEN TO OPPORTUNITIES · I USUALLY RESPOND WITHIN 24 HOURS</p>
 
       <div style={{ display: "grid", gridTemplateColumns: "minmax(0, 0.9fr) minmax(0, 1.1fr)", gap: "clamp(24px,4vw,56px)", alignItems: "start" }} className="contact-grid">
         <motion.div initial={{ opacity: 0, x: -18 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: 0.6 }}>
-          <p className="index-num" style={{ marginBottom: 14 }}>DIRECT CONTACT</p>
+          <p className="index-num" style={{ marginBottom: 14 }}>REACH ME DIRECTLY</p>
           {[
             { label: "EMAIL", value: profile.links.email, href: `mailto:${profile.links.email}` },
             { label: "PHONE", value: profile.links.phone, href: profile.links.phoneHref },
