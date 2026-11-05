@@ -46,7 +46,6 @@ export default function About() {
     <section id="about" className="section" style={{ paddingTop: 72 }} aria-label="About">
       <div className="kicker" data-reveal>
         <span>GOOD TO KNOW</span>
-        <span className="k-right">THE SHORT VERSION</span>
       </div>
 
       <div style={{ display: "grid", gridTemplateColumns: "minmax(0, 1fr) minmax(0, 1fr)", gap: "clamp(28px,4vw,68px)", marginTop: 44, alignItems: "start" }} className="about-grid">

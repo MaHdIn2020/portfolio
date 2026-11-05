@@ -1,12 +1,14 @@
 // src/components/Preloader.jsx
-// Flow: 0→100% loading → ONE merged welcome+quote screen (7s countdown) → site.
-// Big "Welcome / Happy exploring." on top, fresh quote directly underneath.
-// No separate welcome page, no button, no keyboard gate — auto-enters after timer.
+// Flow: thin top progress line + side-by-side quote card → site.
+// Distinct layout: split card, no centered giant %, no top mono header rows.
+// Welcome phrase sits inside the card above the fresh quote; 7s countdown below.
 import { useCallback, useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { generateQuote } from "../data/quoteGenerator";
 
 const QUOTE_SECONDS = 7;
+
+const TICK_WORDS = ["WARMING UP LINES…", "LOADING PIXELS…", "ALIGNING GRID…", "POURING COFFEE…", "ALMOST THERE…"];
 
 export default function Preloader({ onDone }) {
   const [phase, setPhase] = useState("loading"); // loading → welcomeQuote → done
@@ -63,7 +65,6 @@ export default function Preloader({ onDone }) {
     onDone?.();
   }, [onDone]);
 
-  // Countdown 7→0 on the merged screen
   useEffect(() => {
     if (phase !== "welcomeQuote") return;
     if (reduced.current) {
@@ -85,123 +86,121 @@ export default function Preloader({ onDone }) {
 
   if (phase === "done") return null;
   const pct = phase !== "loading" ? 100 : progress;
-  const ringSize = 56;
-  const ringStroke = 3;
-  const ringR = (ringSize - ringStroke) / 2;
-  const ringC = 2 * Math.PI * ringR;
-  const ringOffset = ringC * (1 - (QUOTE_SECONDS - countdown) / QUOTE_SECONDS);
+  const tickIndex = Math.min(TICK_WORDS.length - 1, Math.floor((pct / 100) * TICK_WORDS.length));
 
   return (
-    <div
-      className="preloader"
-      role="status"
-      aria-label="Portfolio loading"
-      aria-busy={phase !== "done"}
-    >
-      <div className="preloader-top">
-        <span>TSM</span>
-        <span>GOOD TO SEE YOU</span>
+    <div className="preloader" role="status" aria-label="Portfolio loading" aria-busy={phase !== "done"}>
+      {/* Progress strip — pinned to top edge */}
+      <div aria-hidden="true" style={{ position: "absolute", top: 0, left: 0, right: 0, height: 3, background: "rgba(255,255,255,0.08)" }}>
+        <div style={{ width: `${pct}%`, height: "100%", background: "var(--accent)", transition: "width .18s linear" }} />
       </div>
 
-      <div className="preloader-center">
-        <AnimatePresence mode="wait">
-          {phase === "loading" && (
-            <motion.div
-              key="loading"
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -12, filter: "blur(4px)" }}
-              transition={{ duration: 0.4 }}
-              style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 18 }}
-            >
-              <div className="preloader-count">
-                {String(pct).padStart(2, "0")}
-                <sup>%</sup>
-              </div>
-              <div className="preloader-bar" aria-hidden="true"><i style={{ transform: `scaleX(${pct / 100})` }} /></div>
-              <div className="preloader-hint">Warming up the site…</div>
-            </motion.div>
-          )}
-
-          {phase === "welcomeQuote" && quote && (
-            <motion.div
-              key="welcomeQuote"
-              initial={{ opacity: 0, y: 20, filter: "blur(6px)" }}
-              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-              exit={{ opacity: 0, y: -14, filter: "blur(4px)" }}
-              transition={{ duration: 0.6, ease: [0.22, 0.8, 0.3, 1] }}
-              style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 0, textAlign: "center", maxWidth: 680, padding: "0 20px", width: "100%" }}
-            >
-              {/* — Welcome block — */}
-              <p className="preloader-hint" style={{ color: "var(--accent)", margin: "0 0 12px" }}>GREETINGS</p>
-              <h2 className="display-title" style={{ fontSize: "clamp(56px, 8vw, 96px)", margin: 0, color: "#fff", letterSpacing: "-0.05em", lineHeight: 0.92 }}>
-                Good to
-                <br />
-                <span style={{ color: "var(--accent)" }}>see you.</span>
-              </h2>
-              <p style={{ color: "var(--muted)", fontFamily: "var(--mono)", fontSize: 11, letterSpacing: "0.14em", margin: "14px 0 0" }}>
+      <AnimatePresence mode="wait">
+        {phase === "loading" && (
+          <motion.div
+            key="loading"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0, scale: 0.985 }}
+            transition={{ duration: 0.45, ease: [0.22, 0.8, 0.3, 1] }}
+            style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", justifyContent: "space-between", padding: "56px var(--gutter) 48px" }}
+          >
+            {/* Brand — centred initials, no mono rows */}
+            <div style={{ textAlign: "center" }}>
+              <p className="display-title" style={{ fontSize: "clamp(44px, 6vw, 72px)", margin: 0, color: "#fff", letterSpacing: "-0.05em", lineHeight: 1 }}>
+                TSM
+                <span style={{ color: "var(--accent)", fontSize: "0.35em", verticalAlign: "super", marginLeft: 6 }}>®</span>
+              </p>
+              <p style={{ fontFamily: "var(--mono)", fontSize: 11, letterSpacing: "0.2em", color: "var(--muted)", marginTop: 10 }}>
                 FULL-STACK · ML · RESEARCH · TEACHING
               </p>
+            </div>
 
-              {/* — Divider — */}
-              <div style={{ width: "min(420px, 70vw)", height: 1, background: "linear-gradient(90deg, transparent, rgba(0,229,255,0.5), transparent)", margin: "26px 0" }} aria-hidden="true" />
+            {/* Pill + percent + tick */}
+            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 16 }}>
+              <div
+                aria-hidden="true"
+                style={{
+                  width: "min(340px, 70vw)", height: 44, borderRadius: 999,
+                  border: "1px solid rgba(255,255,255,0.18)", overflow: "hidden", position: "relative",
+                }}
+              >
+                <div style={{
+                  width: `${pct}%`, height: "100%", borderRadius: 999,
+                  background: "linear-gradient(90deg, rgba(0,229,255,0.25), var(--accent))",
+                  transition: "width .18s linear",
+                }} />
+                <span style={{ position: "absolute", inset: 0, display: "grid", placeItems: "center", fontFamily: "var(--mono)", fontSize: 12, letterSpacing: "0.14em", color: "#fff", fontVariantNumeric: "tabular-nums" }}>
+                  {pct}%
+                </span>
+              </div>
+              <p style={{ fontFamily: "var(--mono)", fontSize: 10, letterSpacing: "0.18em", color: "var(--muted)", margin: 0 }}>
+                {TICK_WORDS[tickIndex]}
+              </p>
+            </div>
+          </motion.div>
+        )}
 
-              {/* — Quote block — */}
-              <p className="preloader-hint" style={{ color: "var(--accent)", margin: "0 0 12px" }}>
-                ✦ {quote.theme} · FRESH QUOTE
+        {phase === "welcomeQuote" && quote && (
+          <motion.div
+            key="welcomeQuote"
+            initial={{ opacity: 0, y: 20, scale: 0.985 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.985 }}
+            transition={{ duration: 0.55, ease: [0.22, 0.8, 0.3, 1] }}
+            style={{ position: "absolute", inset: 0, display: "flex", alignItems: "center", justifyContent: "center", padding: "32px var(--gutter)" }}
+          >
+            <div style={{
+              width: "min(620px, 100%)",
+              border: "1px solid rgba(255,255,255,0.14)",
+              background: "linear-gradient(160deg, rgba(0,229,255,0.07), rgba(255,255,255,0.015) 55%)",
+              borderRadius: 20,
+              padding: "clamp(28px, 4vw, 44px)",
+              textAlign: "left",
+              boxShadow: "0 24px 80px rgba(0,0,0,0.5)",
+            }}>
+              <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+                <span style={{ width: 30, height: 30, borderRadius: "50%", background: "var(--accent)", color: "#001318", display: "grid", placeItems: "center", fontWeight: 800, fontSize: 14, fontFamily: "var(--display)" }}>T</span>
+                <span style={{ fontFamily: "var(--mono)", fontSize: 11, letterSpacing: "0.16em", color: "var(--muted)" }}>GREETINGS FROM TANJIP</span>
+              </div>
+
+              <h2 className="display-title" style={{ fontSize: "clamp(34px, 5vw, 58px)", margin: "18px 0 0", color: "#fff", letterSpacing: "-0.04em", lineHeight: 0.95 }}>
+                Good to see you.
+              </h2>
+
+              <div style={{ width: "100%", height: 1, background: "linear-gradient(90deg, rgba(0,229,255,0.45), transparent)", margin: "22px 0" }} aria-hidden="true" />
+
+              <p style={{ fontFamily: "var(--mono)", fontSize: 10, letterSpacing: "0.18em", color: "var(--accent)", margin: "0 0 10px" }}>
+                ✦ {quote.theme}
               </p>
               <blockquote style={{ margin: 0 }}>
-                <p style={{ fontFamily: "var(--display)", fontSize: "clamp(20px, 3vw, 30px)", lineHeight: 1.4, fontWeight: 600, letterSpacing: "-0.02em", color: "#fff", margin: 0 }}>
+                <p style={{ fontFamily: "var(--display)", fontSize: "clamp(20px, 2.8vw, 28px)", lineHeight: 1.4, fontWeight: 600, letterSpacing: "-0.02em", color: "#fff", margin: 0 }}>
                   “{quote.text}”
                 </p>
-                <cite style={{ display: "block", fontFamily: "var(--mono)", fontStyle: "normal", fontSize: 12, letterSpacing: "0.14em", color: "var(--muted)", marginTop: 12 }}>
+                <cite style={{ display: "block", fontFamily: "var(--mono)", fontStyle: "normal", fontSize: 11, letterSpacing: "0.14em", color: "var(--muted)", marginTop: 12 }}>
                   — {quote.author.toUpperCase()}
                 </cite>
               </blockquote>
 
-              {/* — Countdown + skip — */}
-              <div style={{ display: "flex", alignItems: "center", gap: 14, marginTop: 26 }}>
-                <div style={{ position: "relative", width: ringSize, height: ringSize }} role="timer" aria-label={`Entering site in ${countdown} seconds`}>
-                  <svg width={ringSize} height={ringSize} viewBox={`0 0 ${ringSize} ${ringSize}`} aria-hidden="true">
-                    <circle cx={ringSize / 2} cy={ringSize / 2} r={ringR} fill="none" stroke="rgba(255,255,255,0.12)" strokeWidth={ringStroke} />
-                    <circle
-                      cx={ringSize / 2} cy={ringSize / 2} r={ringR} fill="none"
-                      stroke="var(--accent)" strokeWidth={ringStroke} strokeLinecap="round"
-                      strokeDasharray={ringC} strokeDashoffset={ringOffset}
-                      transform={`rotate(-90 ${ringSize / 2} ${ringSize / 2})`}
-                      style={{ transition: "stroke-dashoffset 1s linear" }}
-                    />
-                  </svg>
-                  <span style={{ position: "absolute", inset: 0, display: "grid", placeItems: "center", fontFamily: "var(--mono)", fontSize: 14, fontWeight: 600, color: "#fff" }}>
-                    {countdown}
-                  </span>
-                </div>
-                <div style={{ textAlign: "left" }}>
-                  <p style={{ fontFamily: "var(--mono)", fontSize: 11, letterSpacing: "0.14em", color: "var(--muted)", margin: 0 }}>
-                    ENTERING IN {countdown}…
-                  </p>
-                  <button
-                    type="button"
-                    onClick={finishAll}
-                    style={{ marginTop: 8, fontFamily: "var(--mono)", fontSize: 11, letterSpacing: "0.14em", color: "var(--accent)", border: "1px solid rgba(0,229,255,0.4)", background: "none", padding: "8px 14px", borderRadius: 999, cursor: "pointer" }}
-                  >
-                    SKIP →
-                  </button>
-                </div>
+              <div style={{ display: "flex", alignItems: "center", gap: 14, marginTop: 26, flexWrap: "wrap" }}>
+                <span style={{ fontFamily: "var(--mono)", fontSize: 12, color: "var(--muted)", fontVariantNumeric: "tabular-nums" }} role="timer" aria-label={`Entering site in ${countdown} seconds`}>
+                  Entering in <strong style={{ color: "#fff" }}>{countdown}…</strong>
+                </span>
+                <span style={{ flex: 1, minWidth: 120, height: 3, background: "rgba(255,255,255,0.12)", borderRadius: 3, overflow: "hidden" }} aria-hidden="true">
+                  <span style={{ display: "block", height: "100%", width: `${((QUOTE_SECONDS - countdown) / QUOTE_SECONDS) * 100}%`, background: "var(--accent)", transition: "width 1s linear" }} />
+                </span>
+                <button
+                  type="button"
+                  onClick={finishAll}
+                  style={{ fontFamily: "var(--mono)", fontSize: 11, letterSpacing: "0.14em", color: "var(--accent)", border: "1px solid rgba(0,229,255,0.4)", background: "none", padding: "9px 16px", borderRadius: 999, cursor: "pointer" }}
+                >
+                  SKIP →
+                </button>
               </div>
-
-              <div className="preloader-bar" style={{ width: "min(420px, 70vw)", marginTop: 16 }} aria-hidden="true">
-                <i style={{ transform: `scaleX(${(QUOTE_SECONDS - countdown) / QUOTE_SECONDS})` }} />
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </div>
-
-      <div className="preloader-bottom">
-        <span>{phase === "loading" ? "SETTING UP" : "ALL SET"}</span>
-        <span>{phase === "loading" ? `${String(pct).padStart(2, "0")}%` : `ENTERING ${countdown}…`}</span>
-      </div>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
